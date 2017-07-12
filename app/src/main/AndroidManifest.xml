@@ -17,5 +17,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
+		<activity android:name=".onboarding.activity.OnboardingActivity" android:theme="@style/Theme.AppCompat.NoActionBar" />
 	</application>
 </manifest>
