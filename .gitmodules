@@ -1,0 +1,4 @@
+[submodule "sdk"]
+	path = sdk
+	url = git@bitbucket.org:3sidedcube/arc-cie-android-sdk.git
+	branch = feature/project-setup
