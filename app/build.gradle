@@ -21,6 +21,16 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
+
+	sourceSets {
+		main {
+			res.srcDirs += 'src/main/res-main'
+
+			file('src/main/res-screen')
+				.listFiles()
+				.each { res.srcDirs += it.path }
+		}
+	}
 }
 
 dependencies {
@@ -28,7 +38,10 @@ dependencies {
 	androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
+
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 	implementation 'com.android.support:appcompat-v7:25.4.0'
+	implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
 	testImplementation 'junit:junit:4.12'
 }

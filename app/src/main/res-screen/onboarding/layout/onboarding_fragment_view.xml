@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/root_view"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#ffffff"
+>
+	<ImageView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/header_image"
+		android:src="@drawable/onboarding_header"
+		android:adjustViewBounds="true"
+	/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/title"
+		android:text="@string/onboarding_title"
+		app:layout_constraintTop_toBottomOf="@+id/header_image"
+		android:layout_marginTop="8dp"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"
+		style="@style/Onboarding_Title"
+	/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/onboarding_body"
+		app:layout_constraintTop_toBottomOf="@+id/title"
+		android:layout_marginTop="8dp"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"
+		style="@style/Onboarding_Body"
+	/>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/video"
+		android:text="@string/onboarding_video_button"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"
+		android:layout_marginBottom="8dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintBottom_toTopOf="@id/skip"
+		style="@style/RedButton"
+	/>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/skip"
+		android:text="@string/onboarding_skip_button"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"
+		android:layout_marginBottom="12dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintBottom_toBottomOf="@id/root_view"
+		style="@style/RedButton.Borderless"
+	/>
+</android.support.constraint.ConstraintLayout>
