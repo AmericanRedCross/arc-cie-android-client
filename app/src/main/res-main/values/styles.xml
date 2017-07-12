@@ -8,4 +8,16 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<style name="RedButton" parent="Base.Widget.AppCompat.Button">
+		<item name="android:colorControlNormal">@color/colorPrimary</item>
+		<item name="android:colorButtonNormal">@color/colorPrimary</item>
+		<item name="android:backgroundTint">@color/colorPrimary</item>
+		<item name="colorButtonNormal">@color/colorPrimary</item>
+		<item name="colorControlNormal">@color/colorPrimary</item>
+		<item name="android:textColor">#ffffff</item>
+	</style>
+
+	<style name="RedButton.Borderless" parent="Widget.AppCompat.Button.Borderless">
+		<item name="android:textColor">@color/colorPrimary</item>
+	</style>
 </resources>
