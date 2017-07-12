@@ -8,6 +8,13 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<style name="AppTheme.Fullscreen">
+		<item name="windowNoTitle">true</item>
+		<item name="windowActionBar">false</item>
+		<item name="android:windowFullscreen">true</item>
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+
 	<style name="RedButton" parent="Base.Widget.AppCompat.Button">
 		<item name="android:colorControlNormal">@color/colorPrimary</item>
 		<item name="android:colorButtonNormal">@color/colorPrimary</item>
