@@ -32,12 +32,6 @@ class VideoPlayerActivity : AppCompatActivity()
 		setContentView(R.layout.video_player_view)
 		val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)
 		val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
-
-		player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
-		videoPlayer.requestFocus()
-		videoPlayer.useController = false
-		videoPlayer.player = player
-
 		val dataSourceFactory: DataSource.Factory = object : Factory
 		{
 			override fun createDataSource(): DataSource
@@ -45,9 +39,9 @@ class VideoPlayerActivity : AppCompatActivity()
 				return AssetDataSource(this@VideoPlayerActivity)
 			}
 		}
-
 		val videoSource = ExtractorMediaSource(Uri.parse("assets:///onboarding_video.mp4"), dataSourceFactory, DefaultExtractorsFactory(), null, null)
 
+		player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
 		player.prepare(videoSource)
 		player.addListener(object: ExoPlayer.EventListener
 		{
@@ -68,6 +62,9 @@ class VideoPlayerActivity : AppCompatActivity()
 		})
 
 		player.playWhenReady = true
+		videoPlayer.requestFocus()
+		videoPlayer.useController = false
+		videoPlayer.player = player
 	}
 
 	override fun onDestroy()
