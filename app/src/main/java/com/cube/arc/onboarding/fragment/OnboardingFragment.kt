@@ -2,12 +2,14 @@ package com.cube.arc.onboarding.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.cube.arc.R
+import com.cube.arc.cie.activity.MainActivity
 import com.cube.arc.onboarding.activity.VideoPlayerActivity
 import com.cube.lib.util.bind
 
@@ -33,7 +35,11 @@ class OnboardingFragment : Fragment()
 		}
 
 		skipButton.setOnClickListener {
+			PreferenceManager.getDefaultSharedPreferences(activity).edit()
+				.putBoolean("seen_onboarding", true)
+				.apply()
 
+			startActivity(Intent(activity, MainActivity::class.java))
 		}
 	}
 }

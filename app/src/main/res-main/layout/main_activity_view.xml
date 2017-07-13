@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+>
+	<android.support.v7.widget.Toolbar
+		android:layout_width="match_parent"
+		android:layout_height="?actionBarSize"
+		android:id="@+id/toolbar"
+		android:minHeight="?actionBarSize"
+		android:theme="@style/Toolbar"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:elevation="4dp"
+		app:popupTheme="@style/Widget.AppCompat.ActionBar"
+		app:theme="@style/Toolbar"
+	/>
+
+	<android.support.design.widget.BottomNavigationView
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:id="@+id/bottom_navigation"
+		android:paddingTop="4dp"
+		android:paddingBottom="4dp"
+		app:itemIconTint="@drawable/menu_drawable_selector"
+		app:itemTextColor="@drawable/menu_drawable_selector"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:menu="@menu/main_activity_menu"
+	/>
+
+	<FrameLayout
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:id="@+id/fragment_holder"
+		app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+		app:layout_constraintTop_toBottomOf="@+id/toolbar"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+	/>
+</android.support.constraint.ConstraintLayout>

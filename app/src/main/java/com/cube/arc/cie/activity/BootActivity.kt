@@ -66,8 +66,16 @@ class BootActivity : Activity()
 
 	fun startOnboarding()
 	{
-		startActivity(Intent(this, OnboardingActivity::class.java))
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+		if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("seen_onboarding", false))
+		{
+			startActivity(Intent(this, OnboardingActivity::class.java))
+			overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+		}
+		else
+		{
+			startActivity(Intent(this, MainActivity::class.java))
+		}
+
 		finish()
 	}
 }

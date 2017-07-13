@@ -1,4 +1,7 @@
 <resources>
 	<string name="app_name">CIE</string>
+
 	<string name="splash_title">Cash in Emergencies</string>
+	<string name="menu_workflow">Workflow</string>
+	<string name="menu_progress">Progress</string>
 </resources>

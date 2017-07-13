@@ -18,7 +18,9 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".onboarding.activity.OnboardingActivity" android:theme="@style/Theme.AppCompat.NoActionBar" />
+		<activity android:name=".cie.activity.MainActivity" />
+
+		<activity android:name=".onboarding.activity.OnboardingActivity" />
 		<activity android:name=".onboarding.activity.VideoPlayerActivity" android:theme="@style/AppTheme.Fullscreen" android:screenOrientation="portrait" />
 	</application>
 </manifest>
