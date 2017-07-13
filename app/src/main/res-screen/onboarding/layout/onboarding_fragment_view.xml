@@ -3,7 +3,6 @@
 <android.support.constraint.ConstraintLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/root_view"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="#ffffff"
@@ -16,54 +15,86 @@
 		android:adjustViewBounds="true"
 	/>
 
-	<TextView
+	<android.support.constraint.Guideline
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:id="@+id/spacer"
+		android:orientation="horizontal"
+		app:layout_constraintGuide_percent=".40"
+	/>
+
+	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/title"
-		android:text="@string/onboarding_title"
-		app:layout_constraintTop_toBottomOf="@+id/header_image"
-		android:layout_marginTop="8dp"
-		android:layout_marginLeft="12dp"
-		android:layout_marginRight="12dp"
-		style="@style/Onboarding_Title"
-	/>
+		app:layout_constraintTop_toBottomOf="@+id/spacer"
+		app:layout_constraintTop_toTopOf="@+id/spacer"
+	>
+		<android.support.constraint.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/root_view"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp"
+			android:paddingBottom="12dp"
+		>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/title"
+				android:text="@string/onboarding_title"
+				android:layout_marginTop="8dp"
+				style="@style/Onboarding_Title"
+			/>
 
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/onboarding_body"
-		app:layout_constraintTop_toBottomOf="@+id/title"
-		android:layout_marginTop="8dp"
-		android:layout_marginLeft="12dp"
-		android:layout_marginRight="12dp"
-		style="@style/Onboarding_Body"
-	/>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/onboarding_body"
+				android:layout_marginTop="8dp"
+				android:layout_marginBottom="24dp"
+				app:layout_constraintTop_toBottomOf="@+id/title"
+				app:layout_constraintBottom_toTopOf="@+id/video_thumb"
+				style="@style/Onboarding_Body"
+			/>
 
-	<Button
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/video"
-		android:text="@string/onboarding_video_button"
-		android:layout_marginLeft="12dp"
-		android:layout_marginRight="12dp"
-		android:layout_marginBottom="8dp"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintBottom_toTopOf="@id/skip"
-		style="@style/RedButton"
-	/>
+			<FrameLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/video_thumb"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintBottom_toTopOf="@id/skip"
+				android:layout_marginBottom="12dp"
+			>
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="72dp"
+					android:src="@drawable/onboarding_video_thumb"
+					android:adjustViewBounds="true"
+					android:layout_gravity="center_horizontal"
+				/>
 
-	<Button
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/skip"
-		android:text="@string/onboarding_skip_button"
-		android:layout_marginLeft="12dp"
-		android:layout_marginRight="12dp"
-		android:layout_marginBottom="12dp"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintBottom_toBottomOf="@id/root_view"
-		style="@style/RedButton.Borderless"
-	/>
+				<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/video"
+					android:text="@string/onboarding_video_button"
+					android:layout_gravity="center_horizontal|bottom"
+					android:layout_marginTop="60dp"
+					style="@style/RedButton"
+				/>
+			</FrameLayout>
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/skip"
+				android:text="@string/onboarding_skip_button"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				style="@style/RedButton.Borderless"
+			/>
+		</android.support.constraint.ConstraintLayout>
+	</ScrollView>
 </android.support.constraint.ConstraintLayout>
