@@ -20,6 +20,7 @@
 		<ImageView
 			android:layout_width="match_parent"
 			android:layout_height="156dp"
+			android:id="@+id/module_image"
 			android:src="@drawable/module_image"
 			android:alpha="0.15"
 			android:scaleType="centerCrop"
@@ -28,20 +29,23 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:id="@+id/steps_container"
 			android:orientation="vertical"
 		>
 			<RelativeLayout
 				android:layout_width="match_parent"
 				android:layout_height="156dp"
 				android:paddingLeft="24dp"
+				android:paddingStart="24dp"
 				android:paddingRight="16dp"
+				android:paddingEnd="16dp"
 				android:layout_marginTop="-8dp"
 				android:layout_gravity="center"
 			>
 				<TextView
 					android:layout_width="56dp"
 					android:layout_height="56dp"
-					android:id="@+id/module"
+					android:id="@+id/module_hierarchy"
 					android:text="1"
 					android:gravity="center"
 					android:textColor="#ffffff"
@@ -55,23 +59,26 @@
 				<ImageView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:id="@+id/chevron"
+					android:id="@+id/module_chevron"
 					android:src="@drawable/chevron_expand"
 					android:layout_centerVertical="true"
 					android:layout_alignParentRight="true"
+					android:layout_alignParentEnd="true"
 				/>
 
 				<TextView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:id="@+id/name"
+					android:id="@+id/module_name"
 					android:layout_centerVertical="true"
 					android:textSize="22sp"
 					android:textColor="#ff000000"
 					android:textStyle="bold"
 					android:text="Preparedness"
-					android:layout_toLeftOf="@id/chevron"
-					android:layout_toRightOf="@id/module"
+					android:layout_toLeftOf="@id/module_chevron"
+					android:layout_toStartOf="@id/module_chevron"
+					android:layout_toRightOf="@id/module_hierarchy"
+					android:layout_toEndOf="@id/module_hierarchy"
 					android:layout_marginLeft="12dp"
 					android:layout_marginRight="12dp"
 				/>
@@ -79,234 +86,18 @@
 				<Button
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_below="@id/name"
-					android:layout_toRightOf="@id/module"
+					android:layout_below="@id/module_name"
+					android:layout_toRightOf="@id/module_hierarchy"
+					android:layout_toEndOf="@id/module_hierarchy"
 					android:layout_marginLeft="12dp"
+					android:layout_marginStart="12dp"
 					android:layout_marginTop="12dp"
 					android:text="Module Roadmap"
 					style="@style/SmallButton"
 				/>
 			</RelativeLayout>
 
-			<android.support.constraint.ConstraintLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/step_container"
-				android:orientation="vertical"
-				android:layout_marginTop="10dp"
-				android:paddingTop="12dp"
-				android:paddingBottom="24dp"
-				android:background="#ffffff"
-			>
-				<TextView
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:id="@+id/step_hierarchy"
-					android:text="2.1.1"
-					android:gravity="center_vertical"
-					android:layout_marginLeft="24dp"
-					android:fontFamily="sans-serif-light"
-					android:textColor="#ff000000"
-					app:layout_constraintStart_toStartOf="parent"
-				/>
-
-				<TextView
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:id="@+id/title"
-					android:text="Initial decision For Cash"
-					android:gravity="center_vertical"
-					android:layout_marginRight="12dp"
-					android:layout_marginLeft="4dp"
-					android:textStyle="bold"
-					android:textColor="#ff000000"
-					app:layout_constraintStart_toEndOf="@id/step_hierarchy"
-				/>
-
-				<Button
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:id="@+id/step_roadmap"
-					android:layout_marginTop="12dp"
-					android:layout_marginLeft="24dp"
-					android:layout_marginStart="24dp"
-					android:layout_marginRight="12dp"
-					android:layout_marginEnd="12dp"
-					android:text="Roadmap"
-					app:layout_constraintTop_toBottomOf="@id/step_hierarchy"
-					app:layout_constraintStart_toStartOf="parent"
-					style="@style/SmallButton"
-				/>
-
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:id="@+id/substep_container"
-					android:orientation="vertical"
-					android:showDividers="middle"
-					android:divider="@drawable/sub_step_divider"
-					android:background="#FAFAFB"
-					android:layout_marginTop="12dp"
-					app:layout_constraintTop_toBottomOf="@id/step_roadmap"
-				>
-					<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:orientation="vertical"
-					>
-						<android.support.constraint.ConstraintLayout
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:paddingTop="12dp"
-							android:paddingBottom="12dp"
-							android:paddingRight="16dp"
-							android:paddingLeft="24dp"
-						>
-							<CheckBox
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:id="@+id/check"
-								android:button="@drawable/checkbox_drawable_selector"
-								app:layout_constraintStart_toStartOf="parent"
-								app:layout_constraintTop_toTopOf="parent"
-							/>
-
-							<ImageView
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:id="@+id/chevron"
-								android:src="@drawable/chevron_expand"
-								app:layout_constraintEnd_toEndOf="parent"
-								app:layout_constraintTop_toTopOf="parent"
-							/>
-
-							<TextView
-								android:layout_width="0dp"
-								android:layout_height="wrap_content"
-								android:id="@+id/hierarchy"
-								android:text="2.1.1"
-								android:gravity="center_vertical"
-								android:layout_marginLeft="12dp"
-								android:fontFamily="sans-serif-light"
-								android:textColor="#ff000000"
-								app:layout_constraintStart_toEndOf="@id/check"
-								app:layout_constraintTop_toTopOf="@id/check"
-								app:layout_constraintBottom_toBottomOf="@id/check"
-							/>
-
-							<TextView
-								android:layout_width="0dp"
-								android:layout_height="wrap_content"
-								android:id="@+id/title"
-								android:text="Initial decision For Cash"
-								android:gravity="center_vertical"
-								android:layout_marginRight="12dp"
-								android:layout_marginLeft="4dp"
-								android:textStyle="bold"
-								android:textColor="#ff000000"
-								app:layout_constraintStart_toEndOf="@id/hierarchy"
-								app:layout_constraintEnd_toStartOf="@+id/chevron"
-								app:layout_constraintTop_toTopOf="@id/check"
-								app:layout_constraintBottom_toBottomOf="@id/check"
-							/>
-
-							<Button
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:id="@+id/add_note"
-								android:text="Add Note"
-								android:layout_marginLeft="12dp"
-								app:layout_constraintStart_toEndOf="@id/check"
-								app:layout_constraintTop_toBottomOf="@id/check"
-								style="@style/SmallButton"
-							/>
-						</android.support.constraint.ConstraintLayout>
-
-						<LinearLayout
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:id="@+id/tools_container"
-							android:orientation="vertical"
-							android:background="#FEEEED"
-						>
-							<View
-								android:layout_width="match_parent"
-								android:layout_height="1dp"
-								android:background="#ffF47D78"
-								android:layout_marginBottom="4dp"
-							/>
-
-							<android.support.constraint.ConstraintLayout
-								android:layout_width="match_parent"
-								android:layout_height="wrap_content"
-								android:paddingLeft="24dp"
-								android:paddingRight="16dp"
-								android:paddingTop="16dp"
-								android:paddingBottom="16dp"
-								android:background="#ffffff"
-								android:layout_marginTop="4dp"
-								android:layout_marginBottom="4dp"
-							>
-								<CheckBox
-									android:layout_width="wrap_content"
-									android:layout_height="wrap_content"
-									android:id="@+id/tool_check"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintTop_toTopOf="parent"
-									app:layout_constraintBottom_toBottomOf="parent"
-									android:button="@drawable/checkbox_drawable_selector"
-								/>
-
-								<ImageView
-									android:layout_width="wrap_content"
-									android:layout_height="wrap_content"
-									android:id="@+id/icon"
-									android:src="@drawable/ic_mime_pdf"
-									android:layout_marginLeft="20dp"
-									app:layout_constraintStart_toEndOf="@id/tool_check"
-								/>
-
-								<TextView
-									android:layout_width="0dp"
-									android:layout_height="wrap_content"
-									android:id="@+id/tool_title"
-									android:text="Tool title"
-									android:layout_marginLeft="8dp"
-									android:layout_marginRight="20dp"
-									android:textSize="12sp"
-									android:textColor="#ff000000"
-									android:textStyle="bold"
-									app:layout_constraintStart_toEndOf="@id/icon"
-									app:layout_constraintTop_toTopOf="@id/icon"
-									app:layout_constraintBottom_toBottomOf="@id/icon"
-									app:layout_constraintEnd_toEndOf="parent"
-								/>
-
-								<TextView
-									android:layout_width="0dp"
-									android:layout_height="wrap_content"
-									android:id="@+id/tool_description"
-									android:text="Tool title"
-									android:layout_marginLeft="20dp"
-									android:layout_marginRight="20dp"
-									android:layout_marginTop="8dp"
-									android:textSize="12sp"
-									app:layout_constraintStart_toEndOf="@id/tool_check"
-									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintTop_toBottomOf="@id/icon"
-								/>
-							</android.support.constraint.ConstraintLayout>
-
-							<View
-								android:layout_width="match_parent"
-								android:layout_height="1dp"
-								android:background="#ffF47D78"
-								android:layout_marginTop="4dp"
-							/>
-						</LinearLayout>
-					</LinearLayout>
-				</LinearLayout>
-			</android.support.constraint.ConstraintLayout>
+			<!-- Add steps here -->
 		</LinearLayout>
 	</android.support.v7.widget.CardView>
 </FrameLayout>
