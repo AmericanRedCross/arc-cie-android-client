@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import com.cube.arc.R
 import com.cube.arc.workflow.adapter.ModuleAdapter
 import com.cube.arc.workflow.model.Module
-import com.cube.arc.workflow.model.ModuleStep
-import com.cube.arc.workflow.model.StepSubStep
 import com.cube.lib.util.bind
 
 /**
@@ -35,23 +33,7 @@ class WorkFlowFragment : Fragment()
 		if (savedInstanceState == null)
 		{
 			adapter.items = listOf(
-				Module("", 1, "", "", listOf(
-					ModuleStep("", 1, "", listOf(
-						StepSubStep("", 1, listOf())))
-					)
-				),
-
-				Module("", 2, "", "", listOf(
-					ModuleStep("", 1, "", listOf(
-						StepSubStep("", 1, listOf())))
-					)
-				),
-
-				Module("", 3, "", "", listOf(
-					ModuleStep("", 1, "", listOf(
-						StepSubStep("", 1, listOf())))
-					)
-				)
+				Module("", 1, "", "", null, null, false)
 			)
 
 			val layoutManager = LinearLayoutManager(activity)
