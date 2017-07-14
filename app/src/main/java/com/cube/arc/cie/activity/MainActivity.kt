@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.cube.arc.R
+import com.cube.arc.workflow.fragment.WorkFlowFragment
 import com.cube.lib.util.bind
 
 /**
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity()
 		bottomNavigation.setOnNavigationItemSelectedListener { item ->
 			var fragment = when (item.itemId)
 			{
-				 R.id.menu_workflow -> Fragment()
+				 R.id.menu_workflow -> WorkFlowFragment()
 				 R.id.menu_progress -> Fragment()
 				else -> Fragment()
 			}
