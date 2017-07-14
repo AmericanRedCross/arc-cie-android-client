@@ -32,4 +32,17 @@
 	<style name="RedButton.Borderless" parent="Widget.AppCompat.Button.Borderless">
 		<item name="android:textColor">@color/colorPrimary</item>
 	</style>
+
+	<style name="SmallButton" parent="Base.Widget.AppCompat.Button">
+		<item name="android:textColor">@color/colorPrimary</item>
+		<item name="android:background">@drawable/small_button_drawable_selector</item>
+		<item name="android:textSize">11dp</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:minHeight">0dip</item>
+		<item name="android:minWidth">0dip</item>
+		<item name="android:paddingTop">8dp</item>
+		<item name="android:paddingBottom">8dp</item>
+		<item name="android:paddingLeft">12dp</item>
+		<item name="android:paddingRight">12dp</item>
+	</style>
 </resources>
