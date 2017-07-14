@@ -1,13 +1,17 @@
 package com.cube.arc.workflow.model
 
 /**
- * Top level module data struct
+ * Recursive module object.
+ *
+ * Module -> Module Step -> Step sub step -> Tools
  */
 data class Module
 (
 	var id : String,
-	var module : Int,
+	var hierarchy : Int,
 	var title : String,
-	var roadmap : String,
-	var steps : List<ModuleStep>
+	var content : String,
+	var steps : List<Module>?,
+	var attachments : List<FileDescriptor>?,
+	var critical : Boolean = false
 )

@@ -1,12 +1,14 @@
 package com.cube.arc.workflow.model
 
 /**
- * // TODO: Add class description
+ * Basic data class for describing attachments in [Module]
  */
 data class FileDescriptor
 (
 	var title : String,
 	var url : String,
-	var critical : Boolean = false,
-	var mime : String
+	var mime : String,
+	var size : Long,
+	var description: String,
+	var featured: Boolean = false
 )
