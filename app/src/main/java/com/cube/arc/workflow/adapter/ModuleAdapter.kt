@@ -12,11 +12,11 @@ import com.cube.arc.workflow.view.holder.ModuleViewHolder
  */
 class ModuleAdapter : RecyclerView.Adapter<ModuleViewHolder>()
 {
-	var items : List<Module> = listOf<Module>()
+	var items : List<Module> = listOf()
 
 	override fun onBindViewHolder(holder: ModuleViewHolder?, position: Int)
 	{
-
+		holder?.populate(items[position])
 	}
 
 	override fun getItemCount(): Int
