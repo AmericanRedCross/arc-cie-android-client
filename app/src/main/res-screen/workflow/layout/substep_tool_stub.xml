@@ -5,30 +5,30 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:layout_marginBottom="4dp"
+	android:layout_marginTop="4dp"
+	android:background="#ffffff"
+	android:paddingBottom="16dp"
 	android:paddingLeft="24dp"
 	android:paddingRight="16dp"
 	android:paddingTop="16dp"
-	android:paddingBottom="16dp"
-	android:background="#ffffff"
-	android:layout_marginTop="4dp"
-	android:layout_marginBottom="4dp"
 >
 	<CheckBox
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/tool_check"
+		android:button="@drawable/checkbox_drawable_selector"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintBottom_toBottomOf="parent"
-		android:button="@drawable/checkbox_drawable_selector"
 	/>
 
 	<ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/tool_icon"
-		android:src="@drawable/ic_mime_pdf"
 		android:layout_marginLeft="20dp"
+		android:src="@drawable/ic_mime_pdf"
 		app:layout_constraintStart_toEndOf="@id/tool_check"
 	/>
 
@@ -39,13 +39,13 @@
 		android:text="Tool title"
 		android:layout_marginLeft="8dp"
 		android:layout_marginRight="20dp"
-		android:textSize="12sp"
 		android:textColor="#ff000000"
+		android:textSize="12sp"
 		android:textStyle="bold"
-		app:layout_constraintStart_toEndOf="@id/tool_icon"
-		app:layout_constraintTop_toTopOf="@id/tool_icon"
 		app:layout_constraintBottom_toBottomOf="@id/tool_icon"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/tool_icon"
+		app:layout_constraintTop_toTopOf="@id/tool_icon"
 	/>
 
 	<TextView
@@ -57,8 +57,8 @@
 		android:layout_marginRight="20dp"
 		android:layout_marginTop="8dp"
 		android:textSize="12sp"
-		app:layout_constraintStart_toEndOf="@id/tool_check"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/tool_check"
 		app:layout_constraintTop_toBottomOf="@id/tool_icon"
 	/>
 </android.support.constraint.ConstraintLayout>
