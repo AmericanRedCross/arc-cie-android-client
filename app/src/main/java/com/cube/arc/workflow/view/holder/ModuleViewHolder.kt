@@ -124,7 +124,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	fun showView(view: View)
 	{
 		view.visibility = View.VISIBLE
-		
+
 //		val anim = AnimationUtils.loadAnimation(view.context, R.anim.slide_in_top)
 //		anim.setAnimationListener(object : Animation.AnimationListener
 //		{
@@ -141,7 +141,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 	fun hideView(view: View)
 	{
-		view.visibility = View.VISIBLE
+		view.visibility = View.GONE
 
 //		val anim = AnimationUtils.loadAnimation(view.context, R.anim.slide_up_bottom)
 //		anim.setAnimationListener(object : Animation.AnimationListener
