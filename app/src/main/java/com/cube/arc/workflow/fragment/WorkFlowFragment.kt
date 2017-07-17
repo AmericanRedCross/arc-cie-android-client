@@ -46,7 +46,7 @@ class WorkFlowFragment : Fragment()
 
 					if (itemPosition > 0)
 					{
-						outRect?.set(0, -resources.getDimensionPixelSize(R.dimen.workflow_card_offset), 0, 0)
+//						outRect?.set(0, -resources.getDimensionPixelSize(R.dimen.workflow_card_offset), 0, 0)
 					}
 				}
 			}

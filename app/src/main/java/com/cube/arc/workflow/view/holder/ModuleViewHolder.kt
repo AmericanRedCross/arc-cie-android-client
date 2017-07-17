@@ -17,6 +17,7 @@ import com.cube.lib.util.inflate
 class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
 	private val stepsContainer by bind<LinearLayout>(R.id.steps_container, itemView)
+	private val moduleClickArea by bind<View>(R.id.module_click_area, itemView)
 	private var chevron = itemView.findViewById(R.id.module_chevron) as ImageView
 	private var title = itemView.findViewById(R.id.module_name) as TextView
 	private var hierarchy = itemView.findViewById(R.id.module_hierarchy) as TextView
@@ -48,7 +49,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 
 		stepsContainer.visibility = View.GONE
-		itemView.setOnClickListener { view ->
+		moduleClickArea.setOnClickListener { view ->
 			when
 			{
 				stepsContainer.visibility == View.VISIBLE -> hideView(stepsContainer)

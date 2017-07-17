@@ -7,10 +7,7 @@
 	android:layout_height="wrap_content"
 	android:id="@+id/step_container"
 	android:orientation="vertical"
-	android:layout_marginTop="10dp"
 	android:paddingTop="12dp"
-	android:paddingBottom="24dp"
-	android:background="#ffffff"
 >
 	<TextView
 		android:layout_width="0dp"
@@ -62,8 +59,6 @@
 		android:orientation="vertical"
 		android:showDividers="middle"
 		android:divider="@drawable/sub_step_divider"
-		android:background="#FAFAFB"
-		android:layout_marginTop="12dp"
 		app:layout_constraintTop_toBottomOf="@id/step_roadmap"
 	>
 		<!-- Add sub steps here -->
