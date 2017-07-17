@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cube.arc.R
 import com.cube.arc.workflow.adapter.ModuleAdapter
-import com.cube.arc.workflow.model.Module
+import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.lib.util.bind
 
 /**
@@ -32,9 +32,10 @@ class WorkFlowFragment : Fragment()
 
 		if (savedInstanceState == null)
 		{
-			adapter.items = listOf(
-				Module("", 1, "", "", null, null, false)
-			)
+			// initialise module manager
+			ModulesManager.init(resources.assets.open("modules.json"))
+
+			adapter.items = ModulesManager.modules
 
 			val layoutManager = LinearLayoutManager(activity)
 			val itemDecoration = object : RecyclerView.ItemDecoration()
