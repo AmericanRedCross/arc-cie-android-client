@@ -1,0 +1,62 @@
+[{
+	"title": "module 1",
+	"hierarchy": 1,
+	"content": "#markdown content",
+	"attachments": [
+		{
+			"title": "Roadmap",
+			"url": "http://download/url",
+			"mime": "application/pdf",
+			"size": 120000,
+			"featured": true
+		}
+	],
+	"steps": [
+		{
+			"title": "module 1 step 1",
+			"hierarchy": 1,
+			"content": "#markdown content",
+			"attachments": [
+				{
+					"title": "Roadmap",
+					"url": "http://download/url",
+					"mime": "application/pdf",
+					"size": 120000,
+					"featured": true
+				}
+			],
+			"steps": [
+				{
+					"title": "sub step 1",
+					"hierarchy": 1,
+					"content": "#markdown content",
+					"attachments": [
+						{
+							"title": "Roadmap",
+							"url": "http://download/url",
+							"mime": "application/pdf",
+							"size": 120000,
+							"featured": true
+						}
+					],
+					"steps": [
+						{
+							"title": "tool 1",
+							"hierarchy": 1,
+							"content": "#markdown content",
+							"critical": true,
+							"attachments": [
+								{
+									"title": "Tool",
+									"url": "http://download/url",
+									"mime": "application/excel",
+									"size": 120000
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}]
