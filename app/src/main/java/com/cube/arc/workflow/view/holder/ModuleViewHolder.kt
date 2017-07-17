@@ -17,8 +17,9 @@ import com.cube.lib.util.inflate
 class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
 	private val stepsContainer by bind<LinearLayout>(R.id.steps_container, itemView)
-	private var title: TextView = itemView.findViewById(R.id.module_name) as TextView
-	private var hierarchy: TextView = itemView.findViewById(R.id.module_hierarchy) as TextView
+	private var chevron = itemView.findViewById(R.id.module_chevron) as ImageView
+	private var title = itemView.findViewById(R.id.module_name) as TextView
+	private var hierarchy = itemView.findViewById(R.id.module_hierarchy) as TextView
 
 	fun populate(model: Module)
 	{
@@ -48,11 +49,17 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 		stepsContainer.visibility = View.GONE
 		itemView.setOnClickListener { view ->
-			stepsContainer.visibility = when
+			when
 			{
-				stepsContainer.visibility == View.VISIBLE -> View.GONE
-				else -> View.VISIBLE
+				stepsContainer.visibility == View.VISIBLE -> hideView(stepsContainer)
+				else -> showView(stepsContainer)
 			}
+
+			chevron.setImageResource(when
+			{
+				stepsContainer.visibility == View.VISIBLE -> R.drawable.chevron_collapse
+				else -> R.drawable.chevron_expand
+			})
 		}
 	}
 
@@ -78,6 +85,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private fun populateSubStepTools(root: Module, step: Module, subStep: Module, subStepView: View)
 	{
 		var toolContainer = subStepView.findViewById(R.id.tools_container) as ViewGroup
+		var subStepChevron = subStepView.findViewById(R.id.substep_chevron) as ImageView
 
 		subStep.steps?.forEach { tool ->
 			val toolView = subStepView.inflate<View>(R.layout.substep_tool_stub)
@@ -89,17 +97,63 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			toolTitle.text = tool.title
 			toolDescription.text = tool.content
 
+			toolView.setOnClickListener { view ->
+				//
+			}
+
 			toolContainer.addView(toolView, toolContainer.childCount - 1)
 		}
 
 		toolContainer.visibility = View.GONE
 
 		subStepView.setOnClickListener {
-			toolContainer.visibility = when
+			when
 			{
-				toolContainer.visibility == View.VISIBLE -> View.GONE
-				else -> View.VISIBLE
+				toolContainer.visibility == View.VISIBLE -> hideView(toolContainer)
+				else -> showView(toolContainer)
 			}
+
+			subStepChevron.setImageResource(when
+			{
+				toolContainer.visibility == View.VISIBLE -> R.drawable.chevron_collapse
+				else -> R.drawable.chevron_expand
+			})
 		}
+	}
+
+	fun showView(view: View)
+	{
+		view.visibility = View.VISIBLE
+		
+//		val anim = AnimationUtils.loadAnimation(view.context, R.anim.slide_in_top)
+//		anim.setAnimationListener(object : Animation.AnimationListener
+//		{
+//			override fun onAnimationRepeat(animation: Animation?){}
+//			override fun onAnimationStart(animation: Animation?)
+//			{
+//				view.visibility = View.VISIBLE
+//			}
+//
+//			override fun onAnimationEnd(animation: Animation?){}
+//		})
+//		view.startAnimation(anim)
+	}
+
+	fun hideView(view: View)
+	{
+		view.visibility = View.VISIBLE
+
+//		val anim = AnimationUtils.loadAnimation(view.context, R.anim.slide_up_bottom)
+//		anim.setAnimationListener(object : Animation.AnimationListener
+//		{
+//			override fun onAnimationRepeat(animation: Animation?){}
+//			override fun onAnimationStart(animation: Animation?)
+//			{
+//				view.visibility = View.VISIBLE
+//			}
+//
+//			override fun onAnimationEnd(animation: Animation?){}
+//		})
+//		view.startAnimation(anim)
 	}
 }

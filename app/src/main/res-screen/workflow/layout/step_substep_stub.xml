@@ -87,6 +87,7 @@
 		android:id="@+id/tools_container"
 		android:orientation="vertical"
 		android:background="#FEEEED"
+		android:animateLayoutChanges="true"
 	>
 		<View
 			android:layout_width="match_parent"

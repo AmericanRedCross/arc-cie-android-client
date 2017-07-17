@@ -101,6 +101,7 @@
 				android:layout_height="wrap_content"
 				android:id="@+id/steps_container"
 				android:orientation="vertical"
+				android:animateLayoutChanges="true"
 			>
 				<!-- add steps here -->
 			</LinearLayout>
