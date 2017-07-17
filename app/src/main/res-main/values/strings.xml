@@ -4,4 +4,6 @@
 	<string name="splash_title">Cash in Emergencies</string>
 	<string name="menu_workflow">Workflow</string>
 	<string name="menu_progress">Progress</string>
+
+	<string name="note_dialog_button_save">Save</string>
 </resources>
