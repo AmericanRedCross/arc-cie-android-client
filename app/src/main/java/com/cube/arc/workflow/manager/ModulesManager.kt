@@ -17,4 +17,19 @@ object ModulesManager
 	{
 		modules = Gson().fromJson(InputStreamReader(dataSource), object : TypeToken<ArrayList<Module>>(){}.type)
 	}
+
+	fun module(id: String) : Module?
+	{
+		return search(modules, id)
+	}
+
+	fun search(modules: List<Module>?, id: String) : Module?
+	{
+		modules?.forEach { module ->
+			if (module.id == id) return module
+			else return search(module.steps, id)
+		}
+
+		return null
+	}
 }
