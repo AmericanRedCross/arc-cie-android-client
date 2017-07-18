@@ -104,6 +104,11 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val toolTitle = toolView.findViewById(R.id.tool_title) as TextView
 			val toolIcon = toolView.findViewById(R.id.tool_icon) as ImageView
 			val toolDescription = toolView.findViewById(R.id.tool_description) as TextView
+			val critical = toolView.findViewById(R.id.critical_tool) as View
+			val note = toolView.findViewById(R.id.note_added) as View
+			val exported = toolView.findViewById(R.id.exported) as View
+
+			critical.visibility = if (tool.critical) View.VISIBLE else View.GONE
 
 			toolTitle.text = tool.title
 			toolDescription.text = tool.content
