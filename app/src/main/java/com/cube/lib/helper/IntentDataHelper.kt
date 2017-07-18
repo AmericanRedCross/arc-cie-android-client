@@ -42,9 +42,10 @@ object IntentDataHelper
 	 * @param tag The tag used to originally store the data
 	 * @return The found object or null.
 	 */
-	fun retrieve(tag: Class<*>): Any?
+	fun <T> retrieve(tag: Class<*>): T
 	{
-		return retrieve(tag.name, Any::class.java)
+		@Suppress("UNCHECKED_CAST")
+		return dataStore.remove(tag.name) as T
 	}
 
 	/**
@@ -54,35 +55,10 @@ object IntentDataHelper
 	 * @param tag The tag used to originally store the data
 	 * @return The found object or null.
 	 */
-	fun retrieve(tag: String): Any?
+	fun <T> retrieve(tag: String): T
 	{
-		return retrieve(tag, Any::class.java)
-	}
-
-	/**
-	 * Gets the stored data object from a given tag, or null if nothing was stored. Operation is destructive,
-	 * object will be removed from data store once retrieved.
-     *
-	 * @param tag The tag used to originally store the data
-	 * @param classType The class type to force cast to
-	 * @return The found object or null.
-	 */
-	fun <T> retrieve(tag: Class<*>, classType: Class<T>): T?
-	{
-		return classType.cast(dataStore.remove(tag.name))
-	}
-
-	/**
-	 * Gets the stored data object from a given tag, or null if nothing was stored. Operation is destructive,
-	 * object will be removed from data store once retrieved.
-     *
-	 * @param tag The tag used to originally store the data
-	 * @param classType The class type to force cast to
-	 * @return The found object or null.
-	 */
-	fun <T> retrieve(tag: String, classType: Class<T>): T?
-	{
-		return classType.cast(dataStore.remove(tag))
+		@Suppress("UNCHECKED_CAST")
+		return dataStore.remove(tag) as T
 	}
 
 	/**
