@@ -1,13 +1,17 @@
 package com.cube.arc.workflow.view.holder
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.cube.arc.R
+import com.cube.arc.workflow.adapter.NoteActivity
 import com.cube.arc.workflow.model.Module
+import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 
@@ -73,9 +77,15 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			val subStepHierarchy = subStepView.findViewById(R.id.substep_hierarchy) as TextView
 			val subStepTitle = subStepView.findViewById(R.id.substep_title) as TextView
+			val subStepNoteButton = subStepView.findViewById(R.id.add_note) as Button
 
 			subStepHierarchy.text = "${root.hierarchy}.${step.hierarchy}.${subStep.hierarchy}"
 			subStepTitle.text = subStep.title
+			subStepNoteButton.setOnClickListener { view ->
+				val noteIntent = Intent(view.context, NoteActivity::class.java)
+				IntentDataHelper.store(NoteActivity::class.java, step.id)
+				view.context.startActivity(noteIntent)
+			}
 
 			populateSubStepTools(root, step, subStep, subStepView)
 

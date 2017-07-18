@@ -4,4 +4,13 @@
 	<string name="splash_title">Cash in Emergencies</string>
 	<string name="menu_workflow">Workflow</string>
 	<string name="menu_progress">Progress</string>
+
+	<string name="note_dialog_button_save">Save</string>
+	<string name="note_dialog_button_cancel">Cancel</string>
+	<string name="note_dialog_title_add">Add Note</string>
+	<string name="note_dialog_title_edit">Edit Note</string>
+	<string name="note_dialog_cancel_confirm_title">Are you sure?</string>
+	<string name="note_dialog_cancel_confirm_message">Any unsaved changes will be lost</string>
+	<string name="note_dialog_cancel_confirm_positive">Discard</string>
+	<string name="note_dialog_cancel_confirm_negative">Cancel</string>
 </resources>

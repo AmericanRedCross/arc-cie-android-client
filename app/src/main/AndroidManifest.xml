@@ -20,6 +20,8 @@
 
 		<activity android:name=".cie.activity.MainActivity" />
 
+		<activity android:name=".workflow.adapter.NoteActivity" android:windowSoftInputMode="adjustResize" />
+
 		<activity android:name=".onboarding.activity.OnboardingActivity" />
 		<activity android:name=".onboarding.activity.VideoPlayerActivity" android:theme="@style/AppTheme.Fullscreen" android:screenOrientation="portrait" />
 	</application>
