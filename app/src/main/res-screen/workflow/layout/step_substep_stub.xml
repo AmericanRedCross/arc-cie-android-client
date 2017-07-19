@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="#f2f2f2"
+>
+	<android.support.constraint.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingTop="12dp"
+		android:paddingBottom="12dp"
+		android:paddingRight="16dp"
+		android:paddingEnd="16dp"
+		android:paddingLeft="24dp"
+		android:paddingStart="24dp"
+	>
+		<CheckBox
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/substep_check"
+			android:button="@drawable/checkbox_drawable_selector"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+		/>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/substep_chevron"
+			android:src="@drawable/chevron_expand"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+		/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/substep_hierarchy"
+			android:text="2.1.1"
+			android:gravity="center_vertical"
+			android:layout_marginLeft="12dp"
+			android:layout_marginStart="12dp"
+			android:fontFamily="sans-serif-light"
+			android:textColor="#ff000000"
+			app:layout_constraintStart_toEndOf="@id/substep_check"
+			app:layout_constraintTop_toTopOf="@id/substep_check"
+			app:layout_constraintBottom_toBottomOf="@id/substep_check"
+		/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/substep_title"
+			android:text="Initial decision For Cash"
+			android:gravity="center_vertical"
+			android:layout_marginRight="12dp"
+			android:layout_marginEnd="12dp"
+			android:layout_marginLeft="4dp"
+			android:layout_marginStart="4dp"
+			android:textStyle="bold"
+			android:textColor="#ff000000"
+			app:layout_constraintStart_toEndOf="@id/substep_hierarchy"
+			app:layout_constraintEnd_toStartOf="@+id/substep_chevron"
+			app:layout_constraintTop_toTopOf="@id/substep_check"
+			app:layout_constraintBottom_toBottomOf="@id/substep_check"
+		/>
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/add_note"
+			android:text="@string/module_substep_add_note"
+			android:layout_marginLeft="12dp"
+			android:layout_marginStart="12dp"
+			app:layout_constraintStart_toEndOf="@id/substep_check"
+			app:layout_constraintTop_toBottomOf="@id/substep_check"
+			style="@style/SmallButton"
+		/>
+	</android.support.constraint.ConstraintLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tools_container"
+		android:orientation="vertical"
+		android:background="#FEEEED"
+		android:animateLayoutChanges="true"
+	>
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="#ffF47D78"
+			android:layout_marginBottom="4dp"
+		/>
+
+		<!-- Add tool stub here -->
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="#ffF47D78"
+			android:layout_marginTop="4dp"
+		/>
+	</LinearLayout>
+</LinearLayout>

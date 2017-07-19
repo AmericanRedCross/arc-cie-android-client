@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+>
+	<android.support.constraint.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/toolbar"
+		android:padding="8dp"
+	>
+		<ImageView
+			android:layout_width="42dp"
+			android:layout_height="42dp"
+			android:id="@+id/ab_icon"
+			android:src="@drawable/ab_ic_add_note"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+		/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/ab_title"
+			android:textStyle="bold"
+			android:textSize="16dp"
+			android:layout_marginLeft="8dp"
+			app:layout_constraintStart_toEndOf="@id/ab_icon"
+			app:layout_constraintEnd_toStartOf="@+id/cancel"
+			app:layout_constraintTop_toTopOf="@id/ab_icon"
+		/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/ab_subtitle"
+			android:textSize="12dp"
+			android:layout_marginLeft="8dp"
+			app:layout_constraintStart_toEndOf="@id/ab_icon"
+			app:layout_constraintEnd_toStartOf="@+id/cancel"
+			app:layout_constraintTop_toBottomOf="@id/ab_title"
+		/>
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:id="@+id/cancel"
+			android:padding="0dp"
+			android:text="@string/note_dialog_button_cancel"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			android:textColor="@color/colorPrimary"
+			style="@style/Widget.AppCompat.Button.Borderless"
+		/>
+	</android.support.constraint.ConstraintLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:id="@+id/toolbar_divider"
+		android:background="@color/grey"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/toolbar"
+	/>
+
+	<EditText
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:id="@+id/editor"
+		android:background="@drawable/note_bg_drawable"
+		android:layout_margin="12dp"
+		android:padding="8dp"
+		android:gravity="top"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/toolbar_divider"
+		app:layout_constraintBottom_toTopOf="@+id/save"
+	/>
+
+	<TextView
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:id="@+id/save"
+		android:text="@string/note_dialog_button_save"
+		android:padding="12dp"
+		android:background="@color/colorPrimary"
+		android:textSize="18sp"
+		android:textColor="#ffffff"
+		android:gravity="center"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+	/>
+</android.support.constraint.ConstraintLayout>
