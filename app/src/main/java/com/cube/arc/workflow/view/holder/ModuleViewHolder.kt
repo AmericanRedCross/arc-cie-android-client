@@ -5,10 +5,7 @@ import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.workflow.adapter.NoteActivity
 import com.cube.arc.workflow.model.Module
@@ -76,10 +73,12 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	{
 		var subStepContainer = stepView.findViewById(R.id.substeps_container) as ViewGroup
 		var notePrefs = stepView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
+		var checkPrefs = stepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
 		step.steps?.forEach { subStep ->
 			val subStepView = subStepContainer.inflate<View>(R.layout.step_substep_stub)
 
+			val subStepCheck = subStepView.findViewById(R.id.substep_check) as CheckBox
 			val subStepHierarchy = subStepView.findViewById(R.id.substep_hierarchy) as TextView
 			val subStepTitle = subStepView.findViewById(R.id.substep_title) as TextView
 			val subStepNoteButton = subStepView.findViewById(R.id.add_note) as Button
@@ -90,6 +89,17 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				val noteIntent = Intent(view.context, NoteActivity::class.java)
 				IntentDataHelper.store(NoteActivity::class.java, step.id)
 				view.context.startActivity(noteIntent)
+			}
+
+			subStepCheck.isChecked = checkPrefs.contains(subStep.id)
+			subStepCheck.setOnCheckedChangeListener { buttonView, isChecked ->
+				checkPrefs.edit().apply {
+					when
+					{
+						isChecked -> putBoolean(subStep.id, true)
+						else -> remove(subStep.id)
+					}
+				}.apply()
 			}
 
 			subStepNoteButton.setText(when
@@ -108,6 +118,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	{
 		var toolContainer = subStepView.findViewById(R.id.tools_container) as ViewGroup
 		var subStepChevron = subStepView.findViewById(R.id.substep_chevron) as ImageView
+		var checkPrefs = subStepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
 		subStep.steps?.forEach { tool ->
 			val toolView = subStepView.inflate<View>(R.layout.substep_tool_stub)
@@ -115,6 +126,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val toolTitle = toolView.findViewById(R.id.tool_title) as TextView
 			val toolIcon = toolView.findViewById(R.id.tool_icon) as ImageView
 			val toolDescription = toolView.findViewById(R.id.tool_description) as TextView
+			val toolCheck = toolView.findViewById(R.id.tool_check) as CheckBox
 			val critical = toolView.findViewById(R.id.critical_tool) as View
 			val note = toolView.findViewById(R.id.note_added) as View
 			val exported = toolView.findViewById(R.id.exported) as View
@@ -123,6 +135,17 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			toolTitle.text = tool.title
 			toolDescription.text = tool.content
+
+			toolCheck.isChecked = checkPrefs.contains(tool.id)
+			toolCheck.setOnCheckedChangeListener { buttonView, isChecked ->
+				checkPrefs.edit().apply {
+					when
+					{
+						isChecked -> putBoolean(tool.id, true)
+						else -> remove(tool.id)
+					}
+				}.apply()
+			}
 
 			toolView.setOnClickListener { view ->
 				//
