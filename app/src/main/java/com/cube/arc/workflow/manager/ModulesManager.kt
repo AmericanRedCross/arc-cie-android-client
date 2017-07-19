@@ -18,16 +18,21 @@ object ModulesManager
 		modules = Gson().fromJson(InputStreamReader(dataSource), object : TypeToken<ArrayList<Module>>(){}.type)
 	}
 
+	/**
+	 * Gets a module or sub step/tool from ID
+	 */
 	fun module(id: String) : Module?
 	{
 		return search(modules, id)
 	}
 
+	/**
+	 * Searches the given list of modules for a matching ID recursively
+	 */
 	fun search(modules: List<Module>?, id: String) : Module?
 	{
 		modules?.forEach { module ->
-			if (module.id == id) return module
-			else return search(module.steps, id)
+			return if (module.id == id) module else search(module.steps, id)
 		}
 
 		return null
