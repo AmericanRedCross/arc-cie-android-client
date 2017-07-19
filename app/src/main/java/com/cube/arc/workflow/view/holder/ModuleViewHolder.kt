@@ -1,5 +1,6 @@
 package com.cube.arc.workflow.view.holder
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -71,6 +72,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private fun populateSubSteps(root: Module, step: Module, stepView: View)
 	{
 		var subStepContainer = stepView.findViewById(R.id.substeps_container) as ViewGroup
+		var notePrefs = stepView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 
 		step.steps?.forEach { subStep ->
 			val subStepView = subStepContainer.inflate<View>(R.layout.step_substep_stub)
@@ -86,6 +88,12 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				IntentDataHelper.store(NoteActivity::class.java, step.id)
 				view.context.startActivity(noteIntent)
 			}
+
+			subStepNoteButton.setText(when
+			{
+				notePrefs.contains(step.id) -> R.string.module_substep_edit_note
+				else -> R.string.module_substep_add_note
+			})
 
 			populateSubStepTools(root, step, subStep, subStepView)
 

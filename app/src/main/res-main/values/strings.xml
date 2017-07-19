@@ -14,6 +14,8 @@
 	<string name="note_dialog_cancel_confirm_positive">Discard</string>
 	<string name="note_dialog_cancel_confirm_negative">Cancel</string>
 
+	<string name="module_substep_add_note">Add Note</string>
+	<string name="module_substep_edit_note">Edit Note</string>
 	<string name="module_tool_critical">CRITICAL TOOL</string>
 	<string name="module_tool_note">NOTE ADDED</string>
 	<string name="module_tool_exported">EXPORTED</string>
