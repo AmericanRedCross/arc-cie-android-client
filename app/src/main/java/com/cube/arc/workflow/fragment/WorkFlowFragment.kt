@@ -32,9 +32,6 @@ class WorkFlowFragment : Fragment()
 
 		if (savedInstanceState == null)
 		{
-			// initialise module manager
-			ModulesManager.init(resources.assets.open("modules.json"))
-
 			adapter.items = ModulesManager.modules
 
 			val layoutManager = LinearLayoutManager(activity)
