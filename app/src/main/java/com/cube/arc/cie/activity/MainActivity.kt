@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.cube.arc.R
+import com.cube.arc.progress.fragment.ProgressFragment
 import com.cube.arc.workflow.fragment.WorkFlowFragment
 import com.cube.lib.util.bind
 
@@ -36,15 +37,13 @@ class MainActivity : AppCompatActivity()
 	fun setUi()
 	{
 		bottomNavigation.setOnNavigationItemSelectedListener { item ->
-			var fragment = when (item.itemId)
-			{
-				 R.id.menu_workflow -> WorkFlowFragment()
-				 R.id.menu_progress -> Fragment()
-				else -> Fragment()
-			}
-
 			supportFragmentManager.beginTransaction()
-				.replace(R.id.fragment_holder, fragment)
+				.replace(R.id.fragment_holder, when (item.itemId)
+					{
+						R.id.menu_workflow -> WorkFlowFragment()
+						R.id.menu_progress -> ProgressFragment()
+						else -> Fragment()
+					})
 				.commit()
 
 			true
