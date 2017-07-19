@@ -13,7 +13,6 @@ import com.cube.arc.R
 import com.cube.arc.workflow.adapter.NoteActivity
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
-import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 
 /**
@@ -21,16 +20,18 @@ import com.cube.lib.util.inflate
  */
 class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
-	private val stepsContainer by bind<LinearLayout>(R.id.steps_container, itemView)
-	private val moduleClickArea by bind<View>(R.id.module_click_area, itemView)
+	private val stepsContainer = itemView.findViewById(R.id.steps_container) as LinearLayout
+	private val moduleClickArea = itemView.findViewById(R.id.module_click_area)
 	private var chevron = itemView.findViewById(R.id.module_chevron) as ImageView
 	private var title = itemView.findViewById(R.id.module_name) as TextView
+	private val roadmap = itemView.findViewById(R.id.module_roadmap) as Button
 	private var hierarchy = itemView.findViewById(R.id.module_hierarchy) as TextView
 
 	fun populate(model: Module)
 	{
 		title.text = model.title
 		hierarchy.text = "${model.hierarchy}"
+		roadmap.visibility = if (model.attachments?.filter { file -> file.featured }?.size == 1) View.VISIBLE else View.GONE
 
 		populateSteps(model)
 	}
@@ -44,9 +45,11 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			val stepHierarchy = stepView.findViewById(R.id.step_hierarchy) as TextView
 			val stepTitle = stepView.findViewById(R.id.step_title) as TextView
+			val stepRoadmap = stepView.findViewById(R.id.step_roadmap) as Button
 
 			stepHierarchy.text = "${model.hierarchy}.${step.hierarchy}"
 			stepTitle.text = step.title
+			stepRoadmap.visibility = if (step.attachments?.filter { file -> file.featured }?.size == 1) View.VISIBLE else View.GONE
 
 			populateSubSteps(model, step, stepView)
 

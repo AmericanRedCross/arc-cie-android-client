@@ -87,6 +87,7 @@
 				<Button
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:id="@+id/module_roadmap"
 					android:layout_below="@id/module_name"
 					android:layout_toRightOf="@id/module_hierarchy"
 					android:layout_toEndOf="@id/module_hierarchy"

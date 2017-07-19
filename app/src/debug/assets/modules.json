@@ -9,8 +9,7 @@
 				"title": "Roadmap",
 				"url": "http://download/url",
 				"mime": "application/pdf",
-				"size": 120000,
-				"featured": true
+				"size": 120000
 			}
 		],
 		"steps": [
@@ -24,8 +23,7 @@
 						"title": "Roadmap",
 						"url": "http://download/url",
 						"mime": "application/pdf",
-						"size": 120000,
-						"featured": true
+						"size": 120000
 					}
 				],
 				"steps": [
@@ -39,8 +37,7 @@
 								"title": "Roadmap",
 								"url": "http://download/url",
 								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
+								"size": 120000
 							}
 						],
 						"steps": [
