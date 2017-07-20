@@ -45,4 +45,14 @@ object ModulesManager
 	{
 		return module.steps?.flatMap { it.steps ?: listOf() }?.size ?: 0
 	}
+
+	/**
+	 * Recursively counts the number of tools for a given module
+	 */
+	fun toolCount(module: Module, onlyCritical: Boolean = false): Int
+	{
+		val subSteps = module.steps?.flatMap { it.steps ?: listOf() }
+		val tools = subSteps?.flatMap { it.steps ?: listOf() }
+		return tools?.filter { if (onlyCritical) it.critical else true }?.size ?: 0
+	}
 }
