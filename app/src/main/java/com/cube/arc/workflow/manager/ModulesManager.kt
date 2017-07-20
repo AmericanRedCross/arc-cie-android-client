@@ -21,7 +21,7 @@ object ModulesManager
 	/**
 	 * Gets a module or sub step/tool from ID
 	 */
-	fun module(id: String) : Module?
+	fun module(id: String): Module?
 	{
 		return search(modules, id)
 	}
@@ -29,12 +29,20 @@ object ModulesManager
 	/**
 	 * Searches the given list of modules for a matching ID recursively
 	 */
-	fun search(modules: List<Module>?, id: String) : Module?
+	fun search(modules: List<Module>?, id: String): Module?
 	{
 		modules?.forEach { module ->
 			return if (module.id == id) module else search(module.steps, id)
 		}
 
 		return null
+	}
+
+	/**
+	 * Recursively counts the number of sub-steps for a given module
+	 */
+	fun subStepCount(module: Module): Int
+	{
+		return module.steps?.flatMap { it.steps ?: listOf() }?.size ?: 0
 	}
 }
