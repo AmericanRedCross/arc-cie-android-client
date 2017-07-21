@@ -21,10 +21,7 @@ class OnboardingFragment : Fragment()
 	private val videoButton by bind<Button>(R.id.video)
 	private val skipButton by bind<Button>(R.id.skip)
 
-	override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
-	{
-		return inflater?.inflate(R.layout.onboarding_fragment_view, container, false)
-	}
+	override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.onboarding_fragment_view, container, false)
 
 	override fun onActivityCreated(savedInstanceState: Bundle?)
 	{

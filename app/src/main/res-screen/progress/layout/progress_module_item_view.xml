@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="4dp"
+	android:padding="0dp"
+	app:cardCornerRadius="8dp"
+	app:cardPreventCornerOverlap="true"
+>
+	<android.support.constraint.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+	>
+		<ProgressBar
+			android:layout_width="0dp"
+			android:layout_height="6dp"
+			android:id="@+id/module_progress"
+			android:padding="0dp"
+			android:layout_margin="0dp"
+			android:minHeight="6dp"
+			android:progressDrawable="@drawable/horizontal_progress_drawable"
+			android:max="100"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+		/>
+
+		<TextView
+			android:layout_width="22dp"
+			android:layout_height="22dp"
+			android:id="@+id/module_hierarchy"
+			android:background="@drawable/circle_bg_drawable"
+			android:textColor="#ffffff"
+			android:text="1"
+			android:textStyle="bold"
+			android:textSize="16dp"
+			android:gravity="center"
+			android:backgroundTint="@color/colorPrimary"
+			android:layout_marginTop="8dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+		/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/module_name"
+			android:textSize="16sp"
+			android:textColor="#000000"
+			android:textStyle="bold"
+			android:text="Prepardness"
+			android:gravity="center_vertical"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			app:layout_constraintStart_toEndOf="@id/module_hierarchy"
+			app:layout_constraintTop_toTopOf="@id/module_hierarchy"
+			app:layout_constraintBottom_toBottomOf="@id/module_hierarchy"
+			app:layout_constraintEnd_toStartOf="@+id/spacer"
+		/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/progress_text"
+			android:textSize="14sp"
+			android:textColor="#6D6E70"
+			android:fontFamily="sans-serif-light"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginBottom="8dp"
+			android:text="70% COMPLETE"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@+id/spacer"
+			app:layout_constraintBottom_toTopOf="@+id/module_progress"
+		/>
+
+		<android.support.constraint.Guideline
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:id="@+id/spacer"
+			android:orientation="vertical"
+			app:layout_constraintGuide_percent=".70"
+		/>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="0dp"
+			android:id="@+id/substeps_divider"
+			android:background="@color/colorPrimary"
+			app:layout_constraintTop_toTopOf="@+id/module_substeps_progress_text"
+			app:layout_constraintBottom_toBottomOf="@+id/module_substeps_progress_text"
+			app:layout_constraintStart_toStartOf="@id/spacer"
+		/>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="0dp"
+			android:id="@+id/critical_divider"
+			android:background="@color/colorPrimary"
+			app:layout_constraintTop_toTopOf="@+id/module_critical_progress_text"
+			app:layout_constraintBottom_toBottomOf="@+id/module_critical_progress_text"
+			app:layout_constraintStart_toStartOf="@id/spacer"
+		/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/module_substeps_progress_text"
+			android:lines="2"
+			android:text="2/4\nSUB-STEPS"
+			android:textColor="#6D6E70"
+			android:textSize="12sp"
+			android:gravity="center_vertical"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			app:layout_constraintStart_toEndOf="@id/spacer"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="@id/module_name"
+		/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/module_critical_progress_text"
+			android:lines="2"
+			android:text="3/12\nCRITICAL TOOLS"
+			android:textColor="#6D6E70"
+			android:textSize="12sp"
+			android:gravity="center_vertical"
+			android:layout_marginTop="4dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginBottom="8dp"
+			app:layout_constraintStart_toEndOf="@id/spacer"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/module_substeps_progress_text"
+			app:layout_constraintBottom_toTopOf="@id/module_progress"
+		/>
+	</android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
