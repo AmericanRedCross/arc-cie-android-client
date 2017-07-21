@@ -12,6 +12,7 @@ import com.cube.arc.R
 import com.cube.arc.workflow.adapter.ModuleAdapter
 import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.lib.util.bind
+import com.cube.lib.util.inflate
 
 /**
  * Fragment for displaying and handling the workflow feature. Will display a list of modules and its steps/substeps
@@ -21,10 +22,7 @@ class WorkFlowFragment : Fragment()
 	val recyclerView by bind<RecyclerView>(R.id.recycler_view)
 	val adapter = ModuleAdapter()
 
-	override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
-	{
-		return inflater?.inflate(R.layout.workflow_fragment_view, container, false)
-	}
+	override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = container?.inflate(R.layout.workflow_fragment_view)
 
 	override fun onActivityCreated(savedInstanceState: Bundle?)
 	{
