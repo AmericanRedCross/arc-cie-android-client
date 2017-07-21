@@ -22,6 +22,7 @@
 			android:layout_margin="0dp"
 			android:minHeight="6dp"
 			android:progressDrawable="@drawable/horizontal_progress_drawable"
+			android:max="100"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
