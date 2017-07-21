@@ -28,7 +28,6 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	{
 		title.text = model.title
 		hierarchy.text = "${model.hierarchy}"
-		roadmap.visibility = if (model.attachments?.filter { file -> file.featured }?.size == 1) View.VISIBLE else View.GONE
 
 		populateSteps(model)
 	}
@@ -48,9 +47,8 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			stepTitle.text = step.title
 			stepRoadmap.visibility = if (step.attachments?.filter { file -> file.featured }?.size == 1) View.VISIBLE else View.GONE
 
-			populateSubSteps(model, step, stepView)
-
 			stepsContainer.addView(stepView)
+			populateSubSteps(model, step, stepView)
 		}
 
 		stepsContainer.visibility = View.GONE
@@ -66,6 +64,8 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				stepsContainer.visibility == View.VISIBLE -> R.drawable.chevron_collapse
 				else -> R.drawable.chevron_expand
 			})
+
+			roadmap.visibility = if (model.attachments?.filter { file -> file.featured }?.size == 1 && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
 		}
 	}
 
@@ -108,9 +108,8 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				else -> R.string.module_substep_add_note
 			})
 
-			populateSubStepTools(root, step, subStep, subStepView)
-
 			subStepContainer.addView(subStepView)
+			populateSubStepTools(root, step, subStep, subStepView)
 		}
 	}
 
