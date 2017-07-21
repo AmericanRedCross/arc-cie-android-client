@@ -6,42 +6,57 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical"
-	android:descendantFocusability="afterDescendants"
 >
-	<android.support.v7.widget.CardView
+	<ImageView
+		android:layout_width="match_parent"
+		android:layout_height="128dp"
+		android:id="@+id/module_image"
+		android:src="@drawable/module_image"
+		android:alpha="0.15"
+		android:layout_marginTop="6dp"
+		android:scaleType="centerCrop"
+	/>
+
+	<ImageView
+		android:layout_width="120dp"
+		android:layout_height="match_parent"
+		android:background="@drawable/card_left_fade"
+		android:layout_gravity="left|start"
+	/>
+
+	<ImageView
+		android:layout_width="match_parent"
+		android:layout_height="6dp"
+		android:background="@drawable/card_top_fade"
+		android:layout_gravity="top"
+	/>
+
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/module_click_area"
-		android:layout_marginTop="24dp"
-		app:cardPreventCornerOverlap="true"
-		app:cardCornerRadius="20dp"
-		app:cardElevation="12dp"
 		android:layout_gravity="center"
+		android:orientation="vertical"
+		android:layout_marginTop="6dp"
 	>
-		<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="156dp"
-			android:id="@+id/module_image"
-			android:src="@drawable/module_image"
-			android:alpha="0.15"
-			android:scaleType="centerCrop"
-		/>
-
-		<LinearLayout
+		<FrameLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
 		>
+			<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="46dp"
+				android:background="@drawable/card_bottom_fade"
+				android:layout_gravity="bottom"
+			/>
+
 			<RelativeLayout
 				android:layout_width="match_parent"
-				android:layout_height="156dp"
+				android:layout_height="128dp"
+				android:id="@+id/module_click_area"
 				android:paddingLeft="24dp"
 				android:paddingStart="24dp"
 				android:paddingRight="16dp"
 				android:paddingEnd="16dp"
-				android:layout_marginTop="-24dp"
-				android:layout_marginBottom="24dp"
-				android:layout_gravity="center"
 			>
 				<TextView
 					android:layout_width="56dp"
@@ -91,22 +106,26 @@
 					android:layout_below="@id/module_name"
 					android:layout_toRightOf="@id/module_hierarchy"
 					android:layout_toEndOf="@id/module_hierarchy"
+					android:layout_marginTop="8dp"
 					android:layout_marginLeft="12dp"
 					android:layout_marginStart="12dp"
 					android:text="Module Roadmap"
+					android:visibility="gone"
 					style="@style/SmallButton"
 				/>
 			</RelativeLayout>
+		</FrameLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/steps_container"
-				android:orientation="vertical"
-				android:animateLayoutChanges="true"
-			>
-				<!-- add steps here -->
-			</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/steps_container"
+			android:orientation="vertical"
+			android:showDividers="beginning"
+			android:divider="@drawable/step_divider"
+			android:paddingTop="8dp"
+		>
+			<!-- add steps here -->
 		</LinearLayout>
-	</android.support.v7.widget.CardView>
+	</LinearLayout>
 </FrameLayout>
