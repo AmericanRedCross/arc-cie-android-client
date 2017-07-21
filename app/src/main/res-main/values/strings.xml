@@ -19,4 +19,8 @@
 	<string name="module_tool_critical">CRITICAL TOOL</string>
 	<string name="module_tool_note">NOTE ADDED</string>
 	<string name="module_tool_exported">EXPORTED</string>
+
+	<string name="progress_substep_summary">%s/%s\nSUB-STEPS</string>
+	<string name="progress_tool_summary">%s/%s\nCRITICAL</string>
+	<string name="progress_text">%s\% COMPLETE</string>
 </resources>

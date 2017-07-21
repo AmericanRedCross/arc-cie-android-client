@@ -1,5 +1,6 @@
 package com.cube.arc.workflow.manager
 
+import android.content.Context
 import com.cube.arc.workflow.model.Module
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -47,6 +48,15 @@ object ModulesManager
 	}
 
 	/**
+	 * Recursively counts the number of completed tools for a given module
+	 */
+	fun completedSubStepCount(context: Context, module: Module): Int
+	{
+		val checkPrefs = context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
+		return module.steps?.flatMap { it.steps ?: listOf() }?.filter { checkPrefs.contains(it.id) }?.size ?: 0
+	}
+
+	/**
 	 * Recursively counts the number of tools for a given module
 	 */
 	fun toolCount(module: Module, onlyCritical: Boolean = false): Int
@@ -54,5 +64,20 @@ object ModulesManager
 		val subSteps = module.steps?.flatMap { it.steps ?: listOf() }
 		val tools = subSteps?.flatMap { it.steps ?: listOf() }
 		return tools?.filter { if (onlyCritical) it.critical else true }?.size ?: 0
+	}
+
+	/**
+	 * Recursively counts the number of completed tools for a given module
+	 */
+	fun completedToolCount(context: Context, module: Module, onlyCritical: Boolean = false): Int
+	{
+		val checkPrefs = context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
+
+		val subSteps = module.steps?.flatMap { it.steps ?: listOf() }
+		val tools = subSteps?.flatMap { it.steps ?: listOf() }
+			?.filter { if (onlyCritical) it.critical else true }
+			?.filter { checkPrefs.contains(it.id) }
+
+		return tools?.size ?: 0
 	}
 }
