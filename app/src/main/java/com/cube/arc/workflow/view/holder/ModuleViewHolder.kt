@@ -129,6 +129,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val critical = toolView.findViewById(R.id.critical_tool) as View
 			val note = toolView.findViewById(R.id.note_added) as View
 			val exported = toolView.findViewById(R.id.exported) as View
+			val options = toolView.findViewById(R.id.options_menu) as ImageButton
 
 			critical.visibility = if (tool.critical) View.VISIBLE else View.GONE
 
@@ -148,6 +149,17 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			toolView.setOnClickListener { view ->
 				//
+			}
+
+			options.setOnClickListener { view ->
+				val popup = PopupMenu(view.context, view)
+				popup.menuInflater.inflate(R.menu.menu_tool, popup.menu)
+				popup.show()
+
+				popup.setOnMenuItemClickListener { item ->
+					// options
+					true
+				}
 			}
 
 			toolContainer.addView(toolView, toolContainer.childCount - 1)
