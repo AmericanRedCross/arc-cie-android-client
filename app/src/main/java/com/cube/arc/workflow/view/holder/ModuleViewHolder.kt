@@ -152,12 +152,44 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			}
 
 			options.setOnClickListener { view ->
+				val criticalPrefs = view.context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
 				val popup = PopupMenu(view.context, view)
+
 				popup.menuInflater.inflate(R.menu.menu_tool, popup.menu)
+
+				if (tool.critical)
+				{
+					popup.menu.findItem(R.id.action_mark).isVisible = false
+				}
+				else
+				{
+					popup.menu.findItem(R.id.action_mark).title = when
+					{
+						criticalPrefs.contains(tool.id) -> view.resources.getString(R.string.tool_menu_unmark)
+						else -> view.resources.getString(R.string.tool_menu_mark)
+					}
+				}
+
 				popup.show()
 
 				popup.setOnMenuItemClickListener { item ->
-					// options
+					when (item.itemId)
+					{
+						R.id.action_mark -> criticalPrefs.edit().apply {
+							when (criticalPrefs.contains(tool.id))
+							{
+								false -> {
+									putBoolean(tool.id, true)
+									critical.visibility = View.VISIBLE
+								}
+								else -> {
+									remove(tool.id)
+									critical.visibility = View.GONE
+								}
+							}
+						}.apply()
+					}
+
 					true
 				}
 			}

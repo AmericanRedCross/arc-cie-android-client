@@ -25,4 +25,10 @@
 	<string name="progress_text">%s%% COMPLETE</string>
 	<string name="progress_title">WORKFLOW PROGRESS</string>
 	<string name="progress_summary">OVERALL COMPLETION: %s%%</string>
+
+	<string name="tool_menu_unmark">Unmark as critical</string>
+	<string name="tool_menu_mark">Mark as critical</string>
+	<string name="tool_menu_add_note">Add note</string>
+	<string name="tool_menu_edit_note">Edit note</string>
+	<string name="tool_menu_export">Export or share</string>
 </resources>
