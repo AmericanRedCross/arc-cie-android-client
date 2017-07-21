@@ -23,4 +23,6 @@
 	<string name="progress_substep_summary">%s/%s\nSUB-STEPS</string>
 	<string name="progress_tool_summary">%s/%s\nCRITICAL</string>
 	<string name="progress_text">%s%% COMPLETE</string>
+	<string name="progress_title">WORKFLOW PROGRESS</string>
+	<string name="progress_summary">OVERALL COMPLETION: %s%%</string>
 </resources>

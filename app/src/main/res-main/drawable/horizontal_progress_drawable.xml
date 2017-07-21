@@ -3,12 +3,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@android:id/background">
 		<shape>
-			<padding
-				android:bottom="3dip"
-				android:left="3dip"
-				android:right="3dip"
-				android:top="3dip"
-			/>
 			<solid
 				android:color="#DADBDC"
 			/>
@@ -19,7 +13,7 @@
 			<shape>
 				<corners android:radius="4dp" />
 				<solid
-					android:color="#8B8D91"
+					android:color="#9f9f9f"
 				/>
 			</shape>
 		</clip>

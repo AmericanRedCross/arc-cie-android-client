@@ -36,5 +36,12 @@ class ProgressFragment : Fragment()
 
 		recyclerView.layoutManager = LinearLayoutManager(activity)
 		recyclerView.adapter = adapter
+
+		val totalTools = ModulesManager.modules.fold(0, { acc, module -> acc + ModulesManager.toolCount(module, true) })
+		val toolsCompleted = ModulesManager.modules.fold(0, { acc, module -> acc + ModulesManager.completedToolCount(context, module, true) })
+		val progressPercent = Math.round((toolsCompleted.toDouble() / totalTools.toDouble()) * 100)
+
+		summary.text = resources.getString(R.string.progress_summary, progressPercent.toString())
+		progress.progress = progressPercent.toInt()
 	}
 }
