@@ -24,16 +24,29 @@ object ModulesManager
 	 */
 	fun module(id: String): Module?
 	{
-		return search(modules, id)
+		var found = modules.forEach {
+			val result = search(it, id)
+
+			if (result != null) return result
+		}
+
+		return null
 	}
 
 	/**
 	 * Searches the given list of modules for a matching ID recursively
 	 */
-	fun search(modules: List<Module>?, id: String): Module?
+	fun search(module: Module, id: String): Module?
 	{
-		modules?.forEach { module ->
-			return if (module.id == id) module else search(module.steps, id)
+		if (module.id == id)
+		{
+			return module
+		}
+
+		module.steps?.forEach { step ->
+			val found = search(step, id)
+
+			if (found != null) return found
 		}
 
 		return null
