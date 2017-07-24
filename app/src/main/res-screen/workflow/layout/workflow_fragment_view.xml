@@ -7,9 +7,54 @@
 	android:orientation="vertical"
 	android:background="#ffffff"
 >
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_gravity="center_horizontal"
+		android:paddingLeft="16dp"
+		android:paddingRight="16dp"
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
+	>
+		<RadioButton
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/filter_modules"
+			android:text="TOOLKIT"
+			android:drawableLeft="@drawable/ic_toolkit"
+			android:drawableTint="@drawable/selected_button_int_list"
+			android:drawablePadding="12dp"
+			android:textColor="@drawable/selected_button_int_list"
+			android:background="@drawable/red_button_drawable_selector"
+			android:checked="true"
+			android:padding="8dp"
+			android:button="@null"
+			android:layout_marginRight="4dp"
+		/>
+
+		<RadioButton
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/filter_critical"
+			android:text="CRITICAL TOOLS"
+			android:drawableLeft="@drawable/ic_critical_tools"
+			android:drawableTint="@drawable/selected_button_int_list"
+			android:drawablePadding="12dp"
+			android:textColor="@drawable/selected_button_int_list"
+			android:background="@drawable/red_button_drawable_selector"
+			android:checked="false"
+			android:padding="8dp"
+			android:button="@null"
+			android:layout_marginLeft="4dp"
+		/>
+	</LinearLayout>
+
 	<android.support.v7.widget.RecyclerView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:id="@+id/recycler_view"
+		android:paddingTop="8dp"
+		android:clipToPadding="false"
 	/>
 </LinearLayout>
