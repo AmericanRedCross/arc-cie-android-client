@@ -65,6 +65,49 @@ object ModulesManager
 	}
 
 	/**
+	 * Searches the given list of modules for a matching ID recursively
+	 */
+	fun searchParent(id: String): Module?
+	{
+		modules.forEach { module ->
+			val ret = searchParent(module, id)
+
+			if (ret != null)
+			{
+				return ret
+			}
+		}
+
+		return null
+	}
+
+	/**
+	 * Searches the given list of modules for a matching ID recursively
+	 *
+	 * @param root The root module to search from
+	 */
+	fun searchParent(root: Module, id: String): Module?
+	{
+		root.steps?.forEach { step ->
+			if (step.id == id)
+			{
+				return root
+			}
+			else
+			{
+				var ret = searchParent(step, id)
+
+				if (ret != null)
+				{
+					return ret
+				}
+			}
+		}
+
+		return null
+	}
+
+	/**
 	 * Recursively counts the number of sub-steps for a given module
 	 */
 	fun subStepCount(module: Module): Int
@@ -121,4 +164,12 @@ fun List<Module>.flatSteps(): List<Module>
 	}
 
 	return results
+}
+
+/**
+ * Gets the parent [Module] object, or null if the object is a root object, or could not be found
+ */
+fun Module.parent(): Module?
+{
+	return ModulesManager.searchParent(id)
 }
