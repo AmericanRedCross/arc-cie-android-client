@@ -1,6 +1,8 @@
 package com.cube.arc
 
 import com.cube.arc.workflow.manager.ModulesManager
+import com.cube.arc.workflow.manager.flatSteps
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -14,6 +16,12 @@ class ModulesTest
 		ModulesManager.init(this::class.java.classLoader.getResourceAsStream("modules.json"))
 
 		assert(ModulesManager.modules.isNotEmpty())
+	}
+
+	@Test fun recursiveFlatMap()
+	{
+		val allModules = ModulesManager.modules.flatSteps()
+		Assert.assertEquals(10, allModules.size)
 	}
 
 	/**

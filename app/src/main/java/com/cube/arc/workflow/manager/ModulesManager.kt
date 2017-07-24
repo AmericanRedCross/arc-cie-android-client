@@ -28,6 +28,16 @@ object ModulesManager
 	}
 
 	/**
+	 * Gets a list of critical and/or user critical tools
+	 */
+	fun tools(critical: Boolean, userCritical: Boolean = false): List<Module>
+	{
+		var allModules = modules.flatSteps()
+
+		return allModules
+	}
+
+	/**
 	 * Searches the given list of modules for a matching ID recursively
 	 */
 	fun search(modules: List<Module>?, id: String): Module?
@@ -80,4 +90,20 @@ object ModulesManager
 
 		return tools?.size ?: 0
 	}
+}
+
+/**
+ * Flattens the recursive array to return a 1D list of type [Module] from [Module.steps]
+ */
+fun List<Module>.flatSteps(): List<Module>
+{
+	var results = arrayListOf<Module>()
+
+	for (item in this)
+	{
+		results.add(item)
+		results.addAll(item.steps?.flatSteps() ?: listOf())
+	}
+
+	return results
 }
