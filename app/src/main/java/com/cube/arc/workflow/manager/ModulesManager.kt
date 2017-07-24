@@ -30,11 +30,13 @@ object ModulesManager
 	/**
 	 * Gets a list of critical and/or user critical tools
 	 */
-	fun tools(critical: Boolean, userCritical: Boolean = false): List<Module>
+	fun modules(onlyCritical: Boolean, includeUserCritical: Boolean = false, context: Context? = null): List<Module>
 	{
-		var allModules = modules.flatSteps()
-
-		return allModules
+		val criticalPrefs = context?.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
+		return modules.flatSteps().filter {
+			if (includeUserCritical && criticalPrefs?.contains(it.id) ?: false) true
+			if (onlyCritical) it.critical else true
+		}
 	}
 
 	/**

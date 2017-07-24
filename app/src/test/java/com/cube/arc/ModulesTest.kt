@@ -25,6 +25,15 @@ class ModulesTest
 	}
 
 	/**
+	 * Tests [ModulesManager.modules] method filters and maps correctly
+	 */
+	@Test fun criticalTools()
+	{
+		var tools = ModulesManager.modules(true)
+		Assert.assertEquals(2, tools.size)
+	}
+
+	/**
 	 * Tests the substep counter calculates substep number correctly
 	 */
 	@Test fun subStepCounter()
