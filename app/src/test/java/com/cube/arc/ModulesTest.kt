@@ -2,6 +2,7 @@ package com.cube.arc
 
 import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.manager.flatSteps
+import com.cube.arc.workflow.manager.parent
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -22,6 +23,29 @@ class ModulesTest
 	{
 		val allModules = ModulesManager.modules.flatSteps()
 		Assert.assertEquals(10, allModules.size)
+	}
+
+	/**
+	 * Tests the [ModulesManager.searchParent] method returns the correct parent object
+	 */
+	@Test fun getModuleParent()
+	{
+		// 2 -> 1
+		val parent = ModulesManager.searchParent("2")
+		Assert.assertNotNull(parent)
+		Assert.assertEquals("1", parent?.id)
+
+		// 9 -> 8 -> 5 -> 1
+		val parent2 = ModulesManager.searchParent("9")
+		Assert.assertNotNull(parent2)
+		Assert.assertEquals("8", parent2?.id)
+
+		// 6 -> 5 -> 1
+		val module = ModulesManager.module("6")
+		Assert.assertNotNull(module)
+		val parent3 = module?.parent()
+		Assert.assertNotNull(parent3)
+		Assert.assertEquals("5", parent3?.id)
 	}
 
 	/**
