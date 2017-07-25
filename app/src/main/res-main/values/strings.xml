@@ -17,6 +17,7 @@
 	<string name="module_substep_add_note">Add Note</string>
 	<string name="module_substep_edit_note">Edit Note</string>
 	<string name="module_tool_critical">CRITICAL TOOL</string>
+	<string name="module_tool_user_critical">MARKED AS CRITICAL</string>
 	<string name="module_tool_note">NOTE ADDED</string>
 	<string name="module_tool_exported">EXPORTED</string>
 
