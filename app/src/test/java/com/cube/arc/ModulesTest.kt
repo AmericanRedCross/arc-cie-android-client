@@ -25,6 +25,33 @@ class ModulesTest
 		Assert.assertEquals(10, allModules.size)
 	}
 
+	@Test fun modulesDepth()
+	{
+		/**
+		 * 	1
+		 * 		2
+		 * 			3
+		 * 				4
+		 * 		5
+		 * 			6
+		 * 				7
+		 * 			8
+		 * 				9
+		 * 				10
+		 */
+
+		Assert.assertEquals(0, ModulesManager.tree["1"])
+		Assert.assertEquals(1, ModulesManager.tree["2"])
+		Assert.assertEquals(2, ModulesManager.tree["3"])
+		Assert.assertEquals(3, ModulesManager.tree["4"])
+		Assert.assertEquals(1, ModulesManager.tree["5"])
+		Assert.assertEquals(2, ModulesManager.tree["6"])
+		Assert.assertEquals(3, ModulesManager.tree["7"])
+		Assert.assertEquals(2, ModulesManager.tree["8"])
+		Assert.assertEquals(3, ModulesManager.tree["9"])
+		Assert.assertEquals(3, ModulesManager.tree["10"])
+	}
+
 	/**
 	 * Tests the [ModulesManager.searchParent] method returns the correct parent object
 	 */
