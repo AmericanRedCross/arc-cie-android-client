@@ -12,11 +12,37 @@ import java.io.InputStreamReader
  */
 object ModulesManager
 {
+	// Tree map of the structure,  <Id, Depth>
+	lateinit var tree : LinkedHashMap<String, Int>
 	lateinit var modules: List<Module>
 
 	fun init(dataSource: InputStream)
 	{
 		modules = Gson().fromJson(InputStreamReader(dataSource), object : TypeToken<ArrayList<Module>>(){}.type)
+
+		tree = LinkedHashMap<String, Int>()
+
+		modules.forEach { module ->
+			mapTree(module)
+		}
+	}
+
+	private fun mapTree(module: Module)
+	{
+		var depth = 0
+		var parent: Module? = module
+
+		while (true)
+		{
+			parent = parent?.parent() ?: break
+			depth++
+		}
+
+		tree.put(module.id, depth)
+
+		module.steps?.forEach { step ->
+			mapTree(step)
+		}
 	}
 
 	/**
