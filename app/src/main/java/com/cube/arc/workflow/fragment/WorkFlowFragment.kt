@@ -8,9 +8,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import com.cube.arc.R
 import com.cube.arc.workflow.adapter.ModuleAdapter
+import com.cube.arc.workflow.adapter.ToolsAdapter
 import com.cube.arc.workflow.manager.ModulesManager
+import com.cube.arc.workflow.manager.parent
+import com.cube.arc.workflow.model.Module
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 
@@ -19,8 +23,9 @@ import com.cube.lib.util.inflate
  */
 class WorkFlowFragment : Fragment()
 {
-	val recyclerView by bind<RecyclerView>(R.id.recycler_view)
-	val adapter = ModuleAdapter()
+	private val recyclerView by bind<RecyclerView>(R.id.recycler_view)
+	private val modulesFilter by bind<RadioButton>(R.id.filter_modules)
+	private val criticalFilter by bind<RadioButton>(R.id.filter_critical)
 
 	override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = container?.inflate(R.layout.workflow_fragment_view)
 
@@ -30,8 +35,6 @@ class WorkFlowFragment : Fragment()
 
 		if (savedInstanceState == null)
 		{
-			adapter.items = ModulesManager.modules
-
 			val layoutManager = LinearLayoutManager(activity)
 			val itemDecoration = object : RecyclerView.ItemDecoration()
 			{
@@ -46,8 +49,43 @@ class WorkFlowFragment : Fragment()
 				}
 			}
 
+			val adapter = ModuleAdapter()
+			adapter.items = ModulesManager.modules
+
 			recyclerView.addItemDecoration(itemDecoration)
 			recyclerView.layoutManager = layoutManager
+			recyclerView.adapter = adapter;
+		}
+
+		modulesFilter.setOnClickListener { view ->
+			criticalFilter.isChecked = false
+
+			val adapter = ModuleAdapter()
+			adapter.items = ModulesManager.modules
+			recyclerView.adapter = adapter
+		}
+
+		criticalFilter.setOnClickListener { view ->
+			modulesFilter.isChecked = false
+
+			val adapter = ToolsAdapter()
+			val items = ModulesManager.modules(true, true, view.context)
+			val adapterItems = LinkedHashSet<Module>()
+			val groupHeaders = LinkedHashSet<String>()
+
+			items.forEach { module ->
+				var parent = module.parent()
+
+				parent?.let { item ->
+					groupHeaders.add(item.id)
+					adapterItems.add(item)
+				}
+
+				adapterItems.add(module)
+			}
+
+			adapter.items = adapterItems.toList()
+			adapter.groups = groupHeaders.toList()
 			recyclerView.adapter = adapter
 		}
 	}
