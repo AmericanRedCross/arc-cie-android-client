@@ -12,7 +12,7 @@ import java.io.InputStreamReader
  */
 object ModulesManager
 {
-	// Tree map of the structure,  <Id, Depth>
+	// Tree map of the structure,  <Id, Depth>. position in tree will be position in modules list
 	lateinit var tree : LinkedHashMap<String, Int>
 	lateinit var modules: List<Module>
 

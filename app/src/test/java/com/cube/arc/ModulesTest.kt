@@ -53,6 +53,19 @@ class ModulesTest
 	}
 
 	/**
+	 * Ensures the index of each item in the tree is the same as in the flat map of items
+	 */
+	@Test fun modulesDepthIndex()
+	{
+		val allSteps = ModulesManager.modules.flatSteps()
+		val keys = ModulesManager.tree.keys
+
+		allSteps.forEachIndexed { index, module ->
+			Assert.assertEquals(index, keys.indexOf(module.id))
+		}
+	}
+
+	/**
 	 * Tests the [ModulesManager.searchParent] method returns the correct parent object
 	 */
 	@Test fun getModuleParent()
