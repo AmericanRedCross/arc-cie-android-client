@@ -70,12 +70,7 @@ object ModulesManager
 	fun searchParent(id: String): Module?
 	{
 		modules.forEach { module ->
-			val ret = searchParent(module, id)
-
-			if (ret != null)
-			{
-				return ret
-			}
+			searchParent(module, id)?.let { return it }
 		}
 
 		return null
@@ -95,12 +90,7 @@ object ModulesManager
 			}
 			else
 			{
-				var ret = searchParent(step, id)
-
-				if (ret != null)
-				{
-					return ret
-				}
+				searchParent(step, id)?.let { return it }
 			}
 		}
 
