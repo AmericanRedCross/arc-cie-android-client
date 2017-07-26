@@ -43,10 +43,9 @@
 						"steps": [
 							{
 								"id": "4",
-								"title": "tool 1",
+								"title": "Non critical tool 1",
 								"hierarchy": 1,
 								"content": "#markdown content",
-								"critical": true,
 								"attachments": [
 									{
 										"title": "Tool",

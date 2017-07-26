@@ -8,10 +8,10 @@ package com.cube.arc.workflow.model
 data class Module
 (
 	var id : String,
-	var hierarchy : Int,
-	var title : String,
-	var content : String,
-	var steps : List<Module>?,
-	var attachments : List<FileDescriptor>?,
+	var hierarchy : Int = 0,
+	var title : String = "",
+	var content : String = "",
+	var steps : List<Module>? = null,
+	var attachments : List<FileDescriptor>? = null,
 	var critical : Boolean = false
 )
