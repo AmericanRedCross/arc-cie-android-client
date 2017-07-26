@@ -129,6 +129,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val critical = toolView.findViewById(R.id.critical_tool) as View
 			val note = toolView.findViewById(R.id.note_added) as View
 			val exported = toolView.findViewById(R.id.exported) as View
+			val options = toolView.findViewById(R.id.options_menu) as ImageButton
 
 			critical.visibility = if (tool.critical) View.VISIBLE else View.GONE
 
@@ -148,6 +149,59 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			toolView.setOnClickListener { view ->
 				//
+			}
+
+			options.setOnClickListener { view ->
+				val criticalPrefs = view.context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
+				val notePrefs = view.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
+				val popup = PopupMenu(view.context, view)
+
+				popup.menuInflater.inflate(R.menu.menu_tool, popup.menu)
+
+				if (tool.critical)
+				{
+					popup.menu.findItem(R.id.action_mark).isVisible = false
+				}
+
+				popup.menu.findItem(R.id.action_mark).title = when
+				{
+					criticalPrefs.contains(tool.id) -> view.resources.getString(R.string.tool_menu_unmark)
+					else -> view.resources.getString(R.string.tool_menu_mark)
+				}
+
+				popup.menu.findItem(R.id.action_note).title = when
+				{
+					notePrefs.contains(tool.id) -> view.resources.getString(R.string.tool_menu_edit_note)
+					else -> view.resources.getString(R.string.tool_menu_add_note)
+				}
+
+				popup.setOnMenuItemClickListener { item ->
+					when (item.itemId)
+					{
+						R.id.action_mark -> criticalPrefs.edit().apply {
+							when (criticalPrefs.contains(tool.id))
+							{
+								false -> {
+									putBoolean(tool.id, true)
+									critical.visibility = View.VISIBLE
+								}
+								else -> {
+									remove(tool.id)
+									critical.visibility = View.GONE
+								}
+							}
+						}.apply()
+
+						R.id.action_note -> {
+							IntentDataHelper.store(NoteActivity::class.java, tool.id)
+							view.context.startActivity(Intent(view.context, NoteActivity::class.java))
+						}
+					}
+
+					true
+				}
+
+				popup.show()
 			}
 
 			toolContainer.addView(toolView, toolContainer.childCount - 1)

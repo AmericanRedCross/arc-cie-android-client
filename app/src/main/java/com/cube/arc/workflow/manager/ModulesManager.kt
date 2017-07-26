@@ -57,6 +57,7 @@ object ModulesManager
 		}
 
 		return null
+<<<<<<< HEAD
 	}
 
 	/**

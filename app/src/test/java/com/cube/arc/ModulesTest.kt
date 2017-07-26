@@ -103,7 +103,13 @@ class ModulesTest
 	@Test fun subStepCounter()
 	{
 		val subStepCount = ModulesManager.subStepCount(ModulesManager.modules[0])
-		assert(subStepCount == 3)
+		Assert.assertTrue(subStepCount == 3)
+	}
+
+	@Test fun searchModule()
+	{
+		val thirdDeep = ModulesManager.module("9")
+		Assert.assertNotNull(thirdDeep)
 	}
 
 	/**
@@ -112,12 +118,12 @@ class ModulesTest
 	@Test fun toolsCounter()
 	{
 		val toolsCount = ModulesManager.toolCount(ModulesManager.modules[0])
-		assert(toolsCount == 4)
+		Assert.assertTrue(toolsCount == 4)
 	}
 
 	@Test fun criticalToolsCounter()
 	{
 		val criticalCount = ModulesManager.toolCount(ModulesManager.modules[0], onlyCritical = true)
-		assert(criticalCount == 2)
+		Assert.assertTrue(criticalCount == 2)
 	}
 }
