@@ -18,7 +18,7 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".cie.activity.MainActivity" />
+		<activity android:name=".cie.activity.MainActivity" android:windowSoftInputMode="stateAlwaysHidden" />
 		<activity android:name=".cie.activity.DocumentViewerActivity" android:theme="@style/AppTheme.Dialog" />
 
 		<activity android:name=".workflow.adapter.NoteActivity" android:windowSoftInputMode="adjustResize" />
