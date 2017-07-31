@@ -15,6 +15,14 @@
 		<item name="android:windowContentOverlay">@null</item>
 	</style>
 
+	<style name="AppTheme.Dialog">
+		<item name="windowNoTitle">true</item>
+		<item name="windowActionBar">false</item>
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowBackground">@android:color/transparent</item>
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+
 	<style name="Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="android:textColorPrimary">#ffffff</item>
 		<item name="android:background">@color/colorPrimary</item>

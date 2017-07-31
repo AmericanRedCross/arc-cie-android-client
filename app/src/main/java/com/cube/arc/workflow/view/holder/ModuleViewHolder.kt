@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.cube.arc.R
+import com.cube.arc.cie.activity.DocumentViewerActivity
 import com.cube.arc.workflow.adapter.NoteActivity
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
@@ -45,7 +46,14 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			stepHierarchy.text = "${model.hierarchy}.${step.hierarchy}"
 			stepTitle.text = step.title
-			stepRoadmap.visibility = if (step.attachments?.filter { file -> file.featured }?.size == 1) View.VISIBLE else View.GONE
+
+			val featuredAttachments = step.attachments?.filter { file -> file.featured }
+
+			stepRoadmap.visibility = if (featuredAttachments?.size == 1) View.VISIBLE else View.GONE
+			stepRoadmap.setOnClickListener { view ->
+				IntentDataHelper.store(DocumentViewerActivity::class.java, step)
+				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
+			}
 
 			stepsContainer.addView(stepView)
 			populateSubSteps(model, step, stepView)
@@ -65,7 +73,12 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				else -> R.drawable.chevron_expand
 			})
 
-			roadmap.visibility = if (model.attachments?.filter { file -> file.featured }?.size == 1 && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+			val featuredAttachments = model.attachments?.filter { file -> file.featured }
+			roadmap.visibility = if (featuredAttachments?.size == 1 && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+			roadmap.setOnClickListener { view ->
+				IntentDataHelper.store(DocumentViewerActivity::class.java, model)
+				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
+			}
 		}
 	}
 
