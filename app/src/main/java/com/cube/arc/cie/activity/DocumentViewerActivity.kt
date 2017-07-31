@@ -2,8 +2,11 @@ package com.cube.arc.cie.activity;
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.*
 import com.cube.arc.R
+import com.cube.arc.workflow.model.Module
+import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
 
 /**
@@ -16,13 +19,35 @@ class DocumentViewerActivity : AppCompatActivity()
 	private val documentIcon by bind<ImageView>(R.id.mime_icon)
 	private val documentTitle by bind<TextView>(R.id.document_title)
 	private val documentSize by bind<TextView>(R.id.document_size)
+	private val close by bind<View>(R.id.close)
 	private val export by bind<Button>(R.id.export)
 	private val downloadProgress by bind<ProgressBar>(R.id.download_progress)
+	private lateinit var module: Module
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
 
 		setContentView(R.layout.document_viewer_activity_view)
+
+		module = IntentDataHelper.retrieve(this::class.java)
+
+		setUi()
+	}
+
+	fun setUi()
+	{
+		val files = module.attachments?.filter { file -> file.featured }
+		preview.setText(module.content)
+
+		files?.let {
+			title.text = files[0].title
+			documentTitle.text = files[0].title
+			documentSize.text = "%.2fMB".format(files[0].size.toDouble() / 1024.0 / 1024.0)
+		}
+
+		close.setOnClickListener {
+			finish()
+		}
 	}
 }

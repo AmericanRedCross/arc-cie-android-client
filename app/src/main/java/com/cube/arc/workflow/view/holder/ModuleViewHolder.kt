@@ -51,7 +51,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			stepRoadmap.visibility = if (featuredAttachments?.size == 1) View.VISIBLE else View.GONE
 			stepRoadmap.setOnClickListener { view ->
-				IntentDataHelper.store(DocumentViewerActivity::class.java, featuredAttachments?.get(0))
+				IntentDataHelper.store(DocumentViewerActivity::class.java, step)
 				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
 			}
 
@@ -76,7 +76,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val featuredAttachments = model.attachments?.filter { file -> file.featured }
 			roadmap.visibility = if (featuredAttachments?.size == 1 && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
 			roadmap.setOnClickListener { view ->
-				IntentDataHelper.store(DocumentViewerActivity::class.java, featuredAttachments?.get(0))
+				IntentDataHelper.store(DocumentViewerActivity::class.java, model)
 				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
 			}
 		}
