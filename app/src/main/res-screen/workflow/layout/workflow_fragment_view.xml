@@ -2,6 +2,7 @@
 
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
@@ -50,11 +51,39 @@
 		/>
 	</LinearLayout>
 
-	<android.support.v7.widget.RecyclerView
+	<android.support.v4.widget.NestedScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:id="@+id/recycler_view"
-		android:paddingTop="8dp"
-		android:clipToPadding="false"
-	/>
+		android:id="@+id/scroller"
+	>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:focusableInTouchMode="true"
+			android:descendantFocusability="beforeDescendants"
+		>
+			<EditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
+				android:background="#E7E7E9"
+				android:drawableLeft="@drawable/ic_input_search"
+				android:padding="12dp"
+				android:drawablePadding="12dp"
+				android:singleLine="true"
+				android:imeOptions="actionSearch"
+				android:maxLines="1"
+			/>
+
+			<android.support.v7.widget.RecyclerView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:id="@+id/recycler_view"
+				android:paddingTop="8dp"
+				android:clipToPadding="false"
+			/>
+		</LinearLayout>
+	</android.support.v4.widget.NestedScrollView>
 </LinearLayout>
