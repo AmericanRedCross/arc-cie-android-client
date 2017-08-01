@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.cie.activity.DocumentViewerActivity
-import com.cube.arc.workflow.adapter.NoteActivity
+import com.cube.arc.workflow.activity.NoteActivity
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.inflate
