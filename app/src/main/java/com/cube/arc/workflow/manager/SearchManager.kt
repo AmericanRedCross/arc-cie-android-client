@@ -9,7 +9,7 @@ import java.util.*
 
 /**
  * Manager classed used for full text searching through storm language content and matching to page ID
-
+ *
  * @author Callum Taylor
  */
 object SearchManager
@@ -84,8 +84,8 @@ object SearchManager
 
 			while (cursor.moveToNext())
 			{
-				val content = cursor.getString(cursor.getColumnIndex("content"))
-				val title = cursor.getString(cursor.getColumnIndex("title"))
+				val content = cursor.getString(cursor.getColumnIndex("content")) ?: ""
+				val title = cursor.getString(cursor.getColumnIndex("title")) ?: ""
 				val moduleId = cursor.getString(cursor.getColumnIndex("module_id"))
 				val isAttachment = cursor.getInt(cursor.getColumnIndex("is_attachment")) == 1
 
