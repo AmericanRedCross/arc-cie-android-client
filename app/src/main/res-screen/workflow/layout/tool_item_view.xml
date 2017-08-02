@@ -11,7 +11,9 @@
 	android:paddingEnd="16dp"
 	android:paddingLeft="24dp"
 	android:paddingStart="24dp"
-	android:background="#FAFAFB"
+	android:layout_marginTop="8dp"
+	android:layout_marginBottom="8dp"
+	android:background="#E7E7E9"
 >
 	<TextView
 		android:layout_width="0dp"
