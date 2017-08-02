@@ -2,12 +2,16 @@ package com.cube.arc.cie.activity;
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Html
 import android.view.View
 import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
+import com.cube.lib.parser.URLImageParser
 import com.cube.lib.util.bind
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
 
 /**
  * Document viewer activity used for viewing content preview of a document
@@ -38,7 +42,13 @@ class DocumentViewerActivity : AppCompatActivity()
 	fun setUi()
 	{
 		val files = module.attachments?.filter { file -> file.featured }
-		preview.setText(module.content)
+
+		val parser = Parser.builder().build()
+		val document = parser.parse(module.content)
+		val renderer = HtmlRenderer.builder().build()
+		val htmlContent = renderer.render(document)
+
+		preview.setText(Html.fromHtml(htmlContent, URLImageParser(preview), null))
 
 		files?.let {
 			title.text = files[0].title
