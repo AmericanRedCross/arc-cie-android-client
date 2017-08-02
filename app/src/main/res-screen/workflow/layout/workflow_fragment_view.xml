@@ -66,6 +66,7 @@
 			<EditText
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:id="@+id/search_input"
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp"
 				android:background="#E7E7E9"

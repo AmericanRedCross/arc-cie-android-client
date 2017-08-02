@@ -22,6 +22,7 @@
 		<activity android:name=".cie.activity.DocumentViewerActivity" android:theme="@style/AppTheme.Dialog" />
 
 		<activity android:name=".workflow.activity.NoteActivity" android:windowSoftInputMode="adjustResize" />
+		<activity android:name=".workflow.activity.ToolSearchResultsActivity" android:windowSoftInputMode="stateAlwaysHidden" />
 
 		<activity android:name=".onboarding.activity.OnboardingActivity" />
 		<activity android:name=".onboarding.activity.VideoPlayerActivity" android:theme="@style/AppTheme.Fullscreen" android:screenOrientation="portrait" />
