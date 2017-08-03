@@ -1,5 +1,8 @@
 package com.cube.lib.parser
 
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
@@ -7,16 +10,16 @@ import android.text.Html
 import android.widget.TextView
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.io.IOException
-import java.io.InputStream
 import java.lang.ref.WeakReference
-import java.net.MalformedURLException
 
-class URLImageParser (internal var container: TextView) : Html.ImageGetter
+/**
+ * Parser class for loading <img> tags in html spannables
+ */
+class URLImageParser(internal var container: TextView) : Html.ImageGetter
 {
 	override fun getDrawable(source: String): Drawable
 	{
-		val urlDrawable = URLDrawable()
+		val urlDrawable = URLDrawable(container.resources)
 
 		// get the actual source
 		val asyncTask = ImageGetterAsyncTask(container, urlDrawable)
@@ -25,7 +28,25 @@ class URLImageParser (internal var container: TextView) : Html.ImageGetter
 		return urlDrawable
 	}
 
-	open class ImageGetterAsyncTask(view: TextView, urlDrawable: URLDrawable) : AsyncTask<String, Void, Drawable>()
+	/**
+	 * Drawable holder class
+	 */
+	class URLDrawable(res: Resources) : BitmapDrawable(res, null as Bitmap?)
+	{
+		// the drawable that you need to set, you could set the initial drawing
+		// with the loading image if you need to
+		public var drawable: Drawable? = null
+
+		override fun draw(canvas: Canvas)
+		{
+			drawable?.draw(canvas)
+		}
+	}
+
+	/**
+	 * Async class for loading images via http
+	 */
+	class ImageGetterAsyncTask(view: TextView, urlDrawable: URLDrawable) : AsyncTask<String, Void, Drawable>()
 	{
 		var sourceView: WeakReference<TextView> = WeakReference(view)
 		var destDrawable: WeakReference<URLDrawable> = WeakReference(urlDrawable)
@@ -51,23 +72,10 @@ class URLImageParser (internal var container: TextView) : Html.ImageGetter
 
 		/***
 		 * Get the Drawable from URL
-		 * @param urlString
-		 * @return
+		 * @param urlString The Url to load
+		 * @return The loaded drawable, or null if the request failed
 		 */
 		fun fetchDrawable(urlString: String): Drawable?
-		{
-			val inputStream = fetch(urlString)
-
-			return inputStream?.let { it ->
-				val drawable = BitmapDrawable(sourceView.get()?.resources, it)
-				drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-
-				return drawable
-			}
-		}
-
-		@Throws(MalformedURLException::class, IOException::class)
-		private fun fetch(urlString: String): InputStream?
 		{
 			val client = OkHttpClient()
 
@@ -76,7 +84,14 @@ class URLImageParser (internal var container: TextView) : Html.ImageGetter
 				.build()
 
 			val response = client.newCall(request).execute()
-			return response.body()?.byteStream()
+			val inputStream =  response.body()?.byteStream()
+
+			return inputStream?.let { it ->
+				val drawable = BitmapDrawable(sourceView.get()?.resources, it)
+				drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+
+				return drawable
+			}
 		}
 	}
 }
