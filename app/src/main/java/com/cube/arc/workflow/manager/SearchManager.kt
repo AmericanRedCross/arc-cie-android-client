@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.cube.arc.workflow.model.SearchResult
+import com.cube.lib.util.flatSteps
 import java.util.*
 
 /**

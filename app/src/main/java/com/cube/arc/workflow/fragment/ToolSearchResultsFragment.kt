@@ -15,10 +15,10 @@ import com.cube.arc.R
 import com.cube.arc.workflow.adapter.ToolsAdapter
 import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.manager.SearchManager
-import com.cube.arc.workflow.manager.parent
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
+import com.cube.lib.util.parent
 
 /**
  * // TODO: Add class description
