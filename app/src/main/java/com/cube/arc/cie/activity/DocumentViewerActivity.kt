@@ -8,7 +8,6 @@ import android.text.Html
 import android.view.View
 import android.widget.*
 import com.cube.arc.R
-import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.arc.workflow.model.Module
@@ -17,7 +16,6 @@ import com.cube.lib.parser.URLImageParser
 import com.cube.lib.util.bind
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
-import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -58,6 +56,12 @@ class DocumentViewerActivity : AppCompatActivity()
 	{
 		val files = module.attachments?.filter { file -> file.featured }
 
+		if (files?.isEmpty() ?: true)
+		{
+			finish()
+			return
+		}
+
 		val parser = Parser.builder().build()
 		val document = parser.parse(module.content)
 		val renderer = HtmlRenderer.builder().build()
@@ -82,7 +86,7 @@ class DocumentViewerActivity : AppCompatActivity()
 			export.setOnClickListener {
 				if (ExportManager.isFileDownloaded(files[0]))
 				{
-					ExportManager.open(files[0], File(MainApplication.BASE_PATH, files[0].title), this)
+					ExportManager.open(files[0], this)
 				}
 				else
 				{
@@ -201,7 +205,7 @@ class DocumentViewerActivity : AppCompatActivity()
 								export.setText(R.string.document_button_open)
 
 								ExportManager.registerFileManifest(file)
-								ExportManager.open(file, filePath, activity)
+								ExportManager.open(file, activity)
 							}
 							else
 							{

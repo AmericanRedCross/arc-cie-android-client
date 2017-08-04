@@ -123,5 +123,9 @@ class WorkFlowFragment : Fragment()
 		adapter.items = adapterItems.toList()
 		adapter.groups = groupHeaders.toList()
 		recyclerView.adapter = adapter
+
+		recyclerView.post {
+			scroller.scrollTo(0, recyclerView.top)
+		}
 	}
 }

@@ -1,7 +1,10 @@
 package com.cube.arc.workflow.view.holder
 
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.support.v4.app.NotificationCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.*
@@ -111,7 +114,74 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 
 		itemView.setOnClickListener { view ->
-			//
+			tool.attachments?.get(0)?.let { file ->
+				if (ExportManager.isFileDownloaded(file))
+				{
+					ExportManager.open(file, view.context)
+				}
+				else
+				{
+					val appContext = view.context.applicationContext
+					val exportNotification: NotificationCompat.Builder
+					val notificationManager = appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+					exportNotification = NotificationCompat.Builder(appContext)
+						.setContentText("Downloading file " + file.title)
+						.setContentTitle("Downloading")
+						.setContentIntent(PendingIntent.getActivity(appContext, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
+						.setTicker("Downloading file " + file.title)
+						.setPriority(NotificationCompat.PRIORITY_HIGH)
+						.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+						.setSmallIcon(android.R.drawable.stat_sys_download)
+						.setVibrate(LongArray(0))
+
+					notificationManager.notify(file.url.hashCode(), exportNotification.build())
+
+					ExportManager.download(
+						file = file,
+						progress = { progress ->
+							exportNotification.setProgress(100, progress, false);
+							notificationManager.notify(file.url.hashCode(), exportNotification.build());
+						},
+						callback = { success, outFile ->
+							if (success)
+							{
+								val finishNotification = NotificationCompat.Builder(appContext)
+									.setContentText("File " + file.title + " downloaded")
+									.setTicker("Download of " + file.title  + " complete")
+									.setContentTitle("Download Complete")
+									.setContentIntent(PendingIntent.getActivity(appContext, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
+									.setSmallIcon(android.R.drawable.stat_sys_download_done)
+									.setPriority(NotificationCompat.PRIORITY_HIGH)
+									.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+									.setAutoCancel(true)
+									.setVibrate(LongArray(0))
+									.build()
+								notificationManager.notify(file.url.hashCode(), finishNotification)
+
+								ExportManager.registerFileManifest(file)
+								ExportManager.open(file, exported.context)
+
+								exported.visibility = View.VISIBLE
+							}
+							else
+							{
+								val finishNotification = NotificationCompat.Builder(appContext)
+									.setContentText("Failed to download " + file.title)
+									.setContentTitle("Download Failed")
+									.setContentIntent(PendingIntent.getActivity(appContext, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
+									.setSmallIcon(android.R.drawable.stat_sys_warning)
+									.setPriority(NotificationCompat.PRIORITY_HIGH)
+									.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+									.setAutoCancel(true)
+									.setVibrate(LongArray(0))
+									.build()
+								notificationManager.notify(file.url.hashCode(), finishNotification)
+							}
+						}
+					)
+				}
+			}
 		}
 	}
 }

@@ -14,7 +14,7 @@
 	/>
 
 	<item
-		android:id="@+id/action_export"
-		android:title="Export or share"
+		android:id="@+id/action_share"
+		android:title="Share"
 	/>
 </menu>
