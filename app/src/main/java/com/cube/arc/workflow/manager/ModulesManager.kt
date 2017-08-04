@@ -2,6 +2,8 @@ package com.cube.arc.workflow.manager
 
 import android.content.Context
 import com.cube.arc.workflow.model.Module
+import com.cube.lib.util.flatSteps
+import com.cube.lib.util.parent
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.InputStream
@@ -164,28 +166,4 @@ object ModulesManager
 
 		return tools?.size ?: 0
 	}
-}
-
-/**
- * Flattens the recursive array to return a 1D list of type [Module] from [Module.steps]
- */
-fun List<Module>.flatSteps(): List<Module>
-{
-	var results = arrayListOf<Module>()
-
-	for (item in this)
-	{
-		results.add(item)
-		results.addAll(item.steps?.flatSteps() ?: listOf())
-	}
-
-	return results
-}
-
-/**
- * Gets the parent [Module] object, or null if the object is a root object, or could not be found
- */
-fun Module.parent(): Module?
-{
-	return ModulesManager.searchParent(id)
 }

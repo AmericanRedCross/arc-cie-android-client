@@ -10,5 +10,6 @@ data class FileDescriptor
 	var mime : String,
 	var size : Long,
 	var description: String,
+	var timestamp: Long,
 	var featured: Boolean = false
 )
