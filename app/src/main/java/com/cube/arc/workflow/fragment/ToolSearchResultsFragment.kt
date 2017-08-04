@@ -67,7 +67,7 @@ class ToolSearchResultsFragment : Fragment()
 	fun search(searchQuery: String)
 	{
 		this.query = searchQuery
-		val searchResults = SearchManager.search(searchQuery).filter { !it.isAttachment }
+		val searchResults = SearchManager.search(searchQuery)
 		val adapterItems = LinkedHashSet<Module>()
 		val groupHeaders = LinkedHashSet<String>()
 

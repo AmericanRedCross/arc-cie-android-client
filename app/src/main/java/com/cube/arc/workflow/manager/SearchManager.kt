@@ -88,9 +88,8 @@ object SearchManager
 				val content = cursor.getString(cursor.getColumnIndex("content")) ?: ""
 				val title = cursor.getString(cursor.getColumnIndex("title")) ?: ""
 				val moduleId = cursor.getString(cursor.getColumnIndex("module_id"))
-				val isAttachment = cursor.getInt(cursor.getColumnIndex("is_attachment")) == 1
 
-				val result = SearchResult(query, moduleId, title, content, isAttachment)
+				val result = SearchResult(query, moduleId, title, content)
 				results.add(result)
 			}
 
@@ -110,20 +109,10 @@ object SearchManager
 		database.beginTransaction()
 
 		ModulesManager.modules.flatSteps().forEach { module ->
-			module.attachments?.forEach { file ->
-				val values = ContentValues()
-				values.put("title", file.title)
-				values.put("is_attachment", 1)
-				values.put("module_id", module.id)
-
-				database.insert("search", null, values)
-			}
-
 			val values = ContentValues()
 			values.put("title", module.title)
 			values.put("content", module.content)
 			values.put("module_id", module.id)
-			values.put("is_attachment", 0)
 
 			database.insert("search", null, values)
 		}

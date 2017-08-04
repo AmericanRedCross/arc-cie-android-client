@@ -9,6 +9,5 @@ data class SearchResult(
 	var searchQuery: String,
 	var moduleId: String,
 	var title: String,
-	var content: String,
-	var isAttachment: Boolean = false
+	var content: String
 )
