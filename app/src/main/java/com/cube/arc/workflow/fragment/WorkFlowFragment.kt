@@ -13,10 +13,10 @@ import com.cube.arc.R
 import com.cube.arc.workflow.adapter.ModuleAdapter
 import com.cube.arc.workflow.adapter.ToolsAdapter
 import com.cube.arc.workflow.manager.ModulesManager
-import com.cube.arc.workflow.manager.parent
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
+import com.cube.lib.util.parent
 
 /**
  * Fragment for displaying and handling the workflow feature. Will display a list of modules and its steps/substeps
