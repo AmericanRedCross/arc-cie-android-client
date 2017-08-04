@@ -1,13 +1,14 @@
 package com.cube.arc.workflow.view.holder
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.cube.arc.R
+import com.cube.arc.workflow.activity.NoteActivity
 import com.cube.arc.workflow.model.Module
+import com.cube.lib.helper.IntentDataHelper
 
 /**
  * View holder for module in WorkFlowFragment recycler view
@@ -21,6 +22,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private val critical = itemView.findViewById(R.id.critical_tool) as TextView
 	private val note = itemView.findViewById(R.id.note_added) as TextView
 	private val exported = itemView.findViewById(R.id.exported) as TextView
+	private val options = itemView.findViewById(R.id.options_menu) as ImageButton
 
 	fun populate(tool: Module)
 	{
@@ -45,6 +47,59 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 					else -> remove(tool.id)
 				}
 			}.apply()
+		}
+
+		options.setOnClickListener { view ->
+			val criticalPrefs = view.context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
+			val notePrefs = view.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
+			val popup = PopupMenu(view.context, view)
+
+			popup.menuInflater.inflate(R.menu.menu_tool, popup.menu)
+
+			if (tool.critical)
+			{
+				popup.menu.findItem(R.id.action_mark).isVisible = false
+			}
+
+			popup.menu.findItem(R.id.action_mark).title = when
+			{
+				criticalPrefs.contains(tool.id) -> view.resources.getString(R.string.tool_menu_unmark)
+				else -> view.resources.getString(R.string.tool_menu_mark)
+			}
+
+			popup.menu.findItem(R.id.action_note).title = when
+			{
+				notePrefs.contains(tool.id) -> view.resources.getString(R.string.tool_menu_edit_note)
+				else -> view.resources.getString(R.string.tool_menu_add_note)
+			}
+
+			popup.setOnMenuItemClickListener { item ->
+				when (item.itemId)
+				{
+					R.id.action_mark -> criticalPrefs.edit().apply {
+						when (criticalPrefs.contains(tool.id))
+						{
+							false -> {
+								putBoolean(tool.id, true)
+								critical.visibility = View.VISIBLE
+							}
+							else -> {
+								remove(tool.id)
+								critical.visibility = View.GONE
+							}
+						}
+					}.apply()
+
+					R.id.action_note -> {
+						IntentDataHelper.store(NoteActivity::class.java, tool.id)
+						view.context.startActivity(Intent(view.context, NoteActivity::class.java))
+					}
+				}
+
+				true
+			}
+
+			popup.show()
 		}
 
 		itemView.setOnClickListener { view ->
