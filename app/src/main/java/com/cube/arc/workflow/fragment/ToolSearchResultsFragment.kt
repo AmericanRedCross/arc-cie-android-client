@@ -22,9 +22,8 @@ import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 import com.cube.lib.util.parent
 
-
 /**
- * // TODO: Add class description
+ * Fragment that displays tool search results
  */
 class ToolSearchResultsFragment : Fragment()
 {
@@ -67,6 +66,9 @@ class ToolSearchResultsFragment : Fragment()
 		search(query)
 	}
 
+	/**
+	 * Searches the index database for the given query
+	 */
 	fun search(searchQuery: String)
 	{
 		this.query = searchQuery
