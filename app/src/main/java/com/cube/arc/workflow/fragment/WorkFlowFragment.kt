@@ -71,6 +71,12 @@ class WorkFlowFragment : Fragment()
 		}
 	}
 
+	override fun onResume()
+	{
+		super.onResume()
+		recyclerView.adapter?.notifyDataSetChanged()
+	}
+
 	/**
 	 * Shows the modules in the list
 	 */

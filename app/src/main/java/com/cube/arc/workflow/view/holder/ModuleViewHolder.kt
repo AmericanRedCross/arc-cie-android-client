@@ -18,6 +18,7 @@ import com.cube.lib.util.inflate
  */
 class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
+	private val visibilityMap = HashMap<String, Boolean>()
 	private val stepsContainer = itemView.findViewById(R.id.steps_container) as LinearLayout
 	private val moduleClickArea = itemView.findViewById(R.id.module_click_area)
 	private var chevron = itemView.findViewById(R.id.module_chevron) as ImageView
@@ -59,12 +60,12 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			populateSubSteps(model, step, stepView)
 		}
 
-		stepsContainer.visibility = View.GONE
+		restoreVisibility(model, stepsContainer)
 		moduleClickArea.setOnClickListener { view ->
 			when
 			{
-				stepsContainer.visibility == View.VISIBLE -> hideView(stepsContainer)
-				else -> showView(stepsContainer)
+				stepsContainer.visibility == View.VISIBLE -> hideView(model, stepsContainer)
+				else -> showView(model, stepsContainer)
 			}
 
 			chevron.setImageResource(when
@@ -139,13 +140,13 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			toolContainer.addView(toolViewHolder.itemView, toolContainer.childCount - 1)
 		}
 
-		toolContainer.visibility = View.GONE
+		restoreVisibility(subStep, toolContainer)
 
 		subStepView.setOnClickListener {
 			when
 			{
-				toolContainer.visibility == View.VISIBLE -> hideView(toolContainer)
-				else -> showView(toolContainer)
+				toolContainer.visibility == View.VISIBLE -> hideView(subStep, toolContainer)
+				else -> showView(subStep, toolContainer)
 			}
 
 			subStepChevron.setImageResource(when
@@ -156,39 +157,20 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 	}
 
-	fun showView(view: View)
+	fun restoreVisibility(module: Module, view: View)
 	{
-		view.visibility = View.VISIBLE
-
-//		val anim = AnimationUtils.loadAnimation(view.context, R.anim.slide_in_top)
-//		anim.setAnimationListener(object : Animation.AnimationListener
-//		{
-//			override fun onAnimationRepeat(animation: Animation?){}
-//			override fun onAnimationStart(animation: Animation?)
-//			{
-//				view.visibility = View.VISIBLE
-//			}
-//
-//			override fun onAnimationEnd(animation: Animation?){}
-//		})
-//		view.startAnimation(anim)
+		view.visibility = if (visibilityMap[module.id] as Boolean? ?: false) View.VISIBLE else View.GONE
 	}
 
-	fun hideView(view: View)
+	fun showView(module: Module, view: View)
+	{
+		view.visibility = View.VISIBLE
+		visibilityMap[module.id] = true // expanded
+	}
+
+	fun hideView(module: Module, view: View)
 	{
 		view.visibility = View.GONE
-
-//		val anim = AnimationUtils.loadAnimation(view.context, R.anim.slide_up_bottom)
-//		anim.setAnimationListener(object : Animation.AnimationListener
-//		{
-//			override fun onAnimationRepeat(animation: Animation?){}
-//			override fun onAnimationStart(animation: Animation?)
-//			{
-//				view.visibility = View.VISIBLE
-//			}
-//
-//			override fun onAnimationEnd(animation: Animation?){}
-//		})
-//		view.startAnimation(anim)
+		visibilityMap[module.id] = false // collapsed
 	}
 }
