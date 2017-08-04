@@ -1,19 +1,25 @@
 package com.cube.arc.workflow.fragment
 
-import android.graphics.Rect
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.RadioButton
 import com.cube.arc.R
+import com.cube.arc.workflow.activity.ToolSearchResultsActivity
 import com.cube.arc.workflow.adapter.ModuleAdapter
 import com.cube.arc.workflow.adapter.ToolsAdapter
 import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.model.Module
+import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 import com.cube.lib.util.parent
@@ -26,6 +32,8 @@ class WorkFlowFragment : Fragment()
 	private val recyclerView by bind<RecyclerView>(R.id.recycler_view)
 	private val modulesFilter by bind<RadioButton>(R.id.filter_modules)
 	private val criticalFilter by bind<RadioButton>(R.id.filter_critical)
+	private val scroller by bind<NestedScrollView>(R.id.scroller)
+	private val searchInput by bind<EditText>(R.id.search_input)
 
 	override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = container?.inflate(R.layout.workflow_fragment_view)
 
@@ -33,60 +41,81 @@ class WorkFlowFragment : Fragment()
 	{
 		super.onActivityCreated(savedInstanceState)
 
-		if (savedInstanceState == null)
-		{
-			val layoutManager = LinearLayoutManager(activity)
-			val itemDecoration = object : RecyclerView.ItemDecoration()
+		setUi()
+		showModules()
+	}
+
+	fun setUi()
+	{
+		recyclerView.layoutManager = LinearLayoutManager(activity)
+
+		ViewCompat.setNestedScrollingEnabled(recyclerView, false);
+
+		modulesFilter.setOnClickListener {
+			showModules()
+		}
+
+		criticalFilter.setOnClickListener {
+			showCritical()
+		}
+
+		searchInput.setOnEditorActionListener { view, actionId, event ->
+			if (actionId == EditorInfo.IME_ACTION_SEARCH)
 			{
-				override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?)
-				{
-					val itemPosition = parent?.getChildAdapterPosition(view) ?: 0
-
-					if (itemPosition > 0)
-					{
-//						outRect?.set(0, -resources.getDimensionPixelSize(R.dimen.workflow_card_offset), 0, 0)
-					}
-				}
+				IntentDataHelper.store("search_query", searchInput.text.toString())
+				view.context.startActivity(Intent(view.context, ToolSearchResultsActivity::class.java))
+				true
 			}
 
-			val adapter = ModuleAdapter()
-			adapter.items = ModulesManager.modules
-
-			recyclerView.addItemDecoration(itemDecoration)
-			recyclerView.layoutManager = layoutManager
-			recyclerView.adapter = adapter;
+			false
 		}
+	}
 
-		modulesFilter.setOnClickListener { view ->
-			criticalFilter.isChecked = false
+	/**
+	 * Shows the modules in the list
+	 */
+	fun showModules()
+	{
+		modulesFilter.isChecked = true
+		criticalFilter.isChecked = false
+		searchInput.visibility = View.VISIBLE
 
-			val adapter = ModuleAdapter()
-			adapter.items = ModulesManager.modules
-			recyclerView.adapter = adapter
+		val adapter = ModuleAdapter()
+		adapter.items = ModulesManager.modules
+		recyclerView.adapter = adapter
+
+		recyclerView.post {
+			scroller.scrollTo(0, recyclerView.top)
 		}
+	}
 
-		criticalFilter.setOnClickListener { view ->
-			modulesFilter.isChecked = false
+	/**
+	 * Filters and shows critical tools, also includes tools marked as critical by user
+	 */
+	fun showCritical()
+	{
+		modulesFilter.isChecked = false
+		criticalFilter.isChecked = true
+		searchInput.visibility = View.GONE
 
-			val adapter = ToolsAdapter()
-			val items = ModulesManager.modules(true, true, view.context)
-			val adapterItems = LinkedHashSet<Module>()
-			val groupHeaders = LinkedHashSet<String>()
+		val adapter = ToolsAdapter()
+		val items = ModulesManager.modules(true, true, activity)
+		val adapterItems = LinkedHashSet<Module>()
+		val groupHeaders = LinkedHashSet<String>()
 
-			items.forEach { module ->
-				var parent = module.parent()
+		items.forEach { module ->
+			var parent = module.parent()
 
-				parent?.let { item ->
-					groupHeaders.add(item.id)
-					adapterItems.add(item)
-				}
-
-				adapterItems.add(module)
+			parent?.let { item ->
+				groupHeaders.add(item.id)
+				adapterItems.add(item)
 			}
 
-			adapter.items = adapterItems.toList()
-			adapter.groups = groupHeaders.toList()
-			recyclerView.adapter = adapter
+			adapterItems.add(module)
 		}
+
+		adapter.items = adapterItems.toList()
+		adapter.groups = groupHeaders.toList()
+		recyclerView.adapter = adapter
 	}
 }

@@ -3,6 +3,7 @@ package com.cube.arc.cie
 import android.app.Application
 import android.os.Environment
 import com.cube.arc.workflow.manager.ModulesManager
+import com.cube.arc.workflow.manager.SearchManager
 import java.io.File
 
 /**
@@ -20,7 +21,8 @@ class MainApplication : Application()
 		super.onCreate()
 
 		// initialise module manager
-		ModulesManager.init(resources.assets.open("modules.json"))
 		BASE_PATH = File(Environment.getExternalStorageDirectory().absoluteFile, "CIE-Documents")
+		ModulesManager.init(resources.assets.open("modules.json"))
+		SearchManager.init(this)
 	}
 }

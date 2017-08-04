@@ -48,5 +48,7 @@ class MainActivity : AppCompatActivity()
 
 			true
 		}
+
+		bottomNavigation.selectedItemId = R.id.menu_workflow
 	}
 }

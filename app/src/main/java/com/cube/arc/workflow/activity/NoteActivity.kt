@@ -1,4 +1,4 @@
-package com.cube.arc.workflow.adapter
+package com.cube.arc.workflow.activity
 
 import android.content.Context
 import android.content.SharedPreferences

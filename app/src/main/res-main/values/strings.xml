@@ -33,6 +33,8 @@
 	<string name="tool_menu_edit_note">Edit note</string>
 	<string name="tool_menu_export">Export or share</string>
 
+	<string name="tool_search_results_count">%s Tools shown for \'%s\'</string>
+
 	<string name="document_button_export">EXPORT</string>
 	<string name="document_button_open">OPEN</string>
 </resources>

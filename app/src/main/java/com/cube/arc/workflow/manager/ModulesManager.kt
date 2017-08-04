@@ -68,8 +68,7 @@ object ModulesManager
 	{
 		val criticalPrefs = context?.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
 		return modules.flatSteps().filter {
-			if (includeUserCritical && criticalPrefs?.contains(it.id) ?: false) true
-			if (onlyCritical) it.critical else true
+			(includeUserCritical && criticalPrefs?.contains(it.id) ?: false) || (onlyCritical && !includeUserCritical && it.critical)
 		}
 	}
 
