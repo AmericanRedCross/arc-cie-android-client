@@ -1,5 +1,6 @@
 package com.cube.arc.cie.activity;
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -63,8 +64,6 @@ class DocumentViewerActivity : AppCompatActivity()
 		preview.setText(Html.fromHtml(htmlContent, URLImageParser(preview), null))
 
 		files?.let {
-			downloadTask.file = files[0]
-
 			title.text = files[0].title
 			documentTitle.text = files[0].title
 			documentSize.text = "%.2fMB".format(files[0].size.toDouble() / 1024.0 / 1024.0)
@@ -72,11 +71,17 @@ class DocumentViewerActivity : AppCompatActivity()
 
 			if (downloadTask.isDownloading.get())
 			{
+				export.isEnabled = false
 				downloadProgress.visibility = View.VISIBLE
 			}
 
 			export.setOnClickListener {
+				export.isEnabled = false
 				downloadProgress.visibility = View.VISIBLE
+				downloadProgress.progress = 0
+
+				downloadTask = downloadTask.attach(this@DocumentViewerActivity)
+				downloadTask.file = files[0]
 				downloadTask.execute()
 			}
 		}
@@ -92,10 +97,14 @@ class DocumentViewerActivity : AppCompatActivity()
 		downloadTask.detach()
 	}
 
+	/**
+	 * Headless fragment used for holding the network request and updating the UI for the attached activity
+	 */
 	class DownloadHelper() : Fragment()
 	{
 		public lateinit var file: FileDescriptor
 		public var isDownloading = AtomicBoolean(false)
+		private var downloadTask: AsyncTask<Void, Int, Boolean>? = null
 
 		override fun onCreate(savedInstanceState: Bundle?)
 		{
@@ -121,14 +130,22 @@ class DocumentViewerActivity : AppCompatActivity()
 
 		fun detach()
 		{
-			activity.supportFragmentManager.beginTransaction()
-				.remove(this@DownloadHelper)
-				.commit()
+			if (isAdded && activity != null)
+			{
+				downloadTask?.cancel(true)
+				isDownloading.set(false)
+
+				activity.supportFragmentManager.beginTransaction()
+					.remove(this@DownloadHelper)
+					.commit()
+			}
 		}
 
 		fun execute()
 		{
-			ExportManager.download(
+			if (isDownloading.get()) return
+
+			downloadTask = ExportManager.download(
 				file = file,
 				progress = { progress ->
 					if (isAdded)
@@ -137,6 +154,7 @@ class DocumentViewerActivity : AppCompatActivity()
 						{
 							isDownloading.set(true)
 
+							export.isEnabled = false
 							downloadProgress.visibility = View.VISIBLE
 							downloadProgress.isIndeterminate = false
 							downloadProgress.max = 100
@@ -145,14 +163,26 @@ class DocumentViewerActivity : AppCompatActivity()
 						}
 					}
 				},
-				callback = {
+				callback = { success, filePath ->
 					if (isAdded)
 					{
 						with (activity as DocumentViewerActivity)
 						{
 							isDownloading.set(false)
 
+							export.isEnabled = true
 							downloadProgress.visibility = View.INVISIBLE
+
+							if (success)
+							{
+								Toast.makeText(activity, "File downloaded successfully", Toast.LENGTH_SHORT).show()
+								ExportManager.open(file, filePath, activity)
+							}
+							else
+							{
+								Toast.makeText(activity, "There was a problem downloading the file", Toast.LENGTH_LONG).show()
+							}
+
 							detach()
 						}
 					}
