@@ -9,19 +9,55 @@ import android.support.v4.content.FileProvider
 import com.cube.arc.BuildConfig
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.model.FileDescriptor
+import com.cube.arc.workflow.model.Registry
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
 import java.io.FileOutputStream
+import java.io.FileReader
 
 /**
  * Manager class used for downloading/opening files associated with modules and tools
  */
 object ExportManager
 {
+	const val REGISTRY = "registry.json"
+
 	init
 	{
 		MainApplication.BASE_PATH.mkdirs()
+	}
+
+	/**
+	 * Checks if a file has already been downloaded with a given hash
+	 */
+	fun isFileDownloaded(file: FileDescriptor): Boolean
+	{
+		if (!File(MainApplication.BASE_PATH, REGISTRY).exists()) return false
+
+		val registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<List<Registry>>(){}.type)
+		return registry.filter { it.timestamp >= file.timestamp && File(MainApplication.BASE_PATH, it.fileName).exists() }.isNotEmpty()
+	}
+
+	/**
+	 * Registers a downloaded file in a manifest used to calculate if the file is the newest version of
+	 * a given [FileDescriptor]
+	 */
+	fun registerFileManifest(file: FileDescriptor)
+	{
+		var registry = arrayListOf<Registry>()
+
+		if (File(MainApplication.BASE_PATH, REGISTRY).exists())
+		{
+			registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<ArrayList<Registry>>(){}.type)
+		}
+
+		val fileRegistry = Registry(file.title, file.timestamp)
+		registry.add(fileRegistry)
+
+		File(MainApplication.BASE_PATH, REGISTRY).bufferedWriter().use { out -> out.write(Gson().toJson(registry).toString()) }
 	}
 
 	/**
