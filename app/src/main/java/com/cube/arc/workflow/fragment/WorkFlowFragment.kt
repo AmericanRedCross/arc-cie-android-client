@@ -78,6 +78,7 @@ class WorkFlowFragment : Fragment()
 	{
 		modulesFilter.isChecked = true
 		criticalFilter.isChecked = false
+		searchInput.visibility = View.VISIBLE
 
 		val adapter = ModuleAdapter()
 		adapter.items = ModulesManager.modules
@@ -95,6 +96,7 @@ class WorkFlowFragment : Fragment()
 	{
 		modulesFilter.isChecked = false
 		criticalFilter.isChecked = true
+		searchInput.visibility = View.GONE
 
 		val adapter = ToolsAdapter()
 		val items = ModulesManager.modules(true, true, activity)
