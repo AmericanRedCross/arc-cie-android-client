@@ -63,6 +63,15 @@ object ExportManager
 		}
 	}
 
+	/**
+	 * Downloads a given file to a standard export path defined in [MainApplication.BASE_PATH]
+	 *
+	 * @param file The file to download
+	 * @param progress Progress callback for updating the UI
+	 * @param callback Finish callback called when operation is completed
+	 *
+	 * @return The task created for the download operation
+	 */
 	@SuppressLint("StaticFieldLeak")
 	fun download(file: FileDescriptor, progress: (percent: Int) -> Unit, callback: (success: Boolean, file: File) -> Unit): AsyncTask<Void, Int, Boolean>
 	{
