@@ -111,14 +111,14 @@ object SearchManager
 		ModulesManager.modules.flatSteps().forEach { module ->
 			val values = ContentValues()
 			values.put("title", module.title)
-			values.put("content", module.content)
+			values.put("content", "")//module.content)
 			values.put("module_id", module.id)
 
 			database.insert("search", null, values)
 		}
 
 		// perform virtual table index
-		database.execSQL("INSERT INTO search_index (docid, content, title) SELECT id, content, title FROM search;")
+		database.execSQL("INSERT INTO search_index (docid, title) SELECT id, title FROM search;")
 
 		database.setTransactionSuccessful()
 		database.endTransaction()

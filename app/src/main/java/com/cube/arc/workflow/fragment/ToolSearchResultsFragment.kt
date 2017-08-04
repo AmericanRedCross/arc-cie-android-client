@@ -75,14 +75,18 @@ class ToolSearchResultsFragment : Fragment()
 			val module = ModulesManager.module(searchResult.moduleId)
 
 			module?.apply {
-				var parent = parent()
+				// only tools will have null steps
+				if (steps == null)
+				{
+					var parent = parent()
 
-				parent?.let { item ->
-					groupHeaders.add(item.id)
-					adapterItems.add(item)
+					parent?.let { item ->
+						groupHeaders.add(item.id)
+						adapterItems.add(item)
+					}
+
+					adapterItems.add(this)
 				}
-
-				adapterItems.add(this)
 			}
 		}
 
