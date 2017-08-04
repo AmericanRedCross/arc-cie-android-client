@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.workflow.activity.NoteActivity
+import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
 
@@ -33,6 +34,13 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		critical.apply {
 			visibility = if (tool.critical || criticalPrefs.contains(tool.id)) View.VISIBLE else View.GONE
 			text = resources.getString(if (criticalPrefs.contains(tool.id)) R.string.module_tool_user_critical else R.string.module_tool_critical)
+		}
+
+		note.visibility = if (notePrefs.contains(tool.id)) View.VISIBLE else View.GONE
+
+		if (tool.attachments?.isNotEmpty() ?: false)
+		{
+			exported.visibility = if (ExportManager.isFileDownloaded(tool.attachments!![0])) View.VISIBLE else View.GONE
 		}
 
 		toolTitle.text = tool.title
