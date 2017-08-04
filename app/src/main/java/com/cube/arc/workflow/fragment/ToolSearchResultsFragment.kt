@@ -1,5 +1,6 @@
 package com.cube.arc.workflow.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import com.cube.arc.R
@@ -19,6 +21,7 @@ import com.cube.arc.workflow.model.Module
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 import com.cube.lib.util.parent
+
 
 /**
  * // TODO: Add class description
@@ -95,5 +98,8 @@ class ToolSearchResultsFragment : Fragment()
 		adapter.notifyDataSetChanged()
 
 		resultCount.text = resources.getString(R.string.tool_search_results_count, (adapter.items.size - adapter.groups.size).toString(), searchQuery)
+
+		val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+		imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0)
 	}
 }
