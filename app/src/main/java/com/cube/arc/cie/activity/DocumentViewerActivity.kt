@@ -58,6 +58,12 @@ class DocumentViewerActivity : AppCompatActivity()
 	{
 		val files = module.attachments?.filter { file -> file.featured }
 
+		if (files?.isEmpty() ?: true)
+		{
+			finish()
+			return
+		}
+
 		val parser = Parser.builder().build()
 		val document = parser.parse(module.content)
 		val renderer = HtmlRenderer.builder().build()
