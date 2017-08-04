@@ -77,9 +77,10 @@ object ExportManager
 	/**
 	 * Opens a file descriptor from the given path, or opens the app store to a google app to handle the intent
 	 */
-	fun open(file: FileDescriptor, path: File, context: Context)
+	fun open(file: FileDescriptor, context: Context)
 	{
 		// open file intent
+		val path = File(MainApplication.BASE_PATH, file.title)
 		val contentUri = FileProvider.getUriForFile(context, context.packageName + ".provider", path)
 
 		val shareIntent = Intent()
@@ -129,42 +130,46 @@ object ExportManager
 					.url(file.url)
 					.build()
 
-				val response = client.newCall(request).execute()
-				val inputStream =  response.body()?.byteStream()
+				try
+				{
+					val response = client.newCall(request).execute()
+					val inputStream =  response.body()?.byteStream()
 
-				inputStream?.use { inStream ->
-					FileOutputStream(path).use { outStream ->
-						var bytesCopied: Long = 0
-						var totalBytes: Long = response.body()?.contentLength() ?: 0
-						var totalPercent = 0
-						val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-						var bytes = inStream.read(buffer)
+					inputStream?.use { inStream ->
+						FileOutputStream(path).use { outStream ->
+							var bytesCopied: Long = 0
+							var totalBytes: Long = response.body()?.contentLength() ?: 0
+							var totalPercent = 0
+							val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+							var bytes = inStream.read(buffer)
 
-						while (bytes >= 0 && !isCancelled)
-						{
-							outStream.write(buffer, 0, bytes)
-							bytesCopied += bytes
-
-							try
+							while (bytes >= 0 && !isCancelled)
 							{
-								bytes = inStream.read(buffer)
-							}
-							catch (e: Exception)
-							{
-								return false
+								outStream.write(buffer, 0, bytes)
+								bytesCopied += bytes
+
+								try
+								{
+									bytes = inStream.read(buffer)
+								}
+								catch (e: Exception)
+								{
+									return false
+								}
+
+								var newPercent = ((bytesCopied.toDouble() / totalBytes.toDouble()) * 100.0).toInt()
+								if (newPercent > totalPercent)
+								{
+									totalPercent = newPercent
+									publishProgress(totalPercent)
+								}
 							}
 
-							var newPercent = ((bytesCopied.toDouble() / totalBytes.toDouble()) * 100.0).toInt()
-							if (newPercent > totalPercent)
-							{
-								totalPercent = newPercent
-								publishProgress(totalPercent)
-							}
+							return path.length() == totalBytes && response.isSuccessful
 						}
-
-						return path.length() == totalBytes && response.isSuccessful
 					}
 				}
+				catch (e: Exception){}
 
 				return false
 			}
