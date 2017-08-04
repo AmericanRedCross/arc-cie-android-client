@@ -112,6 +112,9 @@ class DocumentViewerActivity : AppCompatActivity()
 			retainInstance = true
 		}
 
+		/**
+		 * Attaches the fragment to the given activity, or returns its attached instance if already attached
+		 */
 		fun attach(activity: AppCompatActivity): DownloadHelper
 		{
 			if (activity.supportFragmentManager.findFragmentByTag("download_task") == null)
@@ -128,6 +131,9 @@ class DocumentViewerActivity : AppCompatActivity()
 			}
 		}
 
+		/**
+		 * Detaches the fragment from the current added activity, this will cancel any download task
+		 */
 		fun detach()
 		{
 			if (isAdded && activity != null)
@@ -141,6 +147,10 @@ class DocumentViewerActivity : AppCompatActivity()
 			}
 		}
 
+		/**
+		 * Executes the download task and updates the UI within [DocumentViewerActivity], can only be called once
+		 * during a download.
+		 */
 		fun execute()
 		{
 			if (isDownloading.get()) return
