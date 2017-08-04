@@ -8,6 +8,7 @@ import android.text.Html
 import android.view.View
 import android.widget.*
 import com.cube.arc.R
+import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.arc.workflow.model.Module
@@ -16,6 +17,7 @@ import com.cube.lib.parser.URLImageParser
 import com.cube.lib.util.bind
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
+import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -67,6 +69,7 @@ class DocumentViewerActivity : AppCompatActivity()
 			title.text = files[0].title
 			documentTitle.text = files[0].title
 			documentSize.text = "%.2fMB".format(files[0].size.toDouble() / 1024.0 / 1024.0)
+
 			downloadProgress.isIndeterminate = true
 
 			if (downloadTask.isDownloading.get())
@@ -75,14 +78,22 @@ class DocumentViewerActivity : AppCompatActivity()
 				downloadProgress.visibility = View.VISIBLE
 			}
 
+			export.setText(if (ExportManager.isFileDownloaded(files[0])) R.string.document_button_open else R.string.document_button_export)
 			export.setOnClickListener {
-				export.isEnabled = false
-				downloadProgress.visibility = View.VISIBLE
-				downloadProgress.progress = 0
+				if (ExportManager.isFileDownloaded(files[0]))
+				{
+					ExportManager.open(files[0], File(MainApplication.BASE_PATH, files[0].title), this)
+				}
+				else
+				{
+					export.isEnabled = false
+					downloadProgress.visibility = View.VISIBLE
+					downloadProgress.progress = 0
 
-				downloadTask = downloadTask.attach(this@DocumentViewerActivity)
-				downloadTask.file = files[0]
-				downloadTask.execute()
+					downloadTask = downloadTask.attach(this@DocumentViewerActivity)
+					downloadTask.file = files[0]
+					downloadTask.execute()
+				}
 			}
 		}
 
@@ -186,6 +197,10 @@ class DocumentViewerActivity : AppCompatActivity()
 							if (success)
 							{
 								Toast.makeText(activity, "File downloaded successfully", Toast.LENGTH_SHORT).show()
+
+								export.setText(R.string.document_button_open)
+
+								ExportManager.registerFileManifest(file)
 								ExportManager.open(file, filePath, activity)
 							}
 							else
