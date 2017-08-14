@@ -138,7 +138,7 @@ object ExportManager
 					inputStream?.use { inStream ->
 						FileOutputStream(path).use { outStream ->
 							var bytesCopied: Long = 0
-							var totalBytes: Long = response.body()?.contentLength() ?: 0
+							val totalBytes: Long = response.body()?.contentLength() ?: 0
 							var totalPercent = 0
 							val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
 							var bytes = inStream.read(buffer)
@@ -157,7 +157,7 @@ object ExportManager
 									return false
 								}
 
-								var newPercent = ((bytesCopied.toDouble() / totalBytes.toDouble()) * 100.0).toInt()
+								val newPercent = ((bytesCopied.toDouble() / totalBytes.toDouble()) * 100.0).toInt()
 								if (newPercent > totalPercent)
 								{
 									totalPercent = newPercent
