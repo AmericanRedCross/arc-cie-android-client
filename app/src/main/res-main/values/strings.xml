@@ -5,6 +5,8 @@
 	<string name="menu_workflow">Workflow</string>
 	<string name="menu_progress">Progress</string>
 
+	<string name="actionbar_menu_export_title">Export</string>
+
 	<string name="note_dialog_button_save">Save</string>
 	<string name="note_dialog_button_cancel">Cancel</string>
 	<string name="note_dialog_title_add">Add Note</string>
