@@ -37,6 +37,14 @@
 
 	<string name="tool_search_results_count">%s Tools shown for \'%s\'</string>
 
-	<string name="document_button_export">EXPORT</string>
+	<string name="document_button_export">@string/export</string>
 	<string name="document_button_open">OPEN</string>
+
+	<string name="export_title">Export Content</string>
+	<string name="export_critical_title">Critical Path Tools</string>
+	<string name="export_toolkit_title">Entire Toolkit</string>
+	<string name="export_progress_title">Your Progress</string>
+	<string name="export_notes_title">Your Notes</string>
+
+	<string name="export">EXPORT</string>
 </resources>
