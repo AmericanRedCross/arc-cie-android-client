@@ -1,13 +1,14 @@
 package com.cube.arc.cie.activity;
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.cube.arc.R
-import com.cube.arc.cie.fragment.DownloadHelper
-import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 import kotlinx.android.synthetic.main.document_viewer_activity_view.*
@@ -18,7 +19,6 @@ import kotlinx.android.synthetic.main.document_viewer_activity_view.*
 class ExportActivity : AppCompatActivity()
 {
 	private val exportablesContainer by bind<LinearLayout>(R.id.exportables_container)
-	private var downloadTasks: HashMap<String, DownloadHelper> = hashMapOf()
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -33,91 +33,59 @@ class ExportActivity : AppCompatActivity()
 		// critical path tools
 		inflateExportable(
 			exportTitle = R.string.export_critical_title,
-			exportTask = downloadTasks.getOrPut("critical", {
-				DownloadHelper.newInstance(this@ExportActivity, "critical")
-			}).apply {
-				file = FileDescriptor(
-					title = "critital-tools",
-					url = "https://httpbin.org/bytes/${1024 * 1024 * 4}",
-					size = 1024 * 1024 * 4
-				)
+			exportClick = { view ->
+				val shareUrl = "TODO://CHANGE_URL"
+				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
+					intent.type = "text/plain"
+					intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+				}, "Share to"))
 			}
 		)
 
-//		// entire toolkit
-//		inflateExportable(
-//			exportTitle = R.string.export_toolkit_title,
-//			exportClick = { export, progress ->
-//
-//			}
-//		)
-//
-//		// your progress
-//		inflateExportable(
-//			exportTitle = R.string.export_progress_title,
-//			exportClick = { export, progress ->
-//
-//			}
-//		)
-//
-//		// your notes
-//		inflateExportable(
-//			exportTitle = R.string.export_notes_title,
-//			exportClick = { export, progress ->
-//
-//			}
-//		)
+		// entire toolkit
+		inflateExportable(
+			exportTitle = R.string.export_toolkit_title,
+			exportClick = { view ->
+				val shareUrl = "TODO://CHANGE_URL"
+				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
+					intent.type = "text/plain"
+					intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+				}, "Share to"))
+			}
+		)
+
+		// your progress
+		inflateExportable(
+			exportTitle = R.string.export_progress_title,
+			exportClick = { view ->
+
+			}
+		)
+
+		// your notes
+		inflateExportable(
+			exportTitle = R.string.export_notes_title,
+			exportClick = { view ->
+
+			}
+		)
 
 		close.setOnClickListener {
 			finish()
 		}
 	}
 
-	private fun inflateExportable(@StringRes exportTitle: Int, exportTask: DownloadHelper)
+	private fun inflateExportable(@StringRes exportTitle: Int, exportClick: (View) -> Unit)
 	{
 		val view = exportablesContainer.inflate<View>(R.layout.exportable_view_stub).apply {
 			val title = findViewById(R.id.document_title) as TextView
 			val size = findViewById(R.id.document_size) as TextView
-			val progressBar = findViewById(R.id.download_progress) as ProgressBar
 			val export = findViewById(R.id.export) as Button
 
-			if (exportTask.isDownloading.get())
-			{
-				progressBar.visibility = View.VISIBLE
-				export.isEnabled = false
-			}
-
-			exportTask.progressLambda = { progress ->
-				progressBar.visibility = View.VISIBLE
-				progressBar.progress = progress
-			}
-
-			exportTask.callbackLambda = { success, file ->
-				Toast.makeText(this@ExportActivity, "File exported to ${file.absolutePath}", Toast.LENGTH_SHORT).show()
-
-				progressBar.visibility = View.GONE
-				progressBar.progress = 0
-				export.isEnabled = true
-			}
-
 			title.setText(exportTitle)
-			export.setOnClickListener { v ->
-				exportTask.execute()
-
-				progressBar.visibility = View.VISIBLE
-				export.isEnabled = false
-			}
+			export.setOnClickListener(exportClick)
 		}
 
 		exportablesContainer.addView(view)
-	}
-
-	override fun finish()
-	{
-		downloadTasks.values.forEach { value ->
-			value.detach()
-		}
-
-		super.finish()
 	}
 }
