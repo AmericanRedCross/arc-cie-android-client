@@ -1,10 +1,13 @@
 package com.cube.arc.cie.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
 import com.cube.arc.R
 import com.cube.arc.progress.fragment.ProgressFragment
 import com.cube.arc.workflow.fragment.WorkFlowFragment
@@ -32,6 +35,23 @@ class MainActivity : AppCompatActivity()
 		{
 			setUi()
 		}
+	}
+
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean
+	{
+		menuInflater.inflate(R.menu.main_menu, menu)
+		return true
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean
+	{
+		when (item?.itemId)
+		{
+			R.id.menu_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+			else -> return false
+		}
+
+		return true
 	}
 
 	fun setUi()

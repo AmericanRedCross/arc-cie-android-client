@@ -6,8 +6,15 @@
 >
 	<item
 		android:id="@+id/menu_export"
-		android:title="@string/actionbar_menu_export_title"
+		android:title="Export"
 		android:icon="@drawable/ab_ic_export"
+		app:showAsAction="always"
+	/>
+
+	<item
+		android:id="@+id/menu_settings"
+		android:title="Settings"
+		android:icon="@drawable/ab_ic_settings"
 		app:showAsAction="always"
 	/>
 </menu>
