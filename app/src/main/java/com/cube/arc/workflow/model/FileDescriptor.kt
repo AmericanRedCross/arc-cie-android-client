@@ -5,11 +5,11 @@ package com.cube.arc.workflow.model
  */
 data class FileDescriptor
 (
-	var title : String,
-	var url : String,
-	var mime : String,
-	var size : Long,
-	var description: String,
-	var timestamp: Long,
+	var title : String = "",
+	var url : String = "",
+	var mime : String = "",
+	var size : Long = 0,
+	var description: String = "",
+	var timestamp: Long = 0,
 	var featured: Boolean = false
 )
