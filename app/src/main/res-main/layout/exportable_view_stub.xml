@@ -68,6 +68,8 @@
 		android:progressDrawable="@drawable/horizontal_progress_drawable"
 		android:progressTint="@color/colorPrimary"
 		android:visibility="invisible"
+		android:max="100"
+		android:indeterminate="true"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintBottom_toBottomOf="parent"
