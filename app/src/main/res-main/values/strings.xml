@@ -37,4 +37,13 @@
 
 	<string name="document_button_export">EXPORT</string>
 	<string name="document_button_open">OPEN</string>
+
+	<string name="setting_update_title">Content Update Available</string>
+	<string name="setting_update_description">Current Version 1.0</string>
+	<string name="setting_video_title">Watch the Video</string>
+	<string name="setting_video_description">Watch the tutorial video</string>
+	<string name="setting_reset_title">Reset All Data</string>
+	<string name="setting_reset_description">Clears all progress and note data</string>
+	<string name="setting_locale_title">Change Language</string>
+	<string name="setting_locale_description">Downloads the App Content in another Language</string>
 </resources>
