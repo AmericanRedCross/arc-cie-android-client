@@ -9,6 +9,7 @@ import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.cie.activity.DocumentViewerActivity
 import com.cube.arc.workflow.activity.NoteActivity
+import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.inflate
@@ -23,13 +24,16 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private val moduleClickArea = itemView.findViewById(R.id.module_click_area)
 	private var chevron = itemView.findViewById(R.id.module_chevron) as ImageView
 	private var title = itemView.findViewById(R.id.module_name) as TextView
+	private var image = itemView.findViewById(R.id.module_image) as ImageView
 	private val roadmap = itemView.findViewById(R.id.module_roadmap) as Button
 	private var hierarchy = itemView.findViewById(R.id.module_hierarchy) as TextView
 
-	fun populate(model: Module)
+	fun populate(model: Module, position: Int)
 	{
 		title.text = model.title
 		hierarchy.text = "${model.hierarchy}"
+
+		image.setImageResource(ModulesManager.moduleImages[position])
 
 		populateSteps(model)
 	}
