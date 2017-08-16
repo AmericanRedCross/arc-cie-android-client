@@ -35,6 +35,7 @@
 		</activity>
 
 		<activity android:name=".cie.activity.MainActivity" android:windowSoftInputMode="stateAlwaysHidden" />
+		<activity android:name=".cie.activity.SettingsActivity" android:windowSoftInputMode="stateAlwaysHidden" />
 		<activity android:name=".cie.activity.DocumentViewerActivity" android:theme="@style/AppTheme.Dialog" />
 
 		<activity android:name=".workflow.activity.NoteActivity" android:windowSoftInputMode="adjustResize" />
