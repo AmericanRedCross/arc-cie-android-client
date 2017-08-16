@@ -45,21 +45,12 @@
 				android:layout_marginTop="24dp"
 				android:layout_marginBottom="24dp"
 			>
-				<android.support.constraint.Guideline
-					android:layout_width="match_parent"
-					android:layout_height="0dp"
-					android:id="@+id/update_center_guide"
-					android:orientation="horizontal"
-					app:layout_constraintGuide_percent="0.5"
-				/>
-
 				<ImageView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:id="@+id/download_icon"
+					android:id="@+id/update_icon"
 					android:src="@drawable/ic_update"
 					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintStart_toStartOf="@id/update_center_guide"
 					app:layout_constraintTop_toTopOf="parent"
 				/>
 
@@ -76,37 +67,23 @@
 
 				<TextView
 					android:layout_width="0dp"
-					android:layout_height="0dp"
+					android:layout_height="wrap_content"
 					android:id="@+id/update_title"
-					android:textColor="#ff000000"
-					android:textSize="16sp"
-					android:layout_marginRight="16dp"
-					android:layout_marginLeft="16dp"
-					android:fontFamily="sans-serif-regular"
 					android:text="Content Update Available"
-					android:ellipsize="end"
-					android:singleLine="true"
+					app:layout_constraintStart_toEndOf="@id/update_icon"
 					app:layout_constraintEnd_toStartOf="@id/update_download"
-					app:layout_constraintStart_toEndOf="@id/download_icon"
-					app:layout_constraintTop_toTopOf="parent"
-					app:layout_constraintBottom_toBottomOf="@id/update_center_guide"
+					style="@style/Setting.Title"
 				/>
 
 				<TextView
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:id="@+id/update_description"
-					android:layout_marginTop="6dp"
-					android:fontFamily="sans-serif-light"
-					android:textSize="12sp"
-					android:layout_marginRight="16dp"
-					android:layout_marginLeft="16dp"
-					android:textColor="#ff000000"
 					android:text="Current Version 1.0"
+					app:layout_constraintStart_toEndOf="@id/update_icon"
+					app:layout_constraintTop_toBottomOf="@id/update_title"
 					app:layout_constraintEnd_toStartOf="@id/update_download"
-					app:layout_constraintStart_toEndOf="@id/download_icon"
-					app:layout_constraintTop_toBottomOf="@id/update_center_guide"
-					app:layout_constraintBottom_toBottomOf="parent"
+					style="@style/Setting.Description"
 				/>
 			</android.support.constraint.ConstraintLayout>
 
@@ -117,57 +94,110 @@
 				android:padding="20dp"
 				android:background="#ffffff"
 			>
-				<android.support.constraint.Guideline
-					android:layout_width="match_parent"
-					android:layout_height="0dp"
-					android:id="@+id/video_center_guide"
-					android:orientation="horizontal"
-					app:layout_constraintGuide_percent="0.5"
-				/>
-
 				<ImageView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:id="@+id/video_icon"
 					android:src="@drawable/ic_play"
 					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintStart_toStartOf="@id/video_center_guide"
 					app:layout_constraintTop_toTopOf="parent"
 				/>
 
 				<TextView
 					android:layout_width="0dp"
-					android:layout_height="0dp"
+					android:layout_height="wrap_content"
 					android:id="@+id/video_title"
-					android:textColor="#ff000000"
-					android:textSize="16sp"
-					android:layout_marginRight="16dp"
-					android:layout_marginLeft="16dp"
-					android:fontFamily="sans-serif-regular"
 					android:text="Watch the Video"
-					android:ellipsize="end"
-					android:singleLine="true"
-					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toEndOf="@id/video_icon"
-					app:layout_constraintTop_toTopOf="parent"
-					app:layout_constraintBottom_toBottomOf="@id/video_center_guide"
+					app:layout_constraintEnd_toEndOf="parent"
+					style="@style/Setting.Title"
 				/>
 
 				<TextView
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:id="@+id/video_description"
-					android:layout_marginTop="6dp"
-					android:fontFamily="sans-serif-light"
-					android:textSize="12sp"
-					android:layout_marginRight="16dp"
-					android:layout_marginLeft="16dp"
-					android:textColor="#ff000000"
 					android:text="Watch the tutorial video"
-					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toEndOf="@id/video_icon"
-					app:layout_constraintTop_toBottomOf="@id/video_center_guide"
+					app:layout_constraintTop_toBottomOf="@id/video_title"
+					app:layout_constraintEnd_toEndOf="parent"
+					style="@style/Setting.Description"
+				/>
+			</android.support.constraint.ConstraintLayout>
+
+			<android.support.constraint.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/reset_container"
+				android:padding="20dp"
+				android:background="#ffffff"
+			>
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/reset_icon"
+					android:src="@drawable/ic_reset"
 					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+				/>
+
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:id="@+id/reset_title"
+					android:text="Reset All Data"
+					app:layout_constraintStart_toEndOf="@id/reset_icon"
+					app:layout_constraintEnd_toEndOf="parent"
+					style="@style/Setting.Title"
+				/>
+
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:id="@+id/reset_description"
+					android:text="Clears all progress and note data"
+					app:layout_constraintStart_toEndOf="@id/reset_icon"
+					app:layout_constraintTop_toBottomOf="@id/reset_title"
+					app:layout_constraintEnd_toEndOf="parent"
+					style="@style/Setting.Description"
+				/>
+			</android.support.constraint.ConstraintLayout>
+
+			<android.support.constraint.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/locale_container"
+				android:padding="20dp"
+				android:background="#ffffff"
+			>
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/locale_icon"
+					android:src="@drawable/ic_reset"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+				/>
+
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:id="@+id/locale_title"
+					android:text="Change Language"
+					app:layout_constraintStart_toEndOf="@id/locale_icon"
+					app:layout_constraintEnd_toEndOf="parent"
+					style="@style/Setting.Title"
+				/>
+
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:id="@+id/locale_description"
+					android:text="Downloads the App Content in another Language"
+					app:layout_constraintStart_toEndOf="@id/locale_icon"
+					app:layout_constraintTop_toBottomOf="@id/locale_title"
+					app:layout_constraintEnd_toEndOf="parent"
+					style="@style/Setting.Description"
 				/>
 			</android.support.constraint.ConstraintLayout>
 		</LinearLayout>
