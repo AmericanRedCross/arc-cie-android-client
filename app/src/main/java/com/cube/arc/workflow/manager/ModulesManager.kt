@@ -1,6 +1,7 @@
 package com.cube.arc.workflow.manager
 
 import android.content.Context
+import com.cube.arc.R
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.util.flatSteps
 import com.cube.lib.util.parent
@@ -17,6 +18,22 @@ object ModulesManager
 	// Tree map of the structure,  <Id, Depth>. position in tree will be position in modules list
 	lateinit var tree : LinkedHashMap<String, Int>
 	lateinit var modules: List<Module>
+
+	val moduleImages = mapOf(
+		1 to R.drawable.module_1_backdrop,
+		2 to R.drawable.module_2_backdrop,
+		3 to R.drawable.module_3_backdrop,
+		4 to R.drawable.module_4_backdrop,
+		5 to R.drawable.module_5_backdrop
+	)
+
+	val moduleColours = mapOf(
+		1 to R.color.module_1,
+		2 to R.color.module_2,
+		3 to R.color.module_3,
+		4 to R.color.module_4,
+		5 to R.color.module_5
+	)
 
 	fun init(dataSource: InputStream)
 	{

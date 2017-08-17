@@ -11,8 +11,10 @@ import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.workflow.activity.NoteActivity
 import com.cube.arc.workflow.manager.ExportManager
+import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
+import com.cube.lib.util.tint
 
 /**
  * View holder for module in WorkFlowFragment recycler view
@@ -28,7 +30,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private val exported = itemView.findViewById(R.id.exported) as TextView
 	private val options = itemView.findViewById(R.id.options_menu) as ImageButton
 
-	fun populate(tool: Module)
+	fun populate(module: Module?, tool: Module)
 	{
 		var notePrefs = itemView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 		var checkPrefs = itemView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
@@ -49,6 +51,8 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		toolTitle.text = tool.title
 		toolDescription.text = tool.content
 
+//		toolIcon.tint(ModulesManager.moduleColours[module?.hierarchy ?: 1] ?: R.color.module_1)
+		toolCheck.tint(ModulesManager.moduleColours[module?.hierarchy ?: 1] ?: R.color.module_1)
 		toolCheck.isChecked = checkPrefs.contains(tool.id)
 		toolCheck.setOnCheckedChangeListener { buttonView, isChecked ->
 			checkPrefs.edit().apply {
