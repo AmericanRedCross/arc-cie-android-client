@@ -16,7 +16,7 @@ class ModuleAdapter : RecyclerView.Adapter<ModuleViewHolder>()
 
 	override fun onBindViewHolder(holder: ModuleViewHolder?, position: Int)
 	{
-		holder?.populate(items[position], position)
+		holder?.populate(items[position])
 	}
 
 	override fun getItemCount(): Int = items.size
