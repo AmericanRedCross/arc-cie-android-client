@@ -48,6 +48,9 @@ class MainActivity : AppCompatActivity()
 		when (item?.itemId)
 		{
 			R.id.menu_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+			R.id.menu_export -> {
+				startActivity(Intent(this, ExportActivity::class.java))
+			}
 			else -> return false
 		}
 

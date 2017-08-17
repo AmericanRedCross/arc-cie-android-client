@@ -6,7 +6,7 @@
 >
 	<item
 		android:id="@+id/menu_export"
-		android:title="Export"
+		android:title="@string/actionbar_menu_export_title"
 		android:icon="@drawable/ab_ic_export"
 		app:showAsAction="always"
 	/>

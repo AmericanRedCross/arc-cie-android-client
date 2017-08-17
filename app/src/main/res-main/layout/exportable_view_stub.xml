@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:id="@+id/critical_path_container"
+	android:paddingLeft="24dp"
+	android:paddingRight="24dp"
+>
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/mime_icon"
+		android:src="@drawable/ic_mime_pdf"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+	/>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/export"
+		android:text="@string/export"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@id/mime_icon"
+		style="@style/SmallButton"
+	/>
+
+	<TextView
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:id="@+id/document_title"
+		android:textColor="#ff000000"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		android:layout_marginRight="8dp"
+		android:layout_marginLeft="8dp"
+		app:layout_constraintEnd_toStartOf="@id/export"
+		app:layout_constraintStart_toEndOf="@id/mime_icon"
+		app:layout_constraintTop_toTopOf="@id/mime_icon"
+	/>
+
+	<TextView
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:id="@+id/document_size"
+		android:layout_marginTop="4dp"
+		android:fontFamily="sans-serif-light"
+		android:textSize="12sp"
+		android:layout_marginRight="8dp"
+		android:layout_marginLeft="8dp"
+		android:text="&lt; 1MB"
+		app:layout_constraintEnd_toStartOf="@id/export"
+		app:layout_constraintStart_toEndOf="@id/mime_icon"
+		app:layout_constraintTop_toBottomOf="@id/document_title"
+	/>
+
+	<ProgressBar
+		android:layout_width="0dp"
+		android:layout_height="4dp"
+		android:id="@+id/download_progress"
+		android:padding="0dp"
+		android:layout_marginTop="8dp"
+		android:minHeight="4dp"
+		android:progressDrawable="@drawable/horizontal_progress_drawable"
+		android:progressTint="@color/colorPrimary"
+		android:visibility="invisible"
+		android:max="100"
+		android:indeterminate="true"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/document_size"
+		style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+	/>
+</android.support.constraint.ConstraintLayout>

@@ -5,6 +5,8 @@
 	<string name="menu_workflow">Workflow</string>
 	<string name="menu_progress">Progress</string>
 
+	<string name="actionbar_menu_export_title">Export</string>
+
 	<string name="note_dialog_button_save">Save</string>
 	<string name="note_dialog_button_cancel">Cancel</string>
 	<string name="note_dialog_title_add">Add Note</string>
@@ -35,7 +37,7 @@
 
 	<string name="tool_search_results_count">%s Tools shown for \'%s\'</string>
 
-	<string name="document_button_export">EXPORT</string>
+	<string name="document_button_export">@string/export</string>
 	<string name="document_button_open">OPEN</string>
 
 	<string name="setting_update_title">Content Update Available</string>
@@ -52,4 +54,12 @@
 	<string name="reset_dialog_button_confirm">OKAY</string>
 	<string name="reset_dialog_button_cancel">CANCEL</string>
 	<string name="reset_complete_toast">All data reset successfully</string>
+
+	<string name="export_title">Export Content</string>
+	<string name="export_critical_title">Critical Path Tools</string>
+	<string name="export_toolkit_title">Entire Toolkit</string>
+	<string name="export_progress_title">Your Progress</string>
+	<string name="export_notes_title">Your Notes</string>
+
+	<string name="export">EXPORT</string>
 </resources>
