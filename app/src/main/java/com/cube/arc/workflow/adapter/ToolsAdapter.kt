@@ -33,7 +33,7 @@ class ToolsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 	{
 		when (holder)
 		{
-			is ToolViewHolder -> holder?.populate(items[position])
+			is ToolViewHolder -> holder?.populate(null, items[position])
 			is ToolDividerViewHolder -> holder?.populate(items[position])
 		}
 	}

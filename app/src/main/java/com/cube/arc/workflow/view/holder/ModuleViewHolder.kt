@@ -2,10 +2,14 @@ package com.cube.arc.workflow.view.holder
 
 import android.content.Context
 import android.content.Intent
+import android.support.v7.widget.AppCompatCheckBox
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.cube.arc.R
 import com.cube.arc.cie.activity.DocumentViewerActivity
 import com.cube.arc.workflow.activity.NoteActivity
@@ -13,6 +17,7 @@ import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.inflate
+import com.cube.lib.util.tint
 
 /**
  * View holder for module in WorkFlowFragment recycler view
@@ -27,13 +32,17 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private var image = itemView.findViewById(R.id.module_image) as ImageView
 	private val roadmap = itemView.findViewById(R.id.module_roadmap) as Button
 	private var hierarchy = itemView.findViewById(R.id.module_hierarchy) as TextView
+	private var moduleHierarchy: Int = 0
 
-	fun populate(model: Module, position: Int)
+	fun populate(model: Module)
 	{
-		title.text = model.title
-		hierarchy.text = "${model.hierarchy}"
+		moduleHierarchy = model.hierarchy
 
-		image.setImageResource(ModulesManager.moduleImages[position])
+		title.text = model.title
+		hierarchy.text = (moduleHierarchy).toString()
+
+		hierarchy.background.tint(hierarchy.resources.getColor(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1))
+		image.setImageResource(ModulesManager.moduleImages[moduleHierarchy] ?: R.drawable.module_1_backdrop)
 
 		populateSteps(model)
 	}
@@ -96,7 +105,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		step.steps?.forEach { subStep ->
 			val subStepView = subStepContainer.inflate<View>(R.layout.step_substep_stub)
 
-			val subStepCheck = subStepView.findViewById(R.id.substep_check) as CheckBox
+			val subStepCheck = subStepView.findViewById(R.id.substep_check) as AppCompatCheckBox
 			val subStepHierarchy = subStepView.findViewById(R.id.substep_hierarchy) as TextView
 			val subStepTitle = subStepView.findViewById(R.id.substep_title) as TextView
 			val subStepNoteButton = subStepView.findViewById(R.id.add_note) as Button
@@ -109,6 +118,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				view.context.startActivity(noteIntent)
 			}
 
+			subStepCheck.tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1)
 			subStepCheck.isChecked = checkPrefs.contains(subStep.id)
 			subStepCheck.setOnCheckedChangeListener { buttonView, isChecked ->
 				checkPrefs.edit().apply {
@@ -137,9 +147,13 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		var subStepChevron = subStepView.findViewById(R.id.substep_chevron) as ImageView
 		var checkPrefs = subStepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
+		toolContainer.getChildAt(0).tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1)
+		toolContainer.getChildAt(1).tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1)
+		toolContainer.tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1, 0.2f)
+
 		subStep.steps?.forEach { tool ->
 			val toolViewHolder = ToolViewHolder(subStepView.inflate<View>(R.layout.substep_tool_stub))
-			toolViewHolder.populate(tool)
+			toolViewHolder.populate(root, tool)
 
 			toolContainer.addView(toolViewHolder.itemView, toolContainer.childCount - 1)
 		}
