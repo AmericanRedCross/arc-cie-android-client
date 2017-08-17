@@ -51,6 +51,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		toolTitle.text = tool.title
 		toolDescription.text = tool.content
 
+//		toolIcon.tint(ModulesManager.moduleColours[module?.hierarchy ?: 1] ?: R.color.module_1)
 		toolCheck.tint(ModulesManager.moduleColours[module?.hierarchy ?: 1] ?: R.color.module_1)
 		toolCheck.isChecked = checkPrefs.contains(tool.id)
 		toolCheck.setOnCheckedChangeListener { buttonView, isChecked ->
