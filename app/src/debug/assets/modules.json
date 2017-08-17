@@ -160,7 +160,7 @@
 	{
 		"id": "1",
 		"title": "module 1",
-		"hierarchy": 1,
+		"hierarchy": 2,
 		"content": "#markdown content",
 		"attachments": [
 			{
@@ -318,7 +318,7 @@
 	{
 		"id": "1",
 		"title": "module 1",
-		"hierarchy": 1,
+		"hierarchy": 3,
 		"content": "#markdown content",
 		"attachments": [
 			{
@@ -476,7 +476,7 @@
 	{
 		"id": "1",
 		"title": "module 1",
-		"hierarchy": 1,
+		"hierarchy": 4,
 		"content": "#markdown content",
 		"attachments": [
 			{
@@ -634,7 +634,7 @@
 	{
 		"id": "11",
 		"title": "module 2",
-		"hierarchy": 1,
+		"hierarchy": 5,
 		"content": "# markdown content\n*bold* \n ## sub header \n ![text](http://placespider.com/650x488-6.jpg)",
 		"attachments": [
 			{
