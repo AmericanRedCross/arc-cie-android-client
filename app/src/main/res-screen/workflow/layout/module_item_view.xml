@@ -67,7 +67,6 @@
 					android:textStyle="bold"
 					android:textSize="24dp"
 					android:background="@drawable/circle_bg_drawable"
-					android:backgroundTint="@color/colorPrimary"
 					android:layout_centerVertical="true"
 				/>
 
