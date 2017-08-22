@@ -19,15 +19,13 @@ class SearchManagerTest
 {
 	val appContext = InstrumentationRegistry.getTargetContext()
 
-	@Before
-	fun setup()
+	@Before fun setup()
 	{
 		ModulesManager.init(appContext.assets.open("modules.json"))
 		SearchManager.init(appContext)
 	}
 
-	@Test
-	fun testSearch()
+	@Test fun testSearch()
 	{
 		val results = SearchManager.search("step")
 		Assert.assertEquals(23, results.size)

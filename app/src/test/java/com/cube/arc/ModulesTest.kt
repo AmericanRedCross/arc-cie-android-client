@@ -1,8 +1,8 @@
 package com.cube.arc
 
 import com.cube.arc.workflow.manager.ModulesManager
-import com.cube.arc.workflow.manager.flatSteps
-import com.cube.arc.workflow.manager.parent
+import com.cube.lib.util.flatSteps
+import com.cube.lib.util.parent
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
