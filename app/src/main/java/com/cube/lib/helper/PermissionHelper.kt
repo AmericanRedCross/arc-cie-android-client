@@ -31,7 +31,7 @@ object PermissionHelper
 				AlertDialog.Builder(fragment.activity)
 					.setMessage(dialogMessage)
 					.setPositiveButton("OK") { dialog, which -> fragment.requestPermissions(arrayOf(permission), requestCode) }
-					.setNegativeButton("Cancel", null)
+					.setCancelable(false)
 					.show()
 
 				return false
@@ -62,7 +62,7 @@ object PermissionHelper
 				AlertDialog.Builder(context)
 					.setMessage(dialogMessage)
 					.setPositiveButton("OK") { dialog, which -> ActivityCompat.requestPermissions(context, arrayOf(permission), requestCode) }
-					.setNegativeButton("Cancel", null)
+					.setCancelable(false)
 					.show()
 
 				return false
