@@ -10,6 +10,7 @@ import com.cube.arc.BuildConfig
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.arc.workflow.model.Registry
+import com.cube.lib.util.times
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
@@ -98,6 +99,73 @@ object ExportManager
 		{
 			launchStoreForMime(file.mime, context)
 		}
+	}
+
+	/**
+	 * Exports the user's content and module data into a CSV
+	 */
+	fun generateUserContent(context: Context): String
+	{
+		val columns = arrayOf(
+			"Step",
+			"Done",
+			"No.",
+			"Sub-Step Action & Guidance",
+			"Sub-Step Notes",
+			"Critical Tool",
+			"Critical Notes"
+		)
+
+		var finalCsv = ""
+		val criticalPrefs = context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
+		val notesPrefs = context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
+		val checkPrefs = context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
+
+		ModulesManager.modules.forEach { module ->
+			val data = arrayListOf<LinkedHashMap<String, String>>()
+
+			module.steps?.forEach { step ->
+				step.steps?.forEach { substep ->
+					val rows = ArrayList<LinkedHashMap<String, String>>()
+					rows.add(linkedMapOf<String, String>())
+					rows[0].putAll(columns.associate { it to "" })
+
+					rows[0][columns[0]] = step.title
+					rows[0][columns[1]] = checkPrefs.contains(step.id).toString()
+
+					rows[0][columns[2]] = "${substep.hierarchy}"
+					rows[0][columns[3]] = substep.title
+					rows[0][columns[4]] = notesPrefs.getString(substep.id, "")
+
+					substep.steps?.forEachIndexed { index, tool ->
+						if (tool.critical || criticalPrefs.contains(tool.id))
+						{
+							if (rows.size - 1 < index)
+							{
+								rows.add(rows[0].clone() as LinkedHashMap<String, String>)
+							}
+
+							rows[index][columns[5]] = tool.title
+							rows[index][columns[6]] = notesPrefs.getString(tool.id, "")
+						}
+					}
+
+					data.addAll(rows)
+				}
+			}
+
+			var moduleCsv = ""
+			moduleCsv += module.title + ("," * (columns.size - 1)) + "\r\n"
+			moduleCsv += columns.joinToString(",") + "\r\n"
+
+			data.forEach { row ->
+				moduleCsv += row.values.joinToString(",") + "\r\n"
+			}
+
+			finalCsv += moduleCsv + "\r\n"
+		}
+
+		return finalCsv
 	}
 
 	/**
