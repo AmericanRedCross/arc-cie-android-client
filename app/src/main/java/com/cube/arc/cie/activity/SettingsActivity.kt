@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -39,7 +40,9 @@ class SettingsActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
+
 		setContentView(R.layout.settings_activity_view)
+		setSupportActionBar(findViewById(R.id.toolbar) as Toolbar)
 
 		video.setOnClickListener {
 			startActivity(Intent(this, VideoPlayerActivity::class.java))
