@@ -58,7 +58,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val stepTitle = stepView.findViewById(R.id.step_title) as TextView
 			val stepRoadmap = stepView.findViewById(R.id.step_roadmap) as Button
 
-			stepHierarchy.text = "${model.order}.${step.order}"
+			stepHierarchy.text = step.order
 			stepTitle.text = step.title
 
 			val featuredAttachments = step.attachments?.filter { file -> file.featured }
@@ -110,7 +110,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val subStepTitle = subStepView.findViewById(R.id.substep_title) as TextView
 			val subStepNoteButton = subStepView.findViewById(R.id.add_note) as Button
 
-			subStepHierarchy.text = "${root.order}.${step.order}.${subStep.order}"
+			subStepHierarchy.text = subStep.order
 			subStepTitle.text = subStep.title
 			subStepNoteButton.setOnClickListener { view ->
 				val noteIntent = Intent(view.context, NoteActivity::class.java)
