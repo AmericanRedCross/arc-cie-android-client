@@ -18,6 +18,8 @@ import okhttp3.Request
 import java.io.File
 import java.io.FileOutputStream
 import java.io.FileReader
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Manager class used for downloading/opening files associated with modules and tools
@@ -192,8 +194,14 @@ object ExportManager
 			{
 				val client = OkHttpClient()
 
+				val rfc1123 = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US)
+				rfc1123.timeZone = TimeZone.getTimeZone("GMT")
+				val lastModified = rfc1123.format(Date(file.timestamp));
+
 				val request = Request.Builder()
 					.addHeader("User-Agent", "Android/ARC-" + BuildConfig.APPLICATION_ID + "-" + BuildConfig.VERSION_NAME)
+					.addHeader("Last-Modified", lastModified)
+					.addHeader("Cache-Control", "max-age=0")
 					.url(file.url)
 					.build()
 
