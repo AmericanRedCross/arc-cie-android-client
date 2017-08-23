@@ -32,11 +32,11 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private var image = itemView.findViewById(R.id.module_image) as ImageView
 	private val roadmap = itemView.findViewById(R.id.module_roadmap) as Button
 	private var hierarchy = itemView.findViewById(R.id.module_hierarchy) as TextView
-	private var moduleHierarchy: Int = 0
+	private var moduleHierarchy: String = "0"
 
 	fun populate(model: Module)
 	{
-		moduleHierarchy = model.hierarchy
+		moduleHierarchy = model.order
 
 		title.text = model.title
 		hierarchy.text = (moduleHierarchy).toString()
@@ -51,14 +51,14 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	{
 		stepsContainer.removeAllViews()
 
-		model.steps?.forEach { step ->
+		model.directories?.forEach { step ->
 			val stepView = stepsContainer.inflate<View>(R.layout.module_step_stub)
 
 			val stepHierarchy = stepView.findViewById(R.id.step_hierarchy) as TextView
 			val stepTitle = stepView.findViewById(R.id.step_title) as TextView
 			val stepRoadmap = stepView.findViewById(R.id.step_roadmap) as Button
 
-			stepHierarchy.text = "${model.hierarchy}.${step.hierarchy}"
+			stepHierarchy.text = "${model.order}.${step.order}"
 			stepTitle.text = step.title
 
 			val featuredAttachments = step.attachments?.filter { file -> file.featured }
@@ -102,7 +102,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		var notePrefs = stepView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 		var checkPrefs = stepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		step.steps?.forEach { subStep ->
+		step.directories?.forEach { subStep ->
 			val subStepView = subStepContainer.inflate<View>(R.layout.step_substep_stub)
 
 			val subStepCheck = subStepView.findViewById(R.id.substep_check) as AppCompatCheckBox
@@ -110,7 +110,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val subStepTitle = subStepView.findViewById(R.id.substep_title) as TextView
 			val subStepNoteButton = subStepView.findViewById(R.id.add_note) as Button
 
-			subStepHierarchy.text = "${root.hierarchy}.${step.hierarchy}.${subStep.hierarchy}"
+			subStepHierarchy.text = "${root.order}.${step.order}.${subStep.order}"
 			subStepTitle.text = subStep.title
 			subStepNoteButton.setOnClickListener { view ->
 				val noteIntent = Intent(view.context, NoteActivity::class.java)
@@ -151,7 +151,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		toolContainer.getChildAt(1).tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1)
 		toolContainer.tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1, 0.2f)
 
-		subStep.steps?.forEach { tool ->
+		subStep.directories?.forEach { tool ->
 			val toolViewHolder = ToolViewHolder(subStepView.inflate<View>(R.layout.substep_tool_stub))
 			toolViewHolder.populate(root, tool)
 

@@ -4,7 +4,7 @@ import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.model.Module
 
 /**
- * Flattens the recursive array to return a 1D list of type [Module] from [Module.steps]
+ * Flattens the recursive array to return a 1D list of type [Module] from [Module.directories]
  */
 fun List<Module>.flatSteps(): List<Module>
 {
@@ -13,7 +13,7 @@ fun List<Module>.flatSteps(): List<Module>
 	for (item in this)
 	{
 		results.add(item)
-		results.addAll(item.steps?.flatSteps() ?: listOf())
+		results.addAll(item.directories?.flatSteps() ?: listOf())
 	}
 
 	return results

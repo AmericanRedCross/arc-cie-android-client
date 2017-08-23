@@ -25,7 +25,7 @@ import com.cube.lib.util.inflate
 import com.cube.lib.util.parent
 
 /**
- * Fragment for displaying and handling the workflow feature. Will display a list of modules and its steps/substeps
+ * Fragment for displaying and handling the workflow feature. Will display a list of modules and its directories/substeps
  */
 class WorkFlowFragment : Fragment()
 {
