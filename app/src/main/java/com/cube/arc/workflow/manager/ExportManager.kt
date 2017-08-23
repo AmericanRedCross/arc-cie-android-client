@@ -131,7 +131,7 @@ object ExportManager
 					rows[0].putAll(columns.associate { it to "" })
 
 					rows[0][columns[0]] = step.title
-					rows[0][columns[1]] = checkPrefs.contains(step.id).toString()
+					rows[0][columns[1]] = if (checkPrefs.contains(step.id)) "yes" else "no"
 
 					rows[0][columns[2]] = "${substep.hierarchy}"
 					rows[0][columns[3]] = substep.title
@@ -155,16 +155,17 @@ object ExportManager
 			}
 
 			var moduleCsv = ""
-			moduleCsv += module.title + ("," * (columns.size - 1)) + "\r\n"
-			moduleCsv += columns.joinToString(",") + "\r\n"
+			moduleCsv += module.title + ("," * (columns.size - 1)) + "\n"
+			moduleCsv += columns.joinToString(",") + "\n"
 
 			data.forEach { row ->
-				moduleCsv += row.values.joinToString(",") + "\r\n"
+				moduleCsv += row.values.joinToString(",") + "\n"
 			}
 
-			finalCsv += moduleCsv + "\r\n"
+			finalCsv += moduleCsv + "\n"
 		}
 
+		finalCsv += "\r\n"
 		return finalCsv
 	}
 
