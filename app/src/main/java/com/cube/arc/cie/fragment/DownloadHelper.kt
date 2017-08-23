@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.FileDescriptor
 import java.io.File
@@ -86,12 +87,13 @@ class DownloadHelper : Fragment()
 	 * Executes the download task and updates the UI within [DocumentViewerActivity], can only be called once
 	 * during a download.
 	 */
-	fun execute()
+	fun execute(outFile: File = File(MainApplication.BASE_PATH, file.title))
 	{
 		if (isDownloading.get()) return
 
 		downloadTask = ExportManager.download(
 			file = file,
+			path = outFile,
 			progress = { progress ->
 				progressLambda?.also { callback ->
 					isDownloading.set(true)

@@ -179,12 +179,10 @@ object ExportManager
 	 * @return The task created for the download operation
 	 */
 	@SuppressLint("StaticFieldLeak")
-	fun download(file: FileDescriptor, progress: (percent: Int) -> Unit, callback: (success: Boolean, file: File) -> Unit): AsyncTask<Void, Int, Boolean>
+	fun download(file: FileDescriptor, path: File, progress: (percent: Int) -> Unit, callback: (success: Boolean, file: File) -> Unit): AsyncTask<Void, Int, Boolean>
 	{
 		return object : AsyncTask<Void, Int, Boolean>()
 		{
-			val path = File(MainApplication.BASE_PATH, file.title)
-
 			override fun onProgressUpdate(vararg values: Int?)
 			{
 				progress.invoke(values[0] ?: 0)
