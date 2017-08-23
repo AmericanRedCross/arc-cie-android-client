@@ -35,6 +35,9 @@ object ModulesManager
 		5 to R.color.module_5
 	)
 
+	/**
+	 * Initialises the module manager with a file from a given input stream
+	 */
 	fun init(dataSource: InputStream)
 	{
 		modules = Gson().fromJson(InputStreamReader(dataSource), object : TypeToken<ArrayList<Module>>(){}.type)
