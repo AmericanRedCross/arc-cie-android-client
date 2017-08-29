@@ -35,6 +35,9 @@ class ToolSearchResultsFragment : Fragment()
 
 	companion object
 	{
+		/**
+		 * Creates a new instance of the search results fragment with the given search query
+		 */
 		fun newInstance(query: String): ToolSearchResultsFragment
 		{
 			return ToolSearchResultsFragment().apply {
@@ -102,6 +105,6 @@ class ToolSearchResultsFragment : Fragment()
 		resultCount.text = resources.getString(R.string.tool_search_results_count, (adapter.items.size - adapter.groups.size).toString(), searchQuery)
 
 		val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-		imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0)
+		imm.hideSoftInputFromWindow(searchInput.windowToken, 0)
 	}
 }

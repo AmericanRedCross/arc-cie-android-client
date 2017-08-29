@@ -30,15 +30,10 @@ class VideoPlayerActivity : AppCompatActivity()
 		super.onCreate(savedInstanceState)
 
 		setContentView(R.layout.video_player_view)
+
 		val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)
 		val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
-		val dataSourceFactory: DataSource.Factory = object : Factory
-		{
-			override fun createDataSource(): DataSource
-			{
-				return AssetDataSource(this@VideoPlayerActivity)
-			}
-		}
+		val dataSourceFactory: DataSource.Factory = Factory { AssetDataSource(this@VideoPlayerActivity) }
 		val videoSource = ExtractorMediaSource(Uri.parse("assets:///onboarding_video.mp4"), dataSourceFactory, DefaultExtractorsFactory(), null, null)
 
 		player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)

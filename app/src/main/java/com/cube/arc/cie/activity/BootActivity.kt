@@ -27,6 +27,9 @@ class BootActivity : AppCompatActivity()
 		checkStoragePermission()
 	}
 
+	/**
+	 * Checks to ensure the storage permission has been granted, it is required for storing exports
+	 */
 	fun checkStoragePermission()
 	{
 		if (!PermissionHelper.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
@@ -39,6 +42,9 @@ class BootActivity : AppCompatActivity()
 		}
 	}
 
+	/**
+	 * Shows the splash screen, but only once during the install lifespan of the app
+	 */
 	fun showSplash()
 	{
 		if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("seen_splash", false))
@@ -83,6 +89,10 @@ class BootActivity : AppCompatActivity()
 		}
 	}
 
+	/**
+	 * Starts the onboarding activity if it has not previously been shown, else it will launch the main
+	 * app
+	 */
 	fun startOnboarding()
 	{
 		if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("seen_onboarding", false))

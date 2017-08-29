@@ -13,7 +13,7 @@ import com.cube.arc.onboarding.activity.VideoPlayerActivity
 import com.cube.lib.util.bind
 
 /**
- * // TODO: Add class description
+ * Settings activity to allow users to download content updates or reset app state
  */
 class SettingsActivity : AppCompatActivity()
 {

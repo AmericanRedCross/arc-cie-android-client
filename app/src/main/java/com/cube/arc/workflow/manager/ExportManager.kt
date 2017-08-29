@@ -58,7 +58,7 @@ object ExportManager
 		val fileRegistry = Registry(file.title, file.timestamp)
 		registry.add(fileRegistry)
 
-		File(MainApplication.BASE_PATH, REGISTRY).bufferedWriter().use { out -> out.write(Gson().toJson(registry).toString()) }
+		File(MainApplication.BASE_PATH, REGISTRY).bufferedWriter().use { out -> out.write(Gson().toJson(registry).toString()); out.flush() }
 	}
 
 	/**
@@ -69,6 +69,24 @@ object ExportManager
 		val appId = when (mimeType.toLowerCase())
 		{
 			"application/pdf" -> "com.google.android.apps.pdfviewer"
+
+			"text/plain", // .txt
+			"text/richtext", // .rtf
+			"application/vnd.oasis.opendocument.text", // .odt
+			"application/msword", // .doc
+			"application/vnd.openxmlformats-officedocument.wordprocessingml.document" // .docx
+				-> "com.google.android.apps.docs.editors.docs"
+
+			"application/vnd.ms-excel", // .xls
+			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+			"application/vnd.oasis.opendocument.spreadsheet" // .ods
+				-> "com.google.android.apps.docs.editors.sheets"
+
+			"application/vnd.ms-powerpoint", // .ppt
+			"application/vnd.openxmlformats-officedocument.presentationml.presentation", // .pptx
+			"application/vnd.oasis.opendocument.presentation" // .opt
+				-> "com.google.android.apps.docs.editors.slides"
+
 			else -> return
 		}
 

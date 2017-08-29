@@ -12,7 +12,7 @@ import com.cube.lib.util.inflate
  */
 class ModuleAdapter : RecyclerView.Adapter<ModuleViewHolder>()
 {
-	var items : List<Module> = listOf()
+	var items: List<Module> = listOf()
 
 	override fun onBindViewHolder(holder: ModuleViewHolder?, position: Int)
 	{

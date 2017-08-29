@@ -84,6 +84,9 @@ class ExportActivity : AppCompatActivity()
 		}
 	}
 
+	/**
+	 * Creates an exportable view to put into the exportable container
+	 */
 	private fun inflateExportable(@StringRes exportTitle: Int, exportClick: (View) -> Unit)
 	{
 		val view = exportablesContainer.inflate<View>(R.layout.exportable_view_stub).apply {
