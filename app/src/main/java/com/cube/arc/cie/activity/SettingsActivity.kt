@@ -76,10 +76,13 @@ class SettingsActivity : AppCompatActivity()
 				// extract tar
 				Thread({
 					filePath.extractTo(filePath.parentFile)
+					filePath.delete()
 
 					runOnUiThread {
 						downloadProgress.dismiss()
 						updateButton.isEnabled = true
+
+						(application as MainApplication).initManagers()
 
 						Toast.makeText(this, "Content successfully updated", Toast.LENGTH_SHORT).show()
 					}
@@ -98,8 +101,6 @@ class SettingsActivity : AppCompatActivity()
 			downloadTask = downloadTask.attach(this)
 			downloadTask.file = FileDescriptor(url = "http://ec2-54-193-52-173.us-west-1.compute.amazonaws.com/api/projects/1/publishes/latest?redirect=true&language=en")
 			downloadTask.execute(outFile = File(filesDir, "content.tar.gz"))
-
-			(application as MainApplication).initManagers()
 		}
 	}
 
