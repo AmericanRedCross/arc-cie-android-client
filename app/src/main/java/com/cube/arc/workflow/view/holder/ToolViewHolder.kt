@@ -9,12 +9,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.*
 import com.cube.arc.R
+import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.activity.NoteActivity
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.tint
+import java.io.File
 
 /**
  * View holder for module in WorkFlowFragment recycler view
@@ -51,8 +53,8 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		toolTitle.text = tool.title
 		toolDescription.text = tool.content
 
-//		toolIcon.tint(ModulesManager.moduleColours[module?.hierarchy ?: 1] ?: R.color.module_1)
-		toolCheck.tint(ModulesManager.moduleColours[module?.hierarchy ?: 1] ?: R.color.module_1)
+//		toolIcon.tint(ModulesManager.moduleColours[module?.order ?: 1] ?: R.color.module_1)
+		toolCheck.tint(ModulesManager.moduleColours[module?.order ?: 1] ?: R.color.module_1)
 		toolCheck.isChecked = checkPrefs.contains(tool.id)
 		toolCheck.setOnCheckedChangeListener { buttonView, isChecked ->
 			checkPrefs.edit().apply {
@@ -143,6 +145,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 					ExportManager.download(
 						file = file,
+						path = File(MainApplication.BASE_PATH, file.title),
 						progress = { progress ->
 							exportNotification.setProgress(100, progress, false);
 							notificationManager.notify(file.url.hashCode(), exportNotification.build());

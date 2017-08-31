@@ -64,6 +64,6 @@
 		app:layout_constraintTop_toBottomOf="@id/step_roadmap"
 		app:layout_constraintBottom_toBottomOf="parent"
 	>
-		<!-- Add sub steps here -->
+		<!-- Add directoriesteps here -->
 	</LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -80,8 +80,8 @@ class ToolSearchResultsFragment : Fragment()
 			val module = ModulesManager.module(searchResult.moduleId)
 
 			module?.apply {
-				// only tools will have null steps
-				if (steps == null)
+				// only tools will have null directories
+				if (directories == null)
 				{
 					var parent = parent()
 

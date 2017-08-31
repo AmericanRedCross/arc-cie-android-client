@@ -21,7 +21,7 @@ class SearchManagerTest
 
 	@Before fun setup()
 	{
-		ModulesManager.init(appContext.assets.open("modules.json"))
+		ModulesManager.init(appContext.assets.open("structure.json"))
 		SearchManager.init(appContext)
 	}
 

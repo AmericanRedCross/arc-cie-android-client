@@ -18,6 +18,8 @@ import okhttp3.Request
 import java.io.File
 import java.io.FileOutputStream
 import java.io.FileReader
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Manager class used for downloading/opening files associated with modules and tools
@@ -124,8 +126,8 @@ object ExportManager
 		ModulesManager.modules.forEach { module ->
 			val data = arrayListOf<LinkedHashMap<String, String>>()
 
-			module.steps?.forEach { step ->
-				step.steps?.forEach { substep ->
+			module.directories?.forEach { step ->
+				step.directories?.forEach { substep ->
 					val rows = ArrayList<LinkedHashMap<String, String>>()
 					rows.add(linkedMapOf<String, String>())
 					rows[0].putAll(columns.associate { it to "" })
@@ -133,11 +135,11 @@ object ExportManager
 					rows[0][columns[0]] = step.title
 					rows[0][columns[1]] = if (checkPrefs.contains(step.id)) "yes" else "no"
 
-					rows[0][columns[2]] = "${substep.hierarchy}"
+					rows[0][columns[2]] = "${substep.order}"
 					rows[0][columns[3]] = substep.title
 					rows[0][columns[4]] = notesPrefs.getString(substep.id, "")
 
-					substep.steps?.forEachIndexed { index, tool ->
+					substep.directories?.forEachIndexed { index, tool ->
 						if (tool.critical || criticalPrefs.contains(tool.id))
 						{
 							if (rows.size - 1 < index)
@@ -179,12 +181,10 @@ object ExportManager
 	 * @return The task created for the download operation
 	 */
 	@SuppressLint("StaticFieldLeak")
-	fun download(file: FileDescriptor, progress: (percent: Int) -> Unit, callback: (success: Boolean, file: File) -> Unit): AsyncTask<Void, Int, Boolean>
+	fun download(file: FileDescriptor, path: File, progress: (percent: Int) -> Unit, callback: (success: Boolean, file: File) -> Unit): AsyncTask<Void, Int, Boolean>
 	{
 		return object : AsyncTask<Void, Int, Boolean>()
 		{
-			val path = File(MainApplication.BASE_PATH, file.title)
-
 			override fun onProgressUpdate(vararg values: Int?)
 			{
 				progress.invoke(values[0] ?: 0)
@@ -194,8 +194,14 @@ object ExportManager
 			{
 				val client = OkHttpClient()
 
+				val rfc1123 = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US)
+				rfc1123.timeZone = TimeZone.getTimeZone("GMT")
+				val lastModified = rfc1123.format(Date(file.timestamp));
+
 				val request = Request.Builder()
 					.addHeader("User-Agent", "Android/ARC-" + BuildConfig.APPLICATION_ID + "-" + BuildConfig.VERSION_NAME)
+					.addHeader("Last-Modified", lastModified)
+					.addHeader("Cache-Control", "max-age=0")
 					.url(file.url)
 					.build()
 

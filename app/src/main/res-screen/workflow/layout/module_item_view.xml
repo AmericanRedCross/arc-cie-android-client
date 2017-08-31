@@ -123,7 +123,7 @@
 			android:divider="@drawable/step_divider"
 			android:paddingTop="8dp"
 		>
-			<!-- add steps here -->
+			<!-- directoriesteps here -->
 		</LinearLayout>
 	</LinearLayout>
 </FrameLayout>

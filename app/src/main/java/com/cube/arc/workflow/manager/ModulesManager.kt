@@ -20,21 +20,24 @@ object ModulesManager
 	lateinit var modules: List<Module>
 
 	val moduleImages = mapOf(
-		1 to R.drawable.module_1_backdrop,
-		2 to R.drawable.module_2_backdrop,
-		3 to R.drawable.module_3_backdrop,
-		4 to R.drawable.module_4_backdrop,
-		5 to R.drawable.module_5_backdrop
+		"1" to R.drawable.module_1_backdrop,
+		"2" to R.drawable.module_2_backdrop,
+		"3" to R.drawable.module_3_backdrop,
+		"4" to R.drawable.module_4_backdrop,
+		"5" to R.drawable.module_5_backdrop
 	)
 
 	val moduleColours = mapOf(
-		1 to R.color.module_1,
-		2 to R.color.module_2,
-		3 to R.color.module_3,
-		4 to R.color.module_4,
-		5 to R.color.module_5
+		"1" to R.color.module_1,
+		"2" to R.color.module_2,
+		"3" to R.color.module_3,
+		"4" to R.color.module_4,
+		"5" to R.color.module_5
 	)
 
+	/**
+	 * Initialises the module manager with a file from a given input stream
+	 */
 	fun init(dataSource: InputStream)
 	{
 		modules = Gson().fromJson(InputStreamReader(dataSource), object : TypeToken<ArrayList<Module>>(){}.type)
@@ -59,7 +62,7 @@ object ModulesManager
 
 		tree.put(module.id, depth)
 
-		module.steps?.forEach { step ->
+		module.directories?.forEach { step ->
 			mapTree(step)
 		}
 	}
@@ -99,7 +102,7 @@ object ModulesManager
 			return module
 		}
 
-		module.steps?.forEach { step ->
+		module.directories?.forEach { step ->
 			val found = search(step, id)
 
 			if (found != null) return found
@@ -127,7 +130,7 @@ object ModulesManager
 	 */
 	fun searchParent(root: Module, id: String): Module?
 	{
-		root.steps?.forEach { step ->
+		root.directories?.forEach { step ->
 			if (step.id == id)
 			{
 				return root
@@ -142,11 +145,11 @@ object ModulesManager
 	}
 
 	/**
-	 * Recursively counts the number of sub-steps for a given module
+	 * Recursively counts the number of sub-directories for a given module
 	 */
 	fun subStepCount(module: Module): Int
 	{
-		return module.steps?.flatMap { it.steps ?: listOf() }?.size ?: 0
+		return module.directories?.flatMap { it.directories ?: listOf() }?.size ?: 0
 	}
 
 	/**
@@ -155,7 +158,7 @@ object ModulesManager
 	fun completedSubStepCount(context: Context, module: Module): Int
 	{
 		val checkPrefs = context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
-		return module.steps?.flatMap { it.steps ?: listOf() }?.filter { checkPrefs.contains(it.id) }?.size ?: 0
+		return module.directories?.flatMap { it.directories ?: listOf() }?.filter { checkPrefs.contains(it.id) }?.size ?: 0
 	}
 
 	/**
@@ -163,8 +166,8 @@ object ModulesManager
 	 */
 	fun toolCount(module: Module, onlyCritical: Boolean = false): Int
 	{
-		val subSteps = module.steps?.flatMap { it.steps ?: listOf() }
-		val tools = subSteps?.flatMap { it.steps ?: listOf() }
+		val subSteps = module.directories?.flatMap { it.directories ?: listOf() }
+		val tools = subSteps?.flatMap { it.directories ?: listOf() }
 		return tools?.filter { if (onlyCritical) it.critical else true }?.size ?: 0
 	}
 
@@ -175,8 +178,8 @@ object ModulesManager
 	{
 		val checkPrefs = context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		val subSteps = module.steps?.flatMap { it.steps ?: listOf() }
-		val tools = subSteps?.flatMap { it.steps ?: listOf() }
+		val subSteps = module.directories?.flatMap { it.directories ?: listOf() }
+		val tools = subSteps?.flatMap { it.directories ?: listOf() }
 			?.filter { if (onlyCritical) it.critical else true }
 			?.filter { checkPrefs.contains(it.id) }
 

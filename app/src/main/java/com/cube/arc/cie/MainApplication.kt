@@ -5,6 +5,7 @@ import android.os.Environment
 import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.manager.SearchManager
 import java.io.File
+import java.io.FileInputStream
 
 /**
  * Application singleton for instantiating application configuration and data files
@@ -22,7 +23,22 @@ class MainApplication : Application()
 
 		// initialise module manager
 		BASE_PATH = File(Environment.getExternalStorageDirectory().absoluteFile, "CIE-Documents")
-		ModulesManager.init(resources.assets.open("modules.json"))
+		initManagers()
+	}
+
+	/**
+	 * Initialises the manager classes
+	 */
+	fun initManagers()
+	{
+		var modulesStream = resources.assets.open("structure.json")
+		val cacheModules = File(filesDir, "structure.json")
+		if (cacheModules.exists())
+		{
+			modulesStream = FileInputStream(cacheModules)
+		}
+
+		ModulesManager.init(modulesStream)
 		SearchManager.init(this)
 	}
 }
