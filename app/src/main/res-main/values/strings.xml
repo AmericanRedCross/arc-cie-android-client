@@ -62,4 +62,14 @@
 	<string name="export_notes_title">Your Notes</string>
 
 	<string name="export">EXPORT</string>
+
+	<string-array name="csv_columns">
+		<item>Step</item>
+		<item>Done</item>
+		<item>No.</item>
+		<item>Sub-Step Action &amp; Guidance</item>
+		<item>Sub-Step Notes</item>
+		<item>Critical Tool</item>
+		<item>Critical Notes</item>
+	</string-array>
 </resources>

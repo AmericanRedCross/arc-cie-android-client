@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.support.v4.content.FileProvider
 import com.cube.arc.BuildConfig
+import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.arc.workflow.model.Registry
@@ -124,15 +125,7 @@ object ExportManager
 	 */
 	fun generateUserContent(context: Context): String
 	{
-		val columns = arrayOf(
-			"Step",
-			"Done",
-			"No.",
-			"Sub-Step Action & Guidance",
-			"Sub-Step Notes",
-			"Critical Tool",
-			"Critical Notes"
-		)
+		val columns = context.resources.getStringArray(R.array.csv_columns)
 
 		var finalCsv = ""
 		val criticalPrefs = context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
