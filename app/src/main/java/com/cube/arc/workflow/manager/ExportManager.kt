@@ -126,8 +126,8 @@ object ExportManager
 		ModulesManager.modules.forEach { module ->
 			val data = arrayListOf<LinkedHashMap<String, String>>()
 
-			module.steps?.forEach { step ->
-				step.steps?.forEach { substep ->
+			module.directories?.forEach { step ->
+				step.directories?.forEach { substep ->
 					val rows = ArrayList<LinkedHashMap<String, String>>()
 					rows.add(linkedMapOf<String, String>())
 					rows[0].putAll(columns.associate { it to "" })
@@ -135,11 +135,11 @@ object ExportManager
 					rows[0][columns[0]] = step.title
 					rows[0][columns[1]] = if (checkPrefs.contains(step.id)) "yes" else "no"
 
-					rows[0][columns[2]] = "${substep.hierarchy}"
+					rows[0][columns[2]] = "${substep.order}"
 					rows[0][columns[3]] = substep.title
 					rows[0][columns[4]] = notesPrefs.getString(substep.id, "")
 
-					substep.steps?.forEachIndexed { index, tool ->
+					substep.directories?.forEachIndexed { index, tool ->
 						if (tool.critical || criticalPrefs.contains(tool.id))
 						{
 							if (rows.size - 1 < index)

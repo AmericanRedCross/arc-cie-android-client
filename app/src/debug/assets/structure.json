@@ -2,7 +2,7 @@
 	{
 		"id": "1",
 		"title": "module 1",
-		"hierarchy": 1,
+		"order": "1",
 		"content": "#markdown content",
 		"attachments": [
 			{
@@ -12,11 +12,11 @@
 				"size": 120000
 			}
 		],
-		"steps": [
+		"directories": [
 			{
 				"id": "2",
 				"title": "module 1 step 1",
-				"hierarchy": 1,
+				"order": "1.1",
 				"content": "#markdown content",
 				"attachments": [
 					{
@@ -26,11 +26,11 @@
 						"size": 120000
 					}
 				],
-				"steps": [
+				"directories": [
 					{
 						"id": "3",
 						"title": "sub step 1",
-						"hierarchy": 1,
+						"order": "1.1.1",
 						"content": "#markdown content",
 						"attachments": [
 							{
@@ -40,11 +40,11 @@
 								"size": 120000
 							}
 						],
-						"steps": [
+						"directories": [
 							{
 								"id": "4",
 								"title": "Non critical tool 1",
-								"hierarchy": 1,
+								"order": "1.1.1.1",
 								"content": "#markdown content",
 								"attachments": [
 									{
@@ -62,7 +62,7 @@
 			{
 				"id": "5",
 				"title": "module 1 step 2",
-				"hierarchy": 2,
+				"order": "1.2",
 				"content": "#markdown content",
 				"attachments": [
 					{
@@ -73,11 +73,11 @@
 						"featured": true
 					}
 				],
-				"steps": [
+				"directories": [
 					{
 						"id": "6",
 						"title": "sub step 1",
-						"hierarchy": 1,
+						"order": "1.2.1",
 						"content": "#markdown content",
 						"attachments": [
 							{
@@ -88,11 +88,11 @@
 								"featured": true
 							}
 						],
-						"steps": [
+						"directories": [
 							{
 								"id": "7",
 								"title": "tool 1",
-								"hierarchy": 1,
+								"order": "1.2.1.1",
 								"content": "#markdown content",
 								"critical": true,
 								"attachments": [
@@ -109,7 +109,7 @@
 					{
 						"id": "8",
 						"title": "sub step 2",
-						"hierarchy": 1,
+						"order": "1.2.2",
 						"content": "#markdown content",
 						"attachments": [
 							{
@@ -120,11 +120,11 @@
 								"featured": true
 							}
 						],
-						"steps": [
+						"directories": [
 							{
 								"id": "9",
 								"title": "tool 1",
-								"hierarchy": 1,
+								"order": "1.2.2.1",
 								"content": "#markdown content",
 								"critical": true,
 								"attachments": [
@@ -139,610 +139,7 @@
 							{
 								"id": "10",
 								"title": "tool 2",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"id": "1",
-		"title": "module 1",
-		"hierarchy": 2,
-		"content": "#markdown content",
-		"attachments": [
-			{
-				"title": "Roadmap",
-				"url": "http://download/url",
-				"mime": "application/pdf",
-				"size": 120000
-			}
-		],
-		"steps": [
-			{
-				"id": "2",
-				"title": "module 1 step 1",
-				"hierarchy": 1,
-				"content": "#markdown content",
-				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000
-					}
-				],
-				"steps": [
-					{
-						"id": "3",
-						"title": "sub step 1",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000
-							}
-						],
-						"steps": [
-							{
-								"id": "4",
-								"title": "Non critical tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"id": "5",
-				"title": "module 1 step 2",
-				"hierarchy": 2,
-				"content": "#markdown content",
-				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000,
-						"featured": true
-					}
-				],
-				"steps": [
-					{
-						"id": "6",
-						"title": "sub step 1",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"steps": [
-							{
-								"id": "7",
-								"title": "tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					},
-					{
-						"id": "8",
-						"title": "sub step 2",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"steps": [
-							{
-								"id": "9",
-								"title": "tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							},
-							{
-								"id": "10",
-								"title": "tool 2",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"id": "1",
-		"title": "module 1",
-		"hierarchy": 3,
-		"content": "#markdown content",
-		"attachments": [
-			{
-				"title": "Roadmap",
-				"url": "http://download/url",
-				"mime": "application/pdf",
-				"size": 120000
-			}
-		],
-		"steps": [
-			{
-				"id": "2",
-				"title": "module 1 step 1",
-				"hierarchy": 1,
-				"content": "#markdown content",
-				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000
-					}
-				],
-				"steps": [
-					{
-						"id": "3",
-						"title": "sub step 1",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000
-							}
-						],
-						"steps": [
-							{
-								"id": "4",
-								"title": "Non critical tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"id": "5",
-				"title": "module 1 step 2",
-				"hierarchy": 2,
-				"content": "#markdown content",
-				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000,
-						"featured": true
-					}
-				],
-				"steps": [
-					{
-						"id": "6",
-						"title": "sub step 1",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"steps": [
-							{
-								"id": "7",
-								"title": "tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					},
-					{
-						"id": "8",
-						"title": "sub step 2",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"steps": [
-							{
-								"id": "9",
-								"title": "tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							},
-							{
-								"id": "10",
-								"title": "tool 2",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"id": "1",
-		"title": "module 1",
-		"hierarchy": 4,
-		"content": "#markdown content",
-		"attachments": [
-			{
-				"title": "Roadmap",
-				"url": "http://download/url",
-				"mime": "application/pdf",
-				"size": 120000
-			}
-		],
-		"steps": [
-			{
-				"id": "2",
-				"title": "module 1 step 1",
-				"hierarchy": 1,
-				"content": "#markdown content",
-				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000
-					}
-				],
-				"steps": [
-					{
-						"id": "3",
-						"title": "sub step 1",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000
-							}
-						],
-						"steps": [
-							{
-								"id": "4",
-								"title": "Non critical tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"id": "5",
-				"title": "module 1 step 2",
-				"hierarchy": 2,
-				"content": "#markdown content",
-				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000,
-						"featured": true
-					}
-				],
-				"steps": [
-					{
-						"id": "6",
-						"title": "sub step 1",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"steps": [
-							{
-								"id": "7",
-								"title": "tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					},
-					{
-						"id": "8",
-						"title": "sub step 2",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"steps": [
-							{
-								"id": "9",
-								"title": "tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							},
-							{
-								"id": "10",
-								"title": "tool 2",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"id": "11",
-		"title": "module 2",
-		"hierarchy": 5,
-		"content": "# markdown content\n*bold* \n ## sub header \n ![text](http://placespider.com/650x488-6.jpg)",
-		"attachments": [
-			{
-				"title": "Roadmap",
-				"url": "https://httpbin.org/image/png",
-				"mime": "image/png",
-				"size": 1048576,
-				"timestamp": 1501836161000,
-				"featured": true
-			}
-		],
-		"steps": [
-			{
-				"id": "12",
-				"title": "module 1 step 1",
-				"hierarchy": 1,
-				"content": "#markdown content",
-				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000,
-						"featured": true
-					}
-				],
-				"steps": [
-					{
-						"id": "13",
-						"title": "sub step 1",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"steps": [
-							{
-								"id": "14",
-								"title": "tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					},
-					{
-						"id": "15",
-						"title": "sub step 1",
-						"hierarchy": 1,
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"steps": [
-							{
-								"id": "16",
-								"title": "tool 1",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							},
-							{
-								"id": "17",
-								"title": "tool 2",
-								"hierarchy": 1,
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							},
-							{
-								"id": "18",
-								"title": "tool 3",
-								"hierarchy": 1,
+								"order": "1.2.2.2",
 								"content": "#markdown content",
 								"critical": true,
 								"attachments": [

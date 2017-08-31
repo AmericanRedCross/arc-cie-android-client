@@ -25,10 +25,10 @@ class ProgressModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
 
 	fun populate(model: Module)
 	{
-		hierarchy.background.tint(hierarchy.resources.getColor(ModulesManager.moduleColours[model.hierarchy] ?: R.color.module_1))
-		moduleProgress.tint(ModulesManager.moduleColours[model.hierarchy] ?: R.color.module_1)
-		subStepsDivider.tint(ModulesManager.moduleColours[model.hierarchy] ?: R.color.module_1)
-		criticalDivider.tint(ModulesManager.moduleColours[model.hierarchy] ?: R.color.module_1)
+		hierarchy.background.tint(hierarchy.resources.getColor(ModulesManager.moduleColours[model.order] ?: R.color.module_1))
+		moduleProgress.tint(ModulesManager.moduleColours[model.order] ?: R.color.module_1)
+		subStepsDivider.tint(ModulesManager.moduleColours[model.order] ?: R.color.module_1)
+		criticalDivider.tint(ModulesManager.moduleColours[model.order] ?: R.color.module_1)
 
 		val completedSubSteps = ModulesManager.completedSubStepCount(itemView.context, model)
 		val totalSubSteps = ModulesManager.subStepCount(model)
@@ -43,6 +43,6 @@ class ProgressModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
 
 		moduleProgress.progress = totalComplete
 		name.text = model.title
-		hierarchy.text = model.hierarchy.toString()
+		hierarchy.text = model.order.toString()
 	}
 }

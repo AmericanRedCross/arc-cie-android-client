@@ -16,7 +16,7 @@ class ToolDividerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 	fun populate(parent: Module)
 	{
-		hierarchy.text = parent.hierarchy.toString()
+		hierarchy.text = parent.order.toString()
 		title.text = parent.title
 	}
 }
