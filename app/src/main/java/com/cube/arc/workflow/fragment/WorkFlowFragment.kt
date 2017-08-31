@@ -86,9 +86,7 @@ class WorkFlowFragment : Fragment()
 		criticalFilter.isChecked = false
 		searchInput.visibility = View.VISIBLE
 
-		val adapter = ModuleAdapter()
-		adapter.items = ModulesManager.modules
-		recyclerView.adapter = adapter
+		recyclerView.adapter = ModuleAdapter()
 
 		recyclerView.post {
 			scroller.scrollTo(0, recyclerView.top)

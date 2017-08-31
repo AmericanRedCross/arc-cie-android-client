@@ -3,6 +3,7 @@ package com.cube.arc.workflow.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.cube.arc.R
+import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.model.Module
 import com.cube.arc.workflow.view.holder.ModuleViewHolder
 import com.cube.lib.util.inflate
@@ -12,7 +13,7 @@ import com.cube.lib.util.inflate
  */
 class ModuleAdapter : RecyclerView.Adapter<ModuleViewHolder>()
 {
-	var items : List<Module> = listOf()
+	var items : List<Module> = ModulesManager.modules
 
 	override fun onBindViewHolder(holder: ModuleViewHolder?, position: Int)
 	{
