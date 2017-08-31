@@ -17,7 +17,10 @@ import com.cube.arc.cie.fragment.DownloadHelper
 import com.cube.arc.onboarding.activity.VideoPlayerActivity
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.lib.util.bind
-import java.io.File
+import org.kamranzafar.jtar.TarInputStream
+import java.io.*
+import java.util.zip.GZIPInputStream
+
 
 /**
  * // TODO: Add class description
@@ -69,12 +72,73 @@ class SettingsActivity : AppCompatActivity()
 		}
 
 		downloadTask.callbackLambda = { success, filePath ->
-			downloadProgress.dismiss()
-			updateButton.isEnabled = true
-
 			if (success)
 			{
-				Toast.makeText(this, "Content successfully updated", Toast.LENGTH_SHORT).show()
+				// extract tar
+				Thread({
+					try
+					{
+						val buffer = 8192
+						var totalRead: Long = 0
+
+						val stream = BufferedInputStream(GZIPInputStream(FileInputStream(filePath), buffer), buffer)
+						val tis = TarInputStream(stream)
+
+						while (true)
+						{
+							val file = tis.nextEntry ?: break
+							if (file.name == "./") continue
+
+							val extractedFilePath = filePath.parent + "/" + file.name
+							val extractFile = File(extractedFilePath)
+
+							if (file.isDirectory)
+							{
+								extractFile.mkdirs()
+								continue
+							}
+
+							// create folders if they do not exist for file
+							if (!File(extractFile.parent).exists())
+							{
+								File(extractFile.parent).mkdirs()
+							}
+
+							val fos = FileOutputStream(extractedFilePath)
+							val dest = BufferedOutputStream(fos, buffer)
+
+							var count = 0
+							val data = ByteArray(buffer)
+
+							while (true)
+							{
+								count = tis.read(data)
+
+								if (count == -1) break
+
+								dest.write(data, 0, count)
+								totalRead += count.toLong()
+							}
+
+							dest.flush()
+							dest.close()
+						}
+
+						tis.close()
+						filePath.exists()
+					}
+					catch (e: IOException)
+					{
+						e.printStackTrace()
+					}
+
+					runOnUiThread {
+						downloadProgress.dismiss()
+						updateButton.isEnabled = true
+
+						Toast.makeText(this, "Content successfully updated", Toast.LENGTH_SHORT).show()
+					}
+				}).start()
 			}
 			else
 			{
@@ -87,8 +151,8 @@ class SettingsActivity : AppCompatActivity()
 			updateButton.isEnabled = false
 
 			downloadTask = downloadTask.attach(this)
-			downloadTask.file = FileDescriptor(url = "http://192.168.1.176:8000/modules.json")
-			downloadTask.execute(outFile = File(filesDir, "modules.json"))
+			downloadTask.file = FileDescriptor(url = "http://ec2-54-193-52-173.us-west-1.compute.amazonaws.com/api/projects/1/publishes/latest?redirect=true&language=en")
+			downloadTask.execute(outFile = File(filesDir, "content.tar.gz"))
 
 			(application as MainApplication).initManagers()
 		}
