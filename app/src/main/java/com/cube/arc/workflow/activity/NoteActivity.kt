@@ -62,6 +62,8 @@ class NoteActivity : AppCompatActivity()
 			}
 		}
 
+		actionSubTitle.text = module?.order
+
 		actionCancel.setOnClickListener { view ->
 			AlertDialog.Builder(view.context)
 				.setTitle(R.string.note_dialog_cancel_confirm_title)

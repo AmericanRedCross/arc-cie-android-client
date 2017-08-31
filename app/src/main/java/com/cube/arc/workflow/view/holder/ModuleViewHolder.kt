@@ -114,7 +114,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			subStepTitle.text = subStep.title
 			subStepNoteButton.setOnClickListener { view ->
 				val noteIntent = Intent(view.context, NoteActivity::class.java)
-				IntentDataHelper.store(NoteActivity::class.java, step.id)
+				IntentDataHelper.store(NoteActivity::class.java, subStep.id)
 				view.context.startActivity(noteIntent)
 			}
 
@@ -132,7 +132,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			subStepNoteButton.setText(when
 			{
-				notePrefs.contains(step.id) -> R.string.module_substep_edit_note
+				notePrefs.contains(subStep.id) -> R.string.module_substep_edit_note
 				else -> R.string.module_substep_add_note
 			})
 
