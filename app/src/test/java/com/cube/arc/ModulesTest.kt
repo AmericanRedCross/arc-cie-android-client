@@ -14,7 +14,7 @@ class ModulesTest
 {
 	@Before fun setUp()
 	{
-		ModulesManager.init(this::class.java.classLoader.getResourceAsStream("modules.json"))
+		ModulesManager.init(this::class.java.classLoader.getResourceAsStream("structure.json"))
 
 		assert(ModulesManager.modules.isNotEmpty())
 	}
