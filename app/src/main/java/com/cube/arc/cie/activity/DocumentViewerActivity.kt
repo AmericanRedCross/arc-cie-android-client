@@ -12,6 +12,7 @@ import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.parser.URLImageParser
 import com.cube.lib.util.bind
+import com.cube.lib.util.mimeIcon
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 
@@ -70,6 +71,7 @@ class DocumentViewerActivity : AppCompatActivity()
 			title.text = files[0].title
 			documentTitle.text = files[0].title
 			documentSize.text = "%.2fMB".format(files[0].size.toDouble() / 1024.0 / 1024.0)
+			documentIcon.setImageResource(files[0].mimeIcon())
 
 			downloadProgress.isIndeterminate = true
 
