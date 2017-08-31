@@ -34,6 +34,8 @@
 	<string name="tool_menu_add_note">Add note</string>
 	<string name="tool_menu_edit_note">Edit note</string>
 	<string name="tool_menu_export">Export or share</string>
+	<string name="tool_menu_download">Download</string>
+	<string name="tool_menu_open">Open</string>
 
 	<string name="tool_search_results_count">%s Tools shown for \'%s\'</string>
 
