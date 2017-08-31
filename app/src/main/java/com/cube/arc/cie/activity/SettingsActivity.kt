@@ -17,9 +17,8 @@ import com.cube.arc.cie.fragment.DownloadHelper
 import com.cube.arc.onboarding.activity.VideoPlayerActivity
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.lib.util.bind
-import org.kamranzafar.jtar.TarInputStream
-import java.io.*
-import java.util.zip.GZIPInputStream
+import com.cube.lib.util.extractTo
+import java.io.File
 
 
 /**
@@ -76,61 +75,7 @@ class SettingsActivity : AppCompatActivity()
 			{
 				// extract tar
 				Thread({
-					try
-					{
-						val buffer = 8192
-						var totalRead: Long = 0
-
-						val stream = BufferedInputStream(GZIPInputStream(FileInputStream(filePath), buffer), buffer)
-						val tis = TarInputStream(stream)
-
-						while (true)
-						{
-							val file = tis.nextEntry ?: break
-							if (file.name == "./") continue
-
-							val extractedFilePath = filePath.parent + "/" + file.name
-							val extractFile = File(extractedFilePath)
-
-							if (file.isDirectory)
-							{
-								extractFile.mkdirs()
-								continue
-							}
-
-							// create folders if they do not exist for file
-							if (!File(extractFile.parent).exists())
-							{
-								File(extractFile.parent).mkdirs()
-							}
-
-							val fos = FileOutputStream(extractedFilePath)
-							val dest = BufferedOutputStream(fos, buffer)
-
-							var count = 0
-							val data = ByteArray(buffer)
-
-							while (true)
-							{
-								count = tis.read(data)
-
-								if (count == -1) break
-
-								dest.write(data, 0, count)
-								totalRead += count.toLong()
-							}
-
-							dest.flush()
-							dest.close()
-						}
-
-						tis.close()
-						filePath.exists()
-					}
-					catch (e: IOException)
-					{
-						e.printStackTrace()
-					}
+					filePath.extractTo(filePath.parentFile)
 
 					runOnUiThread {
 						downloadProgress.dismiss()
