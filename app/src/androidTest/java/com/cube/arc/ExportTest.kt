@@ -23,7 +23,7 @@ class ExportTest
 
 	@Before fun setUp()
 	{
-		ModulesManager.init(appContext.assets.open("modules.json"))
+		ModulesManager.init(appContext.assets.open("structure.json"))
 		MainApplication.BASE_PATH = File("/")
 
 		Assert.assertTrue(ModulesManager.modules.isNotEmpty())

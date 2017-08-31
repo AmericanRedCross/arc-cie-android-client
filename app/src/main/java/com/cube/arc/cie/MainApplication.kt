@@ -31,8 +31,8 @@ class MainApplication : Application()
 	 */
 	fun initManagers()
 	{
-		var modulesStream = resources.assets.open("modules.json")
-		val cacheModules = File(filesDir, "modules.json")
+		var modulesStream = resources.assets.open("structure.json")
+		val cacheModules = File(filesDir, "structure.json")
 		if (cacheModules.exists())
 		{
 			modulesStream = FileInputStream(cacheModules)

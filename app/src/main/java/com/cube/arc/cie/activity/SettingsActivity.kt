@@ -17,7 +17,9 @@ import com.cube.arc.cie.fragment.DownloadHelper
 import com.cube.arc.onboarding.activity.VideoPlayerActivity
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.lib.util.bind
+import com.cube.lib.util.extractTo
 import java.io.File
+
 
 /**
  * // TODO: Add class description
@@ -69,12 +71,22 @@ class SettingsActivity : AppCompatActivity()
 		}
 
 		downloadTask.callbackLambda = { success, filePath ->
-			downloadProgress.dismiss()
-			updateButton.isEnabled = true
-
 			if (success)
 			{
-				Toast.makeText(this, "Content successfully updated", Toast.LENGTH_SHORT).show()
+				// extract tar
+				Thread({
+					filePath.extractTo(filePath.parentFile)
+					filePath.delete()
+
+					runOnUiThread {
+						downloadProgress.dismiss()
+						updateButton.isEnabled = true
+
+						(application as MainApplication).initManagers()
+
+						Toast.makeText(this, "Content successfully updated", Toast.LENGTH_SHORT).show()
+					}
+				}).start()
 			}
 			else
 			{
@@ -87,10 +99,8 @@ class SettingsActivity : AppCompatActivity()
 			updateButton.isEnabled = false
 
 			downloadTask = downloadTask.attach(this)
-			downloadTask.file = FileDescriptor(url = "http://192.168.1.176:8000/modules.json")
-			downloadTask.execute(outFile = File(filesDir, "modules.json"))
-
-			(application as MainApplication).initManagers()
+			downloadTask.file = FileDescriptor(url = "http://ec2-54-193-52-173.us-west-1.compute.amazonaws.com/api/projects/1/publishes/latest?redirect=true&language=en")
+			downloadTask.execute(outFile = File(filesDir, "content.tar.gz"))
 		}
 	}
 
