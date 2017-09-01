@@ -15,6 +15,7 @@ import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.manager.ModulesManager
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.IntentDataHelper
+import com.cube.lib.util.mimeIcon
 import com.cube.lib.util.tint
 import java.io.File
 
@@ -53,7 +54,8 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		toolTitle.text = tool.title
 		toolDescription.text = tool.content
 
-//		toolIcon.tint(ModulesManager.moduleColours[module?.order ?: 1] ?: R.color.module_1)
+		toolIcon.setImageResource(tool.attachments?.get(0)?.mimeIcon() ?: R.drawable.ic_mime_misc)
+		toolIcon.tint(ModulesManager.moduleColours[module?.order ?: 1] ?: R.color.module_1)
 		toolCheck.tint(ModulesManager.moduleColours[module?.order ?: 1] ?: R.color.module_1)
 		toolCheck.isChecked = checkPrefs.contains(tool.id)
 		toolCheck.setOnCheckedChangeListener { buttonView, isChecked ->
