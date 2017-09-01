@@ -48,6 +48,7 @@ class NoteActivity : AppCompatActivity()
 		if (savedInstanceState == null)
 		{
 			editor.setText(prefs.getString(id, ""))
+			editor.setSelection(editor.text.length)
 		}
 
 		when
@@ -78,7 +79,14 @@ class NoteActivity : AppCompatActivity()
 		}
 
 		save.setOnClickListener {
-			prefs.edit().putString(id, editor.text.toString()).apply()
+			prefs.edit().let {
+				when (editor.text.isEmpty())
+				{
+					true -> it.remove(id)
+					else -> it.putString(id, editor.text.toString())
+				}
+			}.apply()
+
 			finish()
 		}
 	}
