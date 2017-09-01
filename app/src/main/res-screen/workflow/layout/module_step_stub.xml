@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:id="@+id/step_container"
 	android:orientation="vertical"
-	android:paddingTop="20dp"
+	android:id="@+id/step_container"
 >
-	<TextView
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:id="@+id/step_hierarchy"
-		android:text="2.1.1"
-		android:gravity="center_vertical"
-		android:layout_marginLeft="24dp"
-		android:layout_marginStart="24dp"
-		android:fontFamily="sans-serif-light"
-		android:textColor="#ff000000"
-		app:layout_constraintStart_toStartOf="parent"
-	/>
+	<android.support.constraint.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="52dp"
+		android:paddingLeft="24dp"
+		android:paddingRight="24dp"
+	>
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/step_hierarchy"
+			android:text="2.1.1"
+			android:gravity="center_vertical"
+			android:fontFamily="sans-serif-light"
+			android:textColor="#ff000000"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+		/>
 
-	<TextView
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:id="@+id/step_title"
-		android:text="Initial decision For Cash"
-		android:gravity="center_vertical"
-		android:layout_marginRight="12dp"
-		android:layout_marginEnd="12dp"
-		android:layout_marginLeft="4dp"
-		android:layout_marginStart="4dp"
-		android:textStyle="bold"
-		android:textColor="#ff000000"
-		app:layout_constraintStart_toEndOf="@id/step_hierarchy"
-	/>
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/step_title"
+			android:text="Initial decision For Cash"
+			android:gravity="center_vertical"
+			android:layout_marginRight="12dp"
+			android:layout_marginEnd="12dp"
+			android:layout_marginLeft="4dp"
+			android:layout_marginStart="4dp"
+			android:textStyle="bold"
+			android:textColor="#ff000000"
+			app:layout_constraintStart_toEndOf="@id/step_hierarchy"
+			app:layout_constraintEnd_toStartOf="@id/step_roadmap"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+		/>
 
-	<Button
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/step_roadmap"
-		android:layout_marginTop="12dp"
-		android:layout_marginLeft="24dp"
-		android:layout_marginStart="24dp"
-		android:layout_marginRight="12dp"
-		android:layout_marginEnd="12dp"
-		android:text="Roadmap"
-		app:layout_constraintTop_toBottomOf="@id/step_hierarchy"
-		app:layout_constraintStart_toStartOf="parent"
-		style="@style/SmallButton"
-	/>
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/step_roadmap"
+			android:text="Roadmap"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			style="@style/SmallButton"
+		/>
+	</android.support.constraint.ConstraintLayout>
 
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -59,11 +64,9 @@
 		android:orientation="vertical"
 		android:showDividers="middle"
 		android:divider="@drawable/sub_step_divider"
-		android:layout_marginTop="20dp"
-		app:layout_goneMarginTop="20dp"
-		app:layout_constraintTop_toBottomOf="@id/step_roadmap"
+		app:layout_constraintTop_toBottomOf="@id/step_hierarchy"
 		app:layout_constraintBottom_toBottomOf="parent"
 	>
 		<!-- Add directoriesteps here -->
 	</LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

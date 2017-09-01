@@ -98,9 +98,9 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 	private fun populateSubSteps(root: Module, step: Module, stepView: View)
 	{
-		var subStepContainer = stepView.findViewById(R.id.substeps_container) as ViewGroup
-		var notePrefs = stepView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
-		var checkPrefs = stepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
+		val subStepContainer = stepView.findViewById(R.id.substeps_container) as ViewGroup
+		val notePrefs = stepView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
+		val checkPrefs = stepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
 		step.directories?.forEach { subStep ->
 			val subStepView = subStepContainer.inflate<View>(R.layout.step_substep_stub)
@@ -110,6 +110,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val subStepTitle = subStepView.findViewById(R.id.substep_title) as TextView
 			val subStepNoteButton = subStepView.findViewById(R.id.add_note) as Button
 
+			restoreVisibility(subStep, subStepNoteButton)
 			subStepHierarchy.text = subStep.order
 			subStepTitle.text = subStep.title
 			subStepNoteButton.setOnClickListener { view ->
@@ -163,8 +164,14 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		subStepView.setOnClickListener {
 			when
 			{
-				toolContainer.visibility == View.VISIBLE -> hideView(subStep, toolContainer)
-				else -> showView(subStep, toolContainer)
+				toolContainer.visibility == View.VISIBLE -> {
+					hideView(subStep, toolContainer)
+					hideView(subStep, subStepView.findViewById(R.id.add_note))
+				}
+				else -> {
+					showView(subStep, toolContainer)
+					showView(subStep, subStepView.findViewById(R.id.add_note))
+				}
 			}
 
 			subStepChevron.setImageResource(when
