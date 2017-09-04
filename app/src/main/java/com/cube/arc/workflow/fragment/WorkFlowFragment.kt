@@ -88,8 +88,9 @@ class WorkFlowFragment : Fragment()
 
 		recyclerView.adapter = ModuleAdapter()
 
+		recyclerView.setPadding(0, resources.getDimensionPixelSize(R.dimen.dp8), 0, 0)
 		recyclerView.post {
-			scroller.scrollTo(0, recyclerView.top)
+			scroller.scrollTo(0, recyclerView.top + recyclerView.paddingTop)
 		}
 	}
 
@@ -122,8 +123,9 @@ class WorkFlowFragment : Fragment()
 		adapter.groups = groupHeaders.toList()
 		recyclerView.adapter = adapter
 
+		recyclerView.setPadding(0, 0, 0, 0)
 		recyclerView.post {
-			scroller.scrollTo(0, recyclerView.top)
+			scroller.scrollTo(0, recyclerView.top + recyclerView.paddingTop)
 		}
 	}
 }
