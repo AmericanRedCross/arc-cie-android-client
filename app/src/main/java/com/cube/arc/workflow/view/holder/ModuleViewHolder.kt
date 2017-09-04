@@ -44,7 +44,28 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		hierarchy.background.tint(hierarchy.resources.getColor(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1))
 		image.setImageResource(ModulesManager.moduleImages[moduleHierarchy] ?: R.drawable.module_1_backdrop)
 
-		populateSteps(model)
+		moduleClickArea.setOnClickListener { view ->
+			populateSteps(model)
+
+			when
+			{
+				stepsContainer.visibility == View.VISIBLE -> hideView(model, stepsContainer)
+				else -> showView(model, stepsContainer)
+			}
+
+			chevron.setImageResource(when
+			{
+				stepsContainer.visibility == View.VISIBLE -> R.drawable.chevron_collapse
+				else -> R.drawable.chevron_expand
+			})
+
+			val featuredAttachments = model.attachments?.filter { file -> file.featured }
+			roadmap.visibility = if (featuredAttachments?.size == 1 && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+			roadmap.setOnClickListener { view ->
+				IntentDataHelper.store(DocumentViewerActivity::class.java, model)
+				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
+			}
+		}
 	}
 
 	private fun populateSteps(model: Module)
@@ -74,26 +95,6 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 
 		restoreVisibility(model, stepsContainer)
-		moduleClickArea.setOnClickListener { view ->
-			when
-			{
-				stepsContainer.visibility == View.VISIBLE -> hideView(model, stepsContainer)
-				else -> showView(model, stepsContainer)
-			}
-
-			chevron.setImageResource(when
-			{
-				stepsContainer.visibility == View.VISIBLE -> R.drawable.chevron_collapse
-				else -> R.drawable.chevron_expand
-			})
-
-			val featuredAttachments = model.attachments?.filter { file -> file.featured }
-			roadmap.visibility = if (featuredAttachments?.size == 1 && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
-			roadmap.setOnClickListener { view ->
-				IntentDataHelper.store(DocumentViewerActivity::class.java, model)
-				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
-			}
-		}
 	}
 
 	private fun populateSubSteps(root: Module, step: Module, stepView: View)
