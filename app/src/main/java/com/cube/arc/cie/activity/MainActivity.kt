@@ -59,19 +59,26 @@ class MainActivity : AppCompatActivity()
 
 	fun setUi()
 	{
-		bottomNavigation.setOnNavigationItemSelectedListener { item ->
+		val select = ({ itemId: Int ->
 			supportFragmentManager.beginTransaction()
-				.replace(R.id.fragment_holder, when (item.itemId)
+				.replace(R.id.fragment_holder, when (itemId)
 					{
 						R.id.menu_workflow -> WorkFlowFragment()
 						R.id.menu_progress -> ProgressFragment()
 						else -> Fragment()
 					})
 				.commit()
+		})
+
+		bottomNavigation.setOnNavigationItemSelectedListener { item ->
+			if (bottomNavigation.selectedItemId != item.itemId)
+			{
+				select.invoke(item.itemId)
+			}
 
 			true
 		}
 
-		bottomNavigation.selectedItemId = R.id.menu_workflow
+		select.invoke(R.id.menu_workflow)
 	}
 }
