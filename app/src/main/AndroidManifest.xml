@@ -42,7 +42,7 @@
 		<activity android:name=".workflow.activity.NoteActivity" android:windowSoftInputMode="adjustResize" />
 		<activity android:name=".workflow.activity.ToolSearchResultsActivity" android:windowSoftInputMode="stateAlwaysHidden" />
 
-		<activity android:name=".onboarding.activity.OnboardingActivity" />
+		<activity android:name=".onboarding.activity.OnboardingActivity" android:screenOrientation="portrait" />
 		<activity android:name=".onboarding.activity.VideoPlayerActivity" android:theme="@style/AppTheme.Fullscreen" android:screenOrientation="portrait" />
 	</application>
 </manifest>
