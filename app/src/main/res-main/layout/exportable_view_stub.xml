@@ -14,6 +14,7 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/mime_icon"
 		android:src="@drawable/ic_mime_pdf"
+		android:tint="@color/colorPrimary"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
