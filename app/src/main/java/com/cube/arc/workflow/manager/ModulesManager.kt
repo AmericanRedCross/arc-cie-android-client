@@ -40,7 +40,15 @@ object ModulesManager
 	 */
 	fun init(dataSource: InputStream)
 	{
-		modules = Gson().fromJson(InputStreamReader(dataSource), object : TypeToken<ArrayList<Module>>(){}.type)
+		try
+		{
+			modules = Gson().fromJson(InputStreamReader(dataSource), object : TypeToken<ArrayList<Module>>(){}.type)
+		}
+		catch(e: Exception)
+		{
+			// failed to parse modules json
+			modules = listOf()
+		}
 
 		tree = LinkedHashMap<String, Int>()
 
