@@ -59,7 +59,8 @@
 	<string name="export_title">Export Content</string>
 	<string name="export_critical_title">Critical Path Tools</string>
 	<string name="export_toolkit_title">Entire Toolkit</string>
-	<string name="export_progress_title">Your Progress</string>
+	<string name="export_critical_progress_title">Critical Path Progress</string>
+	<string name="export_entire_progress_title">Entire Progress</string>
 	<string name="export_notes_title">Your Notes</string>
 
 	<string name="export">EXPORT</string>

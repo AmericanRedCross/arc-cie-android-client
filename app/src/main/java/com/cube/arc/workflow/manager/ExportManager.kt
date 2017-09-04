@@ -106,7 +106,7 @@ object ExportManager
 	/**
 	 * Exports the user's content and module data into a CSV
 	 */
-	fun generateUserContent(context: Context): String
+	fun generateUserContent(context: Context, onlyCritical: Boolean = false): String
 	{
 		val columns = arrayOf(
 			"Step",
@@ -140,7 +140,7 @@ object ExportManager
 					rows[0][columns[4]] = notesPrefs.getString(substep.id, "")
 
 					substep.directories?.forEachIndexed { index, tool ->
-						if (tool.critical || criticalPrefs.contains(tool.id))
+						if (onlyCritical && (tool.critical || criticalPrefs.contains(tool.id)) || !onlyCritical)
 						{
 							if (rows.size - 1 < index)
 							{

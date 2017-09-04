@@ -7,6 +7,7 @@ import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.cube.arc.R
@@ -14,7 +15,6 @@ import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
-import kotlinx.android.synthetic.main.document_viewer_activity_view.*
 import java.io.File
 
 /**
@@ -23,6 +23,7 @@ import java.io.File
 class ExportActivity : AppCompatActivity()
 {
 	private val exportablesContainer by bind<LinearLayout>(R.id.exportables_container)
+	private val close by bind<View>(R.id.close)
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -58,12 +59,12 @@ class ExportActivity : AppCompatActivity()
 			}
 		)
 
-		// your progress
+		// critical progress
 		inflateExportable(
-			exportTitle = R.string.export_progress_title,
+			exportTitle = R.string.export_critical_progress_title,
 			exportClick = { view ->
-				val toShare = ExportManager.generateUserContent(view.context)
-				val path = File(MainApplication.BASE_PATH, "user_content.csv")
+				val toShare = ExportManager.generateUserContent(view.context, true)
+				val path = File(MainApplication.BASE_PATH, "critical_user_content.csv")
 				path.bufferedWriter().use { out ->
 					out.write(toShare, 0, toShare.length)
 				}
@@ -77,14 +78,39 @@ class ExportActivity : AppCompatActivity()
 					intent.putExtra(Intent.EXTRA_STREAM, contentUri)
 				}, "Share to"))
 			}
-		)
+		).apply {
+			(findViewById(R.id.mime_icon) as ImageView).setImageResource(R.drawable.ic_mime_misc)
+		}
+
+		// entire progress
+		inflateExportable(
+			exportTitle = R.string.export_entire_progress_title,
+			exportClick = { view ->
+				val toShare = ExportManager.generateUserContent(view.context)
+				val path = File(MainApplication.BASE_PATH, "all_user_content.csv")
+				path.bufferedWriter().use { out ->
+					out.write(toShare, 0, toShare.length)
+				}
+
+				val contentUri = FileProvider.getUriForFile(view.context, view.context.packageName + ".provider", path)
+
+				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
+					intent.data = contentUri
+					intent.type = "text/csv"
+					intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+					intent.putExtra(Intent.EXTRA_STREAM, contentUri)
+				}, "Share to"))
+			}
+		).apply {
+			(findViewById(R.id.mime_icon) as ImageView).setImageResource(R.drawable.ic_mime_misc)
+		}
 
 		close.setOnClickListener {
 			finish()
 		}
 	}
 
-	private fun inflateExportable(@StringRes exportTitle: Int, exportClick: (View) -> Unit)
+	private fun inflateExportable(@StringRes exportTitle: Int, exportClick: (View) -> Unit): View
 	{
 		val view = exportablesContainer.inflate<View>(R.layout.exportable_view_stub).apply {
 			val title = findViewById(R.id.document_title) as TextView
@@ -96,5 +122,6 @@ class ExportActivity : AppCompatActivity()
 		}
 
 		exportablesContainer.addView(view)
+		return view
 	}
 }
