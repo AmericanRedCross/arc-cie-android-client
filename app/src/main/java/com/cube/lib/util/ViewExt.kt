@@ -91,11 +91,13 @@ fun <T : View> T.tint(@ColorRes colourRes: Int, alpha: Float = 1.0f): T
 				indeterminateTintList = ColorStateList.valueOf(tintColour)
 				progressTintList = ColorStateList.valueOf(tintColour)
 				secondaryProgressTintList = ColorStateList.valueOf(tintColour)
+				progressBackgroundTintList = ColorStateList.valueOf(tintColour.alpha(alpha * 0.5f))
 			}
 			else
 			{
 				progressDrawable.tint(tintColour)
 				indeterminateDrawable.tint(tintColour)
+				background.tint(tintColour.alpha(alpha * 0.5f))
 			}
 		}
 
