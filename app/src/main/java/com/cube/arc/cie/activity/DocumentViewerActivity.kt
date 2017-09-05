@@ -9,12 +9,14 @@ import com.cube.arc.R
 import com.cube.arc.cie.fragment.DownloadHelper
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.Module
+import com.cube.lib.helper.BundleHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.parser.URLImageParser
 import com.cube.lib.util.bind
 import com.cube.lib.util.mimeIcon
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
+import java.io.InputStreamReader
 
 /**
  * Document viewer activity used for viewing content preview of a document
@@ -23,6 +25,7 @@ class DocumentViewerActivity : AppCompatActivity()
 {
 	private val title by bind<TextView>(R.id.title)
 	private val preview by bind<EditText>(R.id.preview)
+	private val documentFooter by bind<View>(R.id.document_footer)
 	private val documentIcon by bind<ImageView>(R.id.mime_icon)
 	private val documentTitle by bind<TextView>(R.id.document_title)
 	private val documentSize by bind<TextView>(R.id.document_size)
@@ -52,22 +55,20 @@ class DocumentViewerActivity : AppCompatActivity()
 
 	fun setUi()
 	{
-		val files = module.attachments?.filter { file -> file.featured }
+		if (module.content == null) return
 
-		if (files?.isEmpty() ?: true)
-		{
-			finish()
-			return
-		}
+		val files = module.attachments.filter { file -> file.featured }
+		documentFooter.visibility = if (files.isEmpty()) View.GONE else View.VISIBLE
 
+		val fileStream = BundleHelper.resolve(module.content ?: "", this)
 		val parser = Parser.builder().build()
-		val document = parser.parse(module.content)
+		val document = parser.parseReader(InputStreamReader(fileStream))
 		val renderer = HtmlRenderer.builder().build()
 		val htmlContent = renderer.render(document)
 
 		preview.setText(Html.fromHtml(htmlContent, URLImageParser(preview), null))
 
-		files?.let {
+		files.getOrNull(0)?.let {
 			title.text = files[0].title
 			documentTitle.text = files[0].title
 			documentSize.text = "%.2fMB".format(files[0].size.toDouble() / 1024.0 / 1024.0)
