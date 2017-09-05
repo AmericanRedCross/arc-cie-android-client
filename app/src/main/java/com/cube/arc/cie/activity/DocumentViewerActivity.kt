@@ -60,71 +60,72 @@ class DocumentViewerActivity : AppCompatActivity()
 		val files = module.attachments.filter { file -> file.featured }
 		documentFooter.visibility = if (files.isEmpty()) View.GONE else View.VISIBLE
 
-		val fileStream = BundleHelper.resolve(module.content ?: "", this)
-		val parser = Parser.builder().build()
-		val document = parser.parseReader(InputStreamReader(fileStream))
-		val renderer = HtmlRenderer.builder().build()
-		val htmlContent = renderer.render(document)
+		BundleHelper.resolve(module.content ?: "", this)?.let {
+			val parser = Parser.builder().build()
+			val document = parser.parseReader(InputStreamReader(it))
+			val renderer = HtmlRenderer.builder().build()
+			val htmlContent = renderer.render(document)
 
-		preview.setText(Html.fromHtml(htmlContent, URLImageParser(preview), null))
+			preview.setText(Html.fromHtml(htmlContent, URLImageParser(preview), null))
 
-		files.getOrNull(0)?.let {
-			title.text = files[0].title
-			documentTitle.text = files[0].title
-			documentSize.text = "%.2fMB".format(files[0].size.toDouble() / 1024.0 / 1024.0)
-			documentIcon.setImageResource(files[0].mimeIcon())
+			files.getOrNull(0)?.let {
+				title.text = files[0].title
+				documentTitle.text = files[0].title
+				documentSize.text = "%.2fMB".format(files[0].size.toDouble() / 1024.0 / 1024.0)
+				documentIcon.setImageResource(files[0].mimeIcon())
 
-			downloadProgress.isIndeterminate = true
+				downloadProgress.isIndeterminate = true
 
-			if (downloadTask.isDownloading.get())
-			{
-				export.isEnabled = false
-				downloadProgress.visibility = View.VISIBLE
-			}
-
-			downloadTask.progressLambda = { progress ->
-				export.isEnabled = false
-				downloadProgress.visibility = View.VISIBLE
-				downloadProgress.isIndeterminate = false
-				downloadProgress.max = 100
-				downloadProgress.progress = progress
-				downloadProgress.invalidate()
-			}
-
-			downloadTask.callbackLambda = { success, filePath ->
-				export.isEnabled = true
-				downloadProgress.visibility = View.INVISIBLE
-
-				if (success)
-				{
-					Toast.makeText(this@DocumentViewerActivity, "File downloaded successfully", Toast.LENGTH_SHORT).show()
-
-					export.setText(R.string.document_button_open)
-
-					ExportManager.registerFileManifest(downloadTask.file)
-					ExportManager.open(downloadTask.file, this@DocumentViewerActivity)
-				}
-				else
-				{
-					Toast.makeText(this@DocumentViewerActivity, "There was a problem downloading the file", Toast.LENGTH_LONG).show()
-				}
-			}
-
-			export.setText(if (ExportManager.isFileDownloaded(files[0])) R.string.document_button_open else R.string.document_button_export)
-			export.setOnClickListener {
-				if (ExportManager.isFileDownloaded(files[0]))
-				{
-					ExportManager.open(files[0], this)
-				}
-				else
+				if (downloadTask.isDownloading.get())
 				{
 					export.isEnabled = false
 					downloadProgress.visibility = View.VISIBLE
-					downloadProgress.progress = 0
+				}
 
-					downloadTask = downloadTask.attach(this@DocumentViewerActivity)
-					downloadTask.file = files[0]
-					downloadTask.execute()
+				downloadTask.progressLambda = { progress ->
+					export.isEnabled = false
+					downloadProgress.visibility = View.VISIBLE
+					downloadProgress.isIndeterminate = false
+					downloadProgress.max = 100
+					downloadProgress.progress = progress
+					downloadProgress.invalidate()
+				}
+
+				downloadTask.callbackLambda = { success, filePath ->
+					export.isEnabled = true
+					downloadProgress.visibility = View.INVISIBLE
+
+					if (success)
+					{
+						Toast.makeText(this@DocumentViewerActivity, "File downloaded successfully", Toast.LENGTH_SHORT).show()
+
+						export.setText(R.string.document_viewer_button_open)
+
+						ExportManager.registerFileManifest(downloadTask.file)
+						ExportManager.open(downloadTask.file, this@DocumentViewerActivity)
+					}
+					else
+					{
+						Toast.makeText(this@DocumentViewerActivity, "There was a problem downloading the file", Toast.LENGTH_LONG).show()
+					}
+				}
+
+				export.setText(if (ExportManager.isFileDownloaded(files[0])) R.string.document_viewer_button_open else R.string.document_viewer_button_export)
+				export.setOnClickListener {
+					if (ExportManager.isFileDownloaded(files[0]))
+					{
+						ExportManager.open(files[0], this)
+					}
+					else
+					{
+						export.isEnabled = false
+						downloadProgress.visibility = View.VISIBLE
+						downloadProgress.progress = 0
+
+						downloadTask = downloadTask.attach(this@DocumentViewerActivity)
+						downloadTask.file = files[0]
+						downloadTask.execute()
+					}
 				}
 			}
 		}

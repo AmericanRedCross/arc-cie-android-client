@@ -39,8 +39,9 @@
 
 	<string name="tool_search_results_count">%s Tools shown for \'%s\'</string>
 
-	<string name="document_button_export">@string/export</string>
-	<string name="document_button_open">OPEN</string>
+	<string name="document_viewer_title">Document</string>
+	<string name="document_viewer_button_export">@string/export</string>
+	<string name="document_viewer_button_open">OPEN</string>
 
 	<string name="setting_title">Settings</string>
 	<string name="setting_update_title">Content Update Available</string>
