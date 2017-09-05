@@ -23,7 +23,8 @@
 						"title": "Roadmap",
 						"url": "http://download/url",
 						"mime": "application/pdf",
-						"size": 120000
+						"size": 120000,
+						"featured": true
 					}
 				],
 				"directories": [
@@ -65,13 +66,6 @@
 				"order": "1.2",
 				"content": "/content/content.md",
 				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000,
-						"featured": true
-					}
 				],
 				"directories": [
 					{
