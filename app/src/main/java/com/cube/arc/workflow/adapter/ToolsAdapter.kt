@@ -9,19 +9,19 @@ import com.cube.arc.workflow.view.holder.ToolViewHolder
 import com.cube.lib.util.inflate
 
 /**
- * Dataset adapter used for rendering modules in a recycler view
+ * Dataset adapter used for rendering document tools in a recycler view
  */
 class ToolsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
-	val TYPE_DIVIDER = 0
-	val TYPE_TOOL = 1
+	private val TYPE_DIVIDER = 0
+	private val TYPE_TOOL = 1
 
-	var items : List<Module> = listOf()
+	var items: List<Module> = listOf()
 
 	/**
 	 * List of item groups, will be returned before
 	 */
-	var groups : List<String> = listOf()
+	var groups: List<String> = listOf()
 
 	override fun getItemViewType(position: Int): Int = when
 	{

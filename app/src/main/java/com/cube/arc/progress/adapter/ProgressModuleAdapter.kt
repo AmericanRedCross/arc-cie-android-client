@@ -12,7 +12,7 @@ import com.cube.lib.util.inflate
  */
 class ProgressModuleAdapter : RecyclerView.Adapter<ProgressModuleViewHolder>()
 {
-	var items : List<Module> = listOf()
+	var items: List<Module> = listOf()
 
 	override fun onBindViewHolder(holder: ProgressModuleViewHolder?, position: Int)
 	{

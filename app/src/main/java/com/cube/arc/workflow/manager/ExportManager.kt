@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.support.v4.content.FileProvider
 import com.cube.arc.BuildConfig
+import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.arc.workflow.model.Registry
@@ -60,7 +61,7 @@ object ExportManager
 		val fileRegistry = Registry(file.title, file.timestamp)
 		registry.add(fileRegistry)
 
-		File(MainApplication.BASE_PATH, REGISTRY).bufferedWriter().use { out -> out.write(Gson().toJson(registry).toString()) }
+		File(MainApplication.BASE_PATH, REGISTRY).bufferedWriter().use { out -> out.write(Gson().toJson(registry).toString()); out.flush() }
 	}
 
 	/**
@@ -71,6 +72,24 @@ object ExportManager
 		val appId = when (mimeType.toLowerCase())
 		{
 			"application/pdf" -> "com.google.android.apps.pdfviewer"
+
+			"text/plain", // .txt
+			"text/richtext", // .rtf
+			"application/vnd.oasis.opendocument.text", // .odt
+			"application/msword", // .doc
+			"application/vnd.openxmlformats-officedocument.wordprocessingml.document" // .docx
+				-> "com.google.android.apps.docs.editors.docs"
+
+			"application/vnd.ms-excel", // .xls
+			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+			"application/vnd.oasis.opendocument.spreadsheet" // .ods
+				-> "com.google.android.apps.docs.editors.sheets"
+
+			"application/vnd.ms-powerpoint", // .ppt
+			"application/vnd.openxmlformats-officedocument.presentationml.presentation", // .pptx
+			"application/vnd.oasis.opendocument.presentation" // .opt
+				-> "com.google.android.apps.docs.editors.slides"
+
 			else -> return
 		}
 
@@ -108,15 +127,7 @@ object ExportManager
 	 */
 	fun generateUserContent(context: Context, onlyCritical: Boolean = false): String
 	{
-		val columns = arrayOf(
-			"Step",
-			"Done",
-			"No.",
-			"Sub-Step Action & Guidance",
-			"Sub-Step Notes",
-			"Critical Tool",
-			"Critical Notes"
-		)
+		val columns = context.resources.getStringArray(R.array.csv_columns)
 
 		var finalCsv = ""
 		val criticalPrefs = context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)

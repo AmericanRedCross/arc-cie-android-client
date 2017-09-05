@@ -20,7 +20,7 @@ import org.commonmark.renderer.html.HtmlRenderer
 import java.io.InputStreamReader
 
 /**
- * Document viewer activity used for viewing content preview of a document
+ * Document viewer activity used for viewing content preview of a module/document/tool
  */
 class DocumentViewerActivity : AppCompatActivity()
 {

@@ -5,18 +5,27 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.cube.arc.cie.MainApplication
+import com.cube.arc.cie.fragment.DownloadHelper.Companion.newInstance
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.FileDescriptor
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * Headless fragment used for holding the network request and updating the UI for the attached activity
+ * Headless fragment used for holding the network request and updating the UI for the attached activity.
+ * Usage:
+ *
+ * Calling [newInstance] will create and return an instance of [DownloadHelper], if the instance has already been
+ * added to the activity, it will return that original instance (as per [tagStr])
  */
 class DownloadHelper : Fragment()
 {
 	companion object
 	{
+		/**
+		 * Creates a new instance of the download helper fragment, or returns the existing instance for the given
+		 * [tagStr]
+		 */
 		public fun newInstance(activity: AppCompatActivity, tagStr: String = "", file: FileDescriptor? = null): DownloadHelper
 		{
 			val helper = DownloadHelper().apply {

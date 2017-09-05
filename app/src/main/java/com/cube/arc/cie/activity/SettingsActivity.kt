@@ -22,7 +22,7 @@ import java.io.File
 
 
 /**
- * // TODO: Add class description
+ * Settings activity to allow users to download content updates or reset app state
  */
 class SettingsActivity : AppCompatActivity()
 {
