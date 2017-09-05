@@ -11,6 +11,7 @@ import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.Module
 import com.cube.lib.helper.BundleHelper
 import com.cube.lib.helper.IntentDataHelper
+import com.cube.lib.parser.ListTagParser
 import com.cube.lib.parser.URLImageParser
 import com.cube.lib.util.bind
 import com.cube.lib.util.mimeIcon
@@ -66,7 +67,7 @@ class DocumentViewerActivity : AppCompatActivity()
 			val renderer = HtmlRenderer.builder().build()
 			val htmlContent = renderer.render(document)
 
-			preview.setText(Html.fromHtml(htmlContent, URLImageParser(preview), null))
+			preview.setText(Html.fromHtml(htmlContent, URLImageParser(preview), ListTagParser()))
 
 			files.getOrNull(0)?.let {
 				title.text = files[0].title
