@@ -44,6 +44,12 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		hierarchy.background.tint(hierarchy.resources.getColor(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1))
 		image.setImageResource(ModulesManager.moduleImages[moduleHierarchy] ?: R.drawable.module_1_backdrop)
 
+		if (stepsContainer.childCount > 0)
+		{
+			// force refresh views
+			populateSteps(model)
+		}
+
 		moduleClickArea.setOnClickListener { view ->
 			populateSteps(model)
 
