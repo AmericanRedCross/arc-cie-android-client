@@ -59,8 +59,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				else -> R.drawable.chevron_expand
 			})
 
-			val featuredAttachments = model.attachments?.filter { file -> file.featured }
-			roadmap.visibility = if (featuredAttachments?.size == 1 && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+			roadmap.visibility = if (model.content != null && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
 			roadmap.setOnClickListener { view ->
 				IntentDataHelper.store(DocumentViewerActivity::class.java, model)
 				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
