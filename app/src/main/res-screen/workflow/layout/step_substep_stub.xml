@@ -88,7 +88,6 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/tools_container"
 		android:orientation="vertical"
-		android:animateLayoutChanges="true"
 	>
 		<View
 			android:layout_width="match_parent"

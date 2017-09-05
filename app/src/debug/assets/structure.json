@@ -17,13 +17,14 @@
 				"id": "2",
 				"title": "module 1 step 1",
 				"order": "1.1",
-				"content": "#markdown content",
+				"content": "/content/content.md",
 				"attachments": [
 					{
 						"title": "Roadmap",
 						"url": "http://download/url",
 						"mime": "application/pdf",
-						"size": 120000
+						"size": 120000,
+						"featured": true
 					}
 				],
 				"directories": [
@@ -31,7 +32,7 @@
 						"id": "3",
 						"title": "sub step 1",
 						"order": "1.1.1",
-						"content": "#markdown content",
+						"content": "/content/content.md",
 						"attachments": [
 							{
 								"title": "Roadmap",
@@ -63,15 +64,8 @@
 				"id": "5",
 				"title": "module 1 step 2",
 				"order": "1.2",
-				"content": "#markdown content",
+				"content": "/content/content.md",
 				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000,
-						"featured": true
-					}
 				],
 				"directories": [
 					{

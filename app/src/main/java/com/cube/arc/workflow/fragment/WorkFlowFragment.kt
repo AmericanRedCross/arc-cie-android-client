@@ -50,6 +50,7 @@ class WorkFlowFragment : Fragment()
 		recyclerView.layoutManager = LinearLayoutManager(activity)
 
 		ViewCompat.setNestedScrollingEnabled(recyclerView, false);
+		ViewCompat.setNestedScrollingEnabled(scroller.getChildAt(0), false);
 
 		modulesFilter.setOnClickListener {
 			showModules()

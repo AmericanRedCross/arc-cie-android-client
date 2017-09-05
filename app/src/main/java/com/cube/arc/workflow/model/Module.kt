@@ -10,8 +10,8 @@ data class Module
 	var id : String,
 	var order: String = "",
 	var title : String = "",
-	var content : String = "",
-	var directories: List<Module>? = null,
-	var attachments : List<FileDescriptor>? = null,
+	var content : String? = null,
+	var directories: List<Module> = listOf(),
+	var attachments : List<FileDescriptor> = listOf(),
 	var critical : Boolean = false
 )
