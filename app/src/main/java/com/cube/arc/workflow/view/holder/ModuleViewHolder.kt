@@ -81,9 +81,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			stepHierarchy.text = step.order
 			stepTitle.text = step.title
 
-			val featuredAttachments = step.attachments?.filter { file -> file.featured }
-
-			stepRoadmap.visibility = if (featuredAttachments?.size == 1) View.VISIBLE else View.GONE
+			stepRoadmap.visibility = if (step.content != null) View.VISIBLE else View.GONE
 			stepRoadmap.setOnClickListener { view ->
 				IntentDataHelper.store(DocumentViewerActivity::class.java, step)
 				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))

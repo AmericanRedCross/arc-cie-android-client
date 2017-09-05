@@ -9,7 +9,7 @@
 >
 	<ImageView
 		android:layout_width="match_parent"
-		android:layout_height="96dp"
+		android:layout_height="104dp"
 		android:id="@+id/module_image"
 		android:alpha="0.15"
 		android:layout_marginTop="6dp"
@@ -50,7 +50,7 @@
 
 			<RelativeLayout
 				android:layout_width="match_parent"
-				android:layout_height="96dp"
+				android:layout_height="104dp"
 				android:id="@+id/module_click_area"
 				android:paddingLeft="24dp"
 				android:paddingStart="24dp"
