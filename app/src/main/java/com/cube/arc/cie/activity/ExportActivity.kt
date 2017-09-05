@@ -79,7 +79,7 @@ class ExportActivity : AppCompatActivity()
 				}, "Share to"))
 			}
 		).apply {
-			(findViewById(R.id.mime_icon) as ImageView).setImageResource(R.drawable.ic_mime_misc)
+			(findViewById(R.id.mime_icon) as ImageView).setImageResource(R.drawable.ic_mime_csv)
 		}
 
 		// entire progress
@@ -102,7 +102,7 @@ class ExportActivity : AppCompatActivity()
 				}, "Share to"))
 			}
 		).apply {
-			(findViewById(R.id.mime_icon) as ImageView).setImageResource(R.drawable.ic_mime_misc)
+			(findViewById(R.id.mime_icon) as ImageView).setImageResource(R.drawable.ic_mime_csv)
 		}
 
 		close.setOnClickListener {
