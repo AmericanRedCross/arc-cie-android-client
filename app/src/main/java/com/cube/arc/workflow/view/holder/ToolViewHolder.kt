@@ -52,8 +52,12 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 
 		toolTitle.text = tool.title
-		toolDescription.text = tool.attachments.getOrNull(0)?.description ?: ""
-//		toolDescription.visibility = if (tool.attachments.getOrNull(0) == null) View.GONE else View.VISIBLE
+
+		toolDescription.visibility = View.GONE
+		tool.attachments.getOrNull(0)?.let {
+			toolDescription.text = it.description
+			toolDescription.visibility = if (it.description.isEmpty()) View.GONE else View.VISIBLE
+		}
 
 		toolIcon.setImageResource(tool.attachments.getOrNull(0)?.mimeIcon() ?: R.drawable.ic_mime_misc)
 		toolIcon.tint(DirectoriesManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)

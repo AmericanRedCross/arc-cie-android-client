@@ -29,17 +29,6 @@
 			app:layout_constraintTop_toTopOf="parent"
 		/>
 
-		<ImageView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/tool_icon"
-			android:layout_marginLeft="20dp"
-			android:src="@drawable/ic_mime_pdf"
-			android:layout_marginTop="12dp"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintStart_toEndOf="@id/tool_check"
-		/>
-
 		<ImageButton
 			android:layout_width="32dp"
 			android:layout_height="32dp"
@@ -51,36 +40,55 @@
 			app:layout_constraintTop_toTopOf="parent"
 		/>
 
-		<TextView
-			android:layout_width="0dp"
-			android:layout_height="0dp"
-			android:id="@+id/tool_title"
-			android:text="Tool title"
-			android:layout_marginLeft="8dp"
-			android:layout_marginRight="12dp"
-			android:textColor="#ff000000"
-			android:textSize="12sp"
-			android:textStyle="bold"
-			android:gravity="center_vertical"
-			app:layout_constraintBottom_toBottomOf="@id/tool_icon"
-			app:layout_constraintEnd_toStartOf="@id/options_menu"
-			app:layout_constraintStart_toEndOf="@id/tool_icon"
-			app:layout_constraintTop_toTopOf="@id/tool_icon"
-		/>
-
-		<TextView
+		<!-- TODO: this needs replacing -->
+		<android.support.constraint.ConstraintLayout
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:id="@+id/tool_description"
-			android:text="Tool Description"
+			android:id="@+id/content_container"
+			android:layout_marginTop="12dp"
 			android:layout_marginLeft="20dp"
 			android:layout_marginRight="20dp"
-			android:layout_marginTop="8dp"
-			android:textSize="12sp"
-			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintStart_toEndOf="@id/tool_check"
-			app:layout_constraintTop_toBottomOf="@id/tool_icon"
-		/>
+			app:layout_constraintEnd_toStartOf="@id/options_menu"
+		>
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/tool_icon"
+				android:src="@drawable/ic_mime_pdf"
+				app:layout_constraintTop_toTopOf="parent"
+			/>
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:id="@+id/tool_title"
+				android:text="Tool title"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="12dp"
+				android:textColor="#ff000000"
+				android:textSize="12sp"
+				android:textStyle="bold"
+				android:gravity="center_vertical"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@id/tool_icon"
+				app:layout_constraintTop_toTopOf="@id/tool_icon"
+				app:layout_constraintBottom_toBottomOf="@id/tool_icon"
+			/>
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:id="@+id/tool_description"
+				android:text="Tool Description"
+				android:layout_marginTop="8dp"
+				android:textSize="12sp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tool_icon"
+			/>
+		</android.support.constraint.ConstraintLayout>
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -95,10 +103,8 @@
 			android:textSize="9dp"
 			android:gravity="center_vertical"
 			android:layout_marginTop="6dp"
-			android:layout_marginLeft="4dp"
-			android:visibility="gone"
-			app:layout_constraintTop_toBottomOf="@id/tool_description"
-			app:layout_constraintStart_toStartOf="@id/tool_description"
+			app:layout_constraintStart_toStartOf="@id/content_container"
+			app:layout_constraintTop_toBottomOf="@id/content_container"
 			app:layout_constraintHorizontal_chainStyle="packed"
 		/>
 
@@ -116,8 +122,7 @@
 			android:gravity="center_vertical"
 			android:layout_marginTop="6dp"
 			android:layout_marginLeft="4dp"
-			android:visibility="gone"
-			app:layout_constraintTop_toBottomOf="@id/tool_description"
+			app:layout_constraintTop_toBottomOf="@id/content_container"
 			app:layout_constraintStart_toEndOf="@id/critical_tool"
 			app:layout_constraintHorizontal_chainStyle="packed"
 		/>
@@ -137,7 +142,7 @@
 			android:layout_marginTop="6dp"
 			android:layout_marginLeft="4dp"
 			android:visibility="gone"
-			app:layout_constraintTop_toBottomOf="@id/tool_description"
+			app:layout_constraintTop_toBottomOf="@id/content_container"
 			app:layout_constraintStart_toEndOf="@id/note_added"
 			app:layout_constraintHorizontal_chainStyle="packed"
 		/>

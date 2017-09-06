@@ -25,7 +25,7 @@ import java.io.InputStreamReader
 class DocumentViewerActivity : AppCompatActivity()
 {
 	private val title by bind<TextView>(R.id.title)
-	private val preview by bind<EditText>(R.id.preview)
+	private val preview by bind<TextView>(R.id.preview)
 	private val documentFooter by bind<View>(R.id.document_footer)
 	private val documentIcon by bind<ImageView>(R.id.mime_icon)
 	private val documentTitle by bind<TextView>(R.id.document_title)
