@@ -22,7 +22,7 @@ object SearchManager
 	 */
 	fun init(context: Context)
 	{
-		sqliteHelper = SQLiteHelper(context)
+		sqliteHelper = SQLiteHelper(context.applicationContext)
 
 		Thread(Runnable {
 			index()
@@ -62,6 +62,8 @@ object SearchManager
 				metaValues.put("id", "1")
 				database.insert("meta", null, metaValues)
 			}
+
+			database.close()
 		}
 	}
 
@@ -77,11 +79,11 @@ object SearchManager
 		val results = ArrayList<SearchResult>()
 		synchronized (this)
 		{
-			val database = sqliteHelper.readableDatabase
+			val database = sqliteHelper.writableDatabase
 
-			val sql = "SELECT * FROM search WHERE id IN (SELECT docid FROM search_index WHERE search_index MATCH ?)"
-			val selectionArgs = arrayOf(query + "*")
-			val cursor = database.rawQuery(sql, selectionArgs)
+			val sql = "SELECT * FROM search WHERE id IN (SELECT docid FROM search_index WHERE search_index MATCH \"${query}*\")"
+//			val selectionArgs = arrayOf(query + "*")
+			val cursor = database.rawQuery(sql, null)
 
 			while (cursor.moveToNext())
 			{
@@ -136,7 +138,7 @@ object SearchManager
 			{
 				val commands = arrayOf(
 					"CREATE TABLE search (id INTEGER PRIMARY KEY, title TEXT, directory_id INTEGER, is_attachment INTEGER);",
-					"CREATE VIRTUAL TABLE search_index USING fts4 (content='search', content, title);",
+					"CREATE VIRTUAL TABLE search_index USING fts4 (content='search', title);",
 					"CREATE TABLE meta (id INTEGER PRIMARY KEY, last_update NUMERIC);",
 					"INSERT INTO meta VALUES (1, 0);"
 				)
