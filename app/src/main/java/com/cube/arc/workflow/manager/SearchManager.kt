@@ -85,11 +85,10 @@ object SearchManager
 
 			while (cursor.moveToNext())
 			{
-				val content = cursor.getString(cursor.getColumnIndex("content")) ?: ""
 				val title = cursor.getString(cursor.getColumnIndex("title")) ?: ""
-				val moduleId = cursor.getString(cursor.getColumnIndex("module_id"))
+				val directoryId = cursor.getInt(cursor.getColumnIndex("directory_id"))
 
-				val result = SearchResult(query, moduleId, title, content)
+				val result = SearchResult(query, directoryId, title)
 				results.add(result)
 			}
 
@@ -108,11 +107,10 @@ object SearchManager
 		database.execSQL("DELETE FROM search_index;")
 		database.beginTransaction()
 
-		ModulesManager.modules.flatSteps().forEach { module ->
+		DirectoriesManager.directories.flatSteps().forEach { directory ->
 			val values = ContentValues()
-			values.put("title", module.title)
-			values.put("content", "")//module.content)
-			values.put("module_id", module.id)
+			values.put("title", directory.title)
+			values.put("directory_id", directory.id)
 
 			database.insert("search", null, values)
 		}
@@ -137,7 +135,7 @@ object SearchManager
 			try
 			{
 				val commands = arrayOf(
-					"CREATE TABLE search (id INTEGER PRIMARY KEY, title TEXT, content TEXT, module_id TEXT, is_attachment INTEGER);",
+					"CREATE TABLE search (id INTEGER PRIMARY KEY, title TEXT, directory_id INTEGER, is_attachment INTEGER);",
 					"CREATE VIRTUAL TABLE search_index USING fts4 (content='search', content, title);",
 					"CREATE TABLE meta (id INTEGER PRIMARY KEY, last_update NUMERIC);",
 					"INSERT INTO meta VALUES (1, 0);"

@@ -8,7 +8,7 @@ import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.cie.fragment.DownloadHelper
 import com.cube.arc.workflow.manager.ExportManager
-import com.cube.arc.workflow.model.Module
+import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.BundleHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.parser.ListTagParser
@@ -20,7 +20,7 @@ import org.commonmark.renderer.html.HtmlRenderer
 import java.io.InputStreamReader
 
 /**
- * Document viewer activity used for viewing content preview of a module/document/tool
+ * Directory viewer activity used for viewing content preview of a directory/document/tool
  */
 class DocumentViewerActivity : AppCompatActivity()
 {
@@ -33,7 +33,7 @@ class DocumentViewerActivity : AppCompatActivity()
 	private val close by bind<View>(R.id.close)
 	private val export by bind<Button>(R.id.export)
 	private val downloadProgress by bind<ProgressBar>(R.id.download_progress)
-	private lateinit var module: Module
+	private lateinit var directory: Directory
 	private lateinit var downloadTask: DownloadHelper
 
 	override fun onCreate(savedInstanceState: Bundle?)
@@ -42,7 +42,7 @@ class DocumentViewerActivity : AppCompatActivity()
 
 		setContentView(R.layout.document_viewer_activity_view)
 
-		module = IntentDataHelper.retrieve(this::class.java)
+		directory = IntentDataHelper.retrieve(this::class.java)
 		downloadTask = DownloadHelper.newInstance(this, "downloader")
 
 		setUi()
@@ -51,17 +51,17 @@ class DocumentViewerActivity : AppCompatActivity()
 	override fun onSaveInstanceState(outState: Bundle?)
 	{
 		super.onSaveInstanceState(outState)
-		IntentDataHelper.store(this::class.java, module)
+		IntentDataHelper.store(this::class.java, directory)
 	}
 
 	fun setUi()
 	{
-		if (module.content == null) return
+		if (directory.content == null) return
 
-		val files = module.attachments.filter { file -> file.featured }
+		val files = directory.attachments.filter { file -> file.featured }
 		documentFooter.visibility = if (files.isEmpty()) View.GONE else View.VISIBLE
 
-		BundleHelper.resolve(module.content ?: "", this)?.let {
+		BundleHelper.resolve(directory.content ?: "", this)?.let {
 			val parser = Parser.builder().build()
 			val document = parser.parseReader(InputStreamReader(it))
 			val renderer = HtmlRenderer.builder().build()

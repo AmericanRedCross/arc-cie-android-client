@@ -1,154 +1,156 @@
-[
-	{
-		"id": "1",
-		"title": "module 1",
-		"order": "1",
-		"content": "#markdown content",
-		"attachments": [
-			{
-				"title": "Roadmap",
-				"url": "http://download/url",
-				"mime": "application/pdf",
-				"size": 120000
-			}
-		],
-		"directories": [
-			{
-				"id": "2",
-				"title": "module 1 step 1",
-				"order": "1.1",
-				"content": "/content/content.md",
-				"attachments": [
-					{
-						"title": "Roadmap",
-						"url": "http://download/url",
-						"mime": "application/pdf",
-						"size": 120000,
-						"featured": true
-					}
-				],
-				"directories": [
-					{
-						"id": "3",
-						"title": "sub step 1",
-						"order": "1.1.1",
-						"content": "/content/content.md",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000
-							}
-						],
-						"directories": [
-							{
-								"id": "4",
-								"title": "Non critical tool 1",
-								"order": "1.1.1.1",
-								"content": "#markdown content",
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
-					}
-				]
+[{
+	"id": 1,
+	"title": "Preparedness",
+	"order": 1,
+	"content": "/content/m1_0_roadmap_for_preparedness.md",
+	"metadata": {
+		"hierarchy": "1"
+	},
+	"attachments": [{
+		"title": "Module 1 Guide",
+		"url": "http://webviz.redcross.org/ctp/docs/en/1.%20toolkit/Module%201%20Preparedness/M1_0a%20Module%201%20Guide.docx",
+		"mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		"size": 95325
+	}],
+	"directories": [{
+		"id": 2,
+		"title": "Prepare and Analyze",
+		"order": 1,
+		"content": "/content/m1_1_roadmap_for_preparing_and_analysing.md",
+		"metadata": {
+			"hierarchy": "1.1"
+		},
+		"attachments": [{
+			"title": "CTP Preparedness Guidance Stage",
+			"url": "http://webviz.redcross.org/ctp/docs/en/1.%20toolkit/Module%201%20Preparedness/M1_1%20Prepare%20and%20analyze/M1_1_0a%20CTP%20Preparedness%20guidance-stage.pdf",
+			"mime": "application/pdf",
+			"size": 156712
+		}],
+		"directories": [{
+				"id": 3,
+				"title": "Secondary data review and analysis",
+				"order": 1,
+				"content": null,
+				"metadata": {
+					"hierarchy": "1.1.1"
+				},
+				"attachments": [],
+				"directories": [{
+					"id": 4,
+					"title": "Secondary Data Sources",
+					"order": 1,
+					"content": "/content/m1_1_1_secondary_data_sources.md",
+					"metadata": {
+						"hierarchy": "1.1.1.1",
+						"critical_path": true
+					},
+					"attachments": [],
+					"directories": []
+				}]
 			},
 			{
-				"id": "5",
-				"title": "module 1 step 2",
-				"order": "1.2",
-				"content": "/content/content.md",
-				"attachments": [
-				],
-				"directories": [
-					{
-						"id": "6",
-						"title": "sub step 1",
-						"order": "1.2.1",
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"directories": [
-							{
-								"id": "7",
-								"title": "tool 1",
-								"order": "1.2.1.1",
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
+				"title": "Primary Data Collection And Analysis",
+				"order": 1,
+				"content": null,
+				"metadata": {
+					"hierarchy": "1.1.2"
+				},
+				"attachments": [],
+				"directories": [{
+						"id": 5,
+						"title": "Key Stakeholders Matrix Template",
+						"order": 1,
+						"content": null,
+						"metadata": {
+							"hierarchy": "1.1.2.1",
+							"tool": true,
+							"critical_path": true
+						},
+						"attachments": [{
+							"title": "Key stakeholders matrix template",
+							"url": "http://webviz.redcross.org/ctp/docs/en/1.%20toolkit/Module%201%20Preparedness/M1_1%20Prepare%20and%20analyze/M1_1_2%20Primary%20data%20collection%20and%20analysis/M1_1_2_1%20Key%20stakeholders%20matrix%20template.docx",
+							"mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+							"size": 35141
+						}],
+						"directories": []
 					},
 					{
-						"id": "8",
-						"title": "sub step 2",
-						"order": "1.2.2",
-						"content": "#markdown content",
-						"attachments": [
-							{
-								"title": "Roadmap",
-								"url": "http://download/url",
-								"mime": "application/pdf",
-								"size": 120000,
-								"featured": true
-							}
-						],
-						"directories": [
-							{
-								"id": "9",
-								"title": "tool 1",
-								"order": "1.2.2.1",
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							},
-							{
-								"id": "10",
-								"title": "tool 2",
-								"order": "1.2.2.2",
-								"content": "#markdown content",
-								"critical": true,
-								"attachments": [
-									{
-										"title": "Tool",
-										"url": "http://download/url",
-										"mime": "application/excel",
-										"size": 120000
-									}
-								]
-							}
-						]
+						"id": 6,
+						"title": "Baseline interviews checklist",
+						"order": 1,
+						"content": null,
+						"metadata": {
+							"hierarchy": "1.1.2.2",
+							"tool": true
+						},
+						"attachments": [{
+							"title": "Baseline interviews checklist",
+							"url": "http://webviz.redcross.org/ctp/docs/en/1.%20toolkit/Module%201%20Preparedness/M1_1%20Prepare%20and%20analyze/M1_1_2%20Primary%20data%20collection%20and%20analysis/M1_1_2_2%20Baseline%20interviews%20checklist.docx",
+							"mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+							"size": 39027
+						}],
+						"directories": []
+					},
+					{
+						"id": 7,
+						"title": "CTP 4Ws matrix template",
+						"order": 2,
+						"content": null,
+						"metadata": {
+							"hierarchy": "1.1.2.3",
+							"tool": true,
+							"critical_path": true
+						},
+						"attachments": [{
+							"title": "CTP 4Ws matrix template",
+							"url": "http://webviz.redcross.org/ctp/docs/en/1.%20toolkit/Module%201%20Preparedness/M1_1%20Prepare%20and%20analyze/M1_1_2%20Primary%20data%20collection%20and%20analysis/M1_1_2_3%20CTP%204Ws%20matrix%20template.xls",
+							"mime": "application/vnd.ms-excel",
+							"size": 129024
+						}],
+						"directories": []
 					}
 				]
 			}
 		]
-	}
-]
+	}]
+}, {
+	"id": 8,
+	"title": "Assessment",
+	"order": 2,
+	"content": "/content/m2_0_roadmap_for_assessment.md",
+	"metadata": {
+		"hierarchy": "2"
+	},
+	"attachments": [],
+	"directories": []
+}, {
+	"id": 9,
+	"title": "Response Analysis",
+	"order": 3,
+	"content": "/content/m3_0_roadmap_for_response_analysis.md",
+	"metadata": {
+		"hierarchy": "3"
+	},
+	"attachments": [],
+	"directories": []
+}, {
+	"id": 10,
+	"title": "Set-Up & Implementation",
+	"order": 4,
+	"content": "/content/m4_0_roadmap_for_implementation.md",
+	"metadata": {
+		"hierarchy": "4"
+	},
+	"attachments": [],
+	"directories": []
+}, {
+	"id": 11,
+	"title": "Monitoring & Evaluation",
+	"order": 5,
+	"content": "/content/m5_0_roadmap_for_m_e.md",
+	"metadata": {
+		"hierarchy": "5"
+	},
+	"attachments": [],
+	"directories": []
+}]

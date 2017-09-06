@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Manager class used for downloading/opening files associated with modules and tools
+ * Manager class used for downloading/opening files associated with directories and tools
  */
 object ExportManager
 {
@@ -123,7 +123,7 @@ object ExportManager
 	}
 
 	/**
-	 * Exports the user's content and module data into a CSV
+	 * Exports the user's content and directory data into a CSV
 	 */
 	fun generateUserContent(context: Context, onlyCritical: Boolean = false): String
 	{
@@ -134,24 +134,24 @@ object ExportManager
 		val notesPrefs = context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 		val checkPrefs = context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		ModulesManager.modules.forEach { module ->
+		DirectoriesManager.directories.forEach { directory ->
 			val data = arrayListOf<LinkedHashMap<String, String>>()
 
-			module.directories?.forEach { step ->
-				step.directories?.forEach { substep ->
+			directory.directories.forEach { step ->
+				step.directories.forEach { substep ->
 					val rows = ArrayList<LinkedHashMap<String, String>>()
 					rows.add(linkedMapOf<String, String>())
 					rows[0].putAll(columns.associate { it to "" })
 
 					rows[0][columns[0]] = step.title
-					rows[0][columns[1]] = if (checkPrefs.contains(step.id)) "yes" else "no"
+					rows[0][columns[1]] = if (checkPrefs.contains(step.id.toString())) "yes" else "no"
 
 					rows[0][columns[2]] = "${substep.order}"
 					rows[0][columns[3]] = substep.title
-					rows[0][columns[4]] = notesPrefs.getString(substep.id, "")
+					rows[0][columns[4]] = notesPrefs.getString(substep.id.toString(), "")
 
-					substep.directories?.forEachIndexed { index, tool ->
-						if (onlyCritical && (tool.critical || criticalPrefs.contains(tool.id)) || !onlyCritical)
+					substep.directories.forEachIndexed { index, tool ->
+						if (onlyCritical && ((tool.metadata?.getOrElse("critical_path", { false }) as Boolean ?: false) || criticalPrefs.contains(tool.id.toString())) || !onlyCritical)
 						{
 							if (rows.size - 1 < index)
 							{
@@ -159,7 +159,7 @@ object ExportManager
 							}
 
 							rows[index][columns[5]] = tool.title
-							rows[index][columns[6]] = notesPrefs.getString(tool.id, "")
+							rows[index][columns[6]] = notesPrefs.getString(tool.id.toString(), "")
 						}
 					}
 
@@ -167,15 +167,15 @@ object ExportManager
 				}
 			}
 
-			var moduleCsv = ""
-			moduleCsv += module.title + ("," * (columns.size - 1)) + "\n"
-			moduleCsv += columns.joinToString(",") + "\n"
+			var directoryCsv = ""
+			directoryCsv += directory.title + ("," * (columns.size - 1)) + "\n"
+			directoryCsv += columns.joinToString(",") + "\n"
 
 			data.forEach { row ->
-				moduleCsv += row.values.joinToString(",") + "\n"
+				directoryCsv += row.values.joinToString(",") + "\n"
 			}
 
-			finalCsv += moduleCsv + "\n"
+			finalCsv += directoryCsv + "\n"
 		}
 
 		finalCsv += "\r\n"

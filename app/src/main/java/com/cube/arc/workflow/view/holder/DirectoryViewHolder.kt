@@ -13,36 +13,36 @@ import android.widget.TextView
 import com.cube.arc.R
 import com.cube.arc.cie.activity.DocumentViewerActivity
 import com.cube.arc.workflow.activity.NoteActivity
-import com.cube.arc.workflow.manager.ModulesManager
-import com.cube.arc.workflow.model.Module
+import com.cube.arc.workflow.manager.DirectoriesManager
+import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.inflate
 import com.cube.lib.util.tint
 
 /**
- * View holder for module in WorkFlowFragment recycler view
+ * View holder for directory in WorkFlowFragment recycler view
  */
-class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
 	private val visibilityMap = HashMap<String, Boolean>()
 	private val stepsContainer = itemView.findViewById(R.id.steps_container) as LinearLayout
-	private val moduleClickArea = itemView.findViewById(R.id.module_click_area)
-	private var chevron = itemView.findViewById(R.id.module_chevron) as ImageView
-	private var title = itemView.findViewById(R.id.module_name) as TextView
-	private var image = itemView.findViewById(R.id.module_image) as ImageView
-	private val roadmap = itemView.findViewById(R.id.module_roadmap) as Button
-	private var hierarchy = itemView.findViewById(R.id.module_hierarchy) as TextView
-	private var moduleHierarchy: String = "0"
+	private val directoryClickArea = itemView.findViewById(R.id.directory_click_area)
+	private var chevron = itemView.findViewById(R.id.directory_chevron) as ImageView
+	private var title = itemView.findViewById(R.id.directory_name) as TextView
+	private var image = itemView.findViewById(R.id.directory_image) as ImageView
+	private val roadmap = itemView.findViewById(R.id.directory_roadmap) as Button
+	private var hierarchy = itemView.findViewById(R.id.directory_hierarchy) as TextView
+	private var directoryHierarchy: String = "0"
 
-	fun populate(model: Module)
+	fun populate(model: Directory)
 	{
-		moduleHierarchy = model.order
+		directoryHierarchy = model.metadata?.get("hierarchy") as String ?: ""
 
 		title.text = model.title
-		hierarchy.text = (moduleHierarchy).toString()
+		hierarchy.text = (directoryHierarchy).toString()
 
-		hierarchy.background.tint(hierarchy.resources.getColor(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1))
-		image.setImageResource(ModulesManager.moduleImages[moduleHierarchy] ?: R.drawable.module_1_backdrop)
+		hierarchy.background.tint(hierarchy.resources.getColor(DirectoriesManager.directoryColours[model.order] ?: R.color.directory_1))
+		image.setImageResource(DirectoriesManager.directoryImages[model.order] ?: R.drawable.directory_1_backdrop)
 
 		if (stepsContainer.childCount > 0)
 		{
@@ -50,7 +50,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			populateSteps(model)
 		}
 
-		moduleClickArea.setOnClickListener { view ->
+		directoryClickArea.setOnClickListener { view ->
 			populateSteps(model)
 
 			when
@@ -73,18 +73,18 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 	}
 
-	private fun populateSteps(model: Module)
+	private fun populateSteps(model: Directory)
 	{
 		stepsContainer.removeAllViews()
 
 		model.directories?.forEach { step ->
-			val stepView = stepsContainer.inflate<View>(R.layout.module_step_stub)
+			val stepView = stepsContainer.inflate<View>(R.layout.directory_step_stub)
 
 			val stepHierarchy = stepView.findViewById(R.id.step_hierarchy) as TextView
 			val stepTitle = stepView.findViewById(R.id.step_title) as TextView
 			val stepRoadmap = stepView.findViewById(R.id.step_roadmap) as Button
 
-			stepHierarchy.text = step.order
+			stepHierarchy.text = step.metadata?.get("hierarchy") as String? ?: ""
 			stepTitle.text = step.title
 
 			stepRoadmap.visibility = if (step.content != null) View.VISIBLE else View.GONE
@@ -100,13 +100,13 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		restoreVisibility(model, stepsContainer)
 	}
 
-	private fun populateSubSteps(root: Module, step: Module, stepView: View)
+	private fun populateSubSteps(root: Directory, step: Directory, stepView: View)
 	{
 		val subStepContainer = stepView.findViewById(R.id.substeps_container) as ViewGroup
 		val notePrefs = stepView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 		val checkPrefs = stepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		step.directories?.forEach { subStep ->
+		step.directories.forEach { subStep ->
 			val subStepView = subStepContainer.inflate<View>(R.layout.step_substep_stub)
 
 			val subStepCheck = subStepView.findViewById(R.id.substep_check) as AppCompatCheckBox
@@ -115,7 +115,7 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			val subStepNoteButton = subStepView.findViewById(R.id.add_note) as Button
 
 			restoreVisibility(subStep, subStepNoteButton)
-			subStepHierarchy.text = subStep.order
+			subStepHierarchy.text = subStep.metadata?.get("hierarchy") as String? ?: ""
 			subStepTitle.text = subStep.title
 			subStepNoteButton.setOnClickListener { view ->
 				val noteIntent = Intent(view.context, NoteActivity::class.java)
@@ -123,22 +123,22 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				view.context.startActivity(noteIntent)
 			}
 
-			subStepCheck.tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1)
-			subStepCheck.isChecked = checkPrefs.contains(subStep.id)
+			subStepCheck.tint(DirectoriesManager.directoryColours[root.order] ?: R.color.directory_1)
+			subStepCheck.isChecked = checkPrefs.contains(subStep.id.toString())
 			subStepCheck.setOnCheckedChangeListener { buttonView, isChecked ->
 				checkPrefs.edit().apply {
 					when
 					{
-						isChecked -> putBoolean(subStep.id, true)
-						else -> remove(subStep.id)
+						isChecked -> putBoolean(subStep.id.toString(), true)
+						else -> remove(subStep.id.toString())
 					}
 				}.apply()
 			}
 
 			subStepNoteButton.setText(when
 			{
-				notePrefs.contains(subStep.id) -> R.string.module_substep_edit_note
-				else -> R.string.module_substep_add_note
+				notePrefs.contains(subStep.id.toString()) -> R.string.directory_substep_edit_note
+				else -> R.string.directory_substep_add_note
 			})
 
 			subStepContainer.addView(subStepView)
@@ -146,17 +146,17 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 	}
 
-	private fun populateSubStepTools(root: Module, step: Module, subStep: Module, subStepView: View)
+	private fun populateSubStepTools(root: Directory, step: Directory, subStep: Directory, subStepView: View)
 	{
 		var toolContainer = subStepView.findViewById(R.id.tools_container) as ViewGroup
 		var subStepChevron = subStepView.findViewById(R.id.substep_chevron) as ImageView
 		var checkPrefs = subStepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		toolContainer.getChildAt(0).tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1)
-		toolContainer.getChildAt(1).tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1)
-		toolContainer.tint(ModulesManager.moduleColours[moduleHierarchy] ?: R.color.module_1, 0.2f)
+		toolContainer.getChildAt(0).tint(DirectoriesManager.directoryColours[root.order] ?: R.color.directory_1)
+		toolContainer.getChildAt(1).tint(DirectoriesManager.directoryColours[root.order] ?: R.color.directory_1)
+		toolContainer.tint(DirectoriesManager.directoryColours[root.order] ?: R.color.directory_1, 0.2f)
 
-		subStep.directories?.forEach { tool ->
+		subStep.directories.forEach { tool ->
 			val toolViewHolder = ToolViewHolder(subStepView.inflate<View>(R.layout.substep_tool_stub))
 			toolViewHolder.populate(root, tool)
 
@@ -186,20 +186,20 @@ class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 	}
 
-	fun restoreVisibility(module: Module, view: View)
+	fun restoreVisibility(directory: Directory, view: View)
 	{
-		view.visibility = if (visibilityMap[module.id] as Boolean? ?: false) View.VISIBLE else View.GONE
+		view.visibility = if (visibilityMap[directory.id.toString()] as Boolean? ?: false) View.VISIBLE else View.GONE
 	}
 
-	fun showView(module: Module, view: View)
+	fun showView(directory: Directory, view: View)
 	{
 		view.visibility = View.VISIBLE
-		visibilityMap[module.id] = true // expanded
+		visibilityMap[directory.id.toString()] = true // expanded
 	}
 
-	fun hideView(module: Module, view: View)
+	fun hideView(directory: Directory, view: View)
 	{
 		view.visibility = View.GONE
-		visibilityMap[module.id] = false // collapsed
+		visibilityMap[directory.id.toString()] = false // collapsed
 	}
 }

@@ -11,16 +11,16 @@ import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.activity.NoteActivity
+import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.manager.ExportManager
-import com.cube.arc.workflow.manager.ModulesManager
-import com.cube.arc.workflow.model.Module
+import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.mimeIcon
 import com.cube.lib.util.tint
 import java.io.File
 
 /**
- * View holder for module in WorkFlowFragment recycler view
+ * View holder for directory in WorkFlowFragment recycler view
  */
 class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
@@ -33,66 +33,65 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private val exported = itemView.findViewById(R.id.exported) as TextView
 	private val options = itemView.findViewById(R.id.options_menu) as ImageButton
 
-	fun populate(module: Module?, tool: Module)
+	fun populate(directory: Directory?, tool: Directory)
 	{
-		var notePrefs = itemView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
-		var checkPrefs = itemView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
-		var criticalPrefs = itemView.context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
+		val notePrefs = itemView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
+		val checkPrefs = itemView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
+		val criticalPrefs = itemView.context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
 
 		critical.apply {
-			visibility = if (tool.critical || criticalPrefs.contains(tool.id)) View.VISIBLE else View.GONE
-			text = resources.getString(if (criticalPrefs.contains(tool.id)) R.string.module_tool_user_critical else R.string.module_tool_critical)
+			visibility = if ((tool.metadata?.getOrElse("critical_path", { false }) as Boolean ?: false) || criticalPrefs.contains(tool.id.toString())) View.VISIBLE else View.GONE
+			text = resources.getString(if (criticalPrefs.contains(tool.id.toString())) R.string.directory_tool_user_critical else R.string.directory_tool_critical)
 		}
 
-		note.visibility = if (notePrefs.contains(tool.id)) View.VISIBLE else View.GONE
+		note.visibility = if (notePrefs.contains(tool.id.toString())) View.VISIBLE else View.GONE
 
-		if (tool.attachments?.isNotEmpty() ?: false)
+		if (tool.attachments.isNotEmpty())
 		{
-			exported.visibility = if (ExportManager.isFileDownloaded(tool.attachments!![0])) View.VISIBLE else View.GONE
+			exported.visibility = if (ExportManager.isFileDownloaded(tool.attachments[0])) View.VISIBLE else View.GONE
 		}
 
 		toolTitle.text = tool.title
-		toolDescription.text = tool.content
+		toolDescription.text = tool.attachments.getOrNull(0)?.description ?: ""
+//		toolDescription.visibility = if (tool.attachments.getOrNull(0) == null) View.GONE else View.VISIBLE
 
-		toolIcon.setImageResource(tool.attachments?.get(0)?.mimeIcon() ?: R.drawable.ic_mime_misc)
-		toolIcon.tint(ModulesManager.moduleColours[module?.order ?: 1] ?: R.color.module_1)
-		toolCheck.tint(ModulesManager.moduleColours[module?.order ?: 1] ?: R.color.module_1)
-		toolCheck.isChecked = checkPrefs.contains(tool.id)
+		toolIcon.setImageResource(tool.attachments.getOrNull(0)?.mimeIcon() ?: R.drawable.ic_mime_misc)
+		toolIcon.tint(DirectoriesManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)
+		toolCheck.tint(DirectoriesManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)
+		toolCheck.isChecked = checkPrefs.contains(tool.id.toString())
 		toolCheck.setOnCheckedChangeListener { buttonView, isChecked ->
 			checkPrefs.edit().apply {
 				when
 				{
-					isChecked -> putBoolean(tool.id, true)
-					else -> remove(tool.id)
+					isChecked -> putBoolean(tool.id.toString(), true)
+					else -> remove(tool.id.toString())
 				}
 			}.apply()
 		}
 
 		options.setOnClickListener { view ->
-			val criticalPrefs = view.context.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
-			val notePrefs = view.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 			val popup = PopupMenu(view.context, view)
 
 			popup.menuInflater.inflate(R.menu.menu_tool, popup.menu)
 
-			if (tool.critical)
+			if (tool.metadata?.getOrElse("critical_path", { false }) as Boolean ?: false)
 			{
 				popup.menu.findItem(R.id.action_mark).isVisible = false
 			}
 
 			popup.menu.findItem(R.id.action_mark).title = when
 			{
-				criticalPrefs.contains(tool.id) -> view.resources.getString(R.string.tool_menu_unmark)
+				criticalPrefs.contains(tool.id.toString()) -> view.resources.getString(R.string.tool_menu_unmark)
 				else -> view.resources.getString(R.string.tool_menu_mark)
 			}
 
 			popup.menu.findItem(R.id.action_note).title = when
 			{
-				notePrefs.contains(tool.id) -> view.resources.getString(R.string.tool_menu_edit_note)
+				notePrefs.contains(tool.id.toString()) -> view.resources.getString(R.string.tool_menu_edit_note)
 				else -> view.resources.getString(R.string.tool_menu_add_note)
 			}
 
-			tool.attachments?.get(0)?.let {
+			tool.attachments.getOrNull(0)?.let {
 				popup.menu.findItem(R.id.action_download).title = when
 				{
 					ExportManager.isFileDownloaded(it) -> view.resources.getString(R.string.tool_menu_open)
@@ -104,26 +103,26 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				when (item.itemId)
 				{
 					R.id.action_mark -> criticalPrefs.edit().apply {
-						when (criticalPrefs.contains(tool.id))
+						when (criticalPrefs.contains(tool.id.toString()))
 						{
 							false -> {
-								putBoolean(tool.id, true)
+								putBoolean(tool.id.toString(), true)
 								critical.visibility = View.VISIBLE
 							}
 							else -> {
-								remove(tool.id)
+								remove(tool.id.toString())
 								critical.visibility = View.GONE
 							}
 						}
 					}.apply()
 
 					R.id.action_note -> {
-						IntentDataHelper.store(NoteActivity::class.java, tool.id)
+						IntentDataHelper.store(NoteActivity::class.java, tool.id.toString())
 						view.context.startActivity(Intent(view.context, NoteActivity::class.java))
 					}
 
 					R.id.action_download -> {
-						tool.attachments?.get(0)?.let { file ->
+						tool.attachments.getOrNull(0)?.let { file ->
 							if (ExportManager.isFileDownloaded(file))
 							{
 								ExportManager.open(file, view.context)

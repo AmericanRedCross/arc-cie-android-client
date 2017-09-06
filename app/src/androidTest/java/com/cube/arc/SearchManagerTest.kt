@@ -3,7 +3,7 @@ package com.cube.arc
 import android.support.test.InstrumentationRegistry
 import android.support.test.filters.SmallTest
 import android.support.test.runner.AndroidJUnit4
-import com.cube.arc.workflow.manager.ModulesManager
+import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.manager.SearchManager
 import org.junit.Assert
 import org.junit.Before
@@ -21,7 +21,7 @@ class SearchManagerTest
 
 	@Before fun setup()
 	{
-		ModulesManager.init(appContext.assets.open("structure.json"))
+		DirectoriesManager.init(appContext.assets.open("structure.json"))
 		SearchManager.init(appContext)
 	}
 

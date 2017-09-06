@@ -3,7 +3,7 @@ package com.cube.arc.workflow.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.cube.arc.R
-import com.cube.arc.workflow.model.Module
+import com.cube.arc.workflow.model.Directory
 import com.cube.arc.workflow.view.holder.ToolDividerViewHolder
 import com.cube.arc.workflow.view.holder.ToolViewHolder
 import com.cube.lib.util.inflate
@@ -16,12 +16,12 @@ class ToolsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 	private val TYPE_DIVIDER = 0
 	private val TYPE_TOOL = 1
 
-	var items: List<Module> = listOf()
+	var items: List<Directory> = listOf()
 
 	/**
 	 * List of item groups, will be returned before
 	 */
-	var groups: List<String> = listOf()
+	var groups: List<Int> = listOf()
 
 	override fun getItemViewType(position: Int): Int = when
 	{

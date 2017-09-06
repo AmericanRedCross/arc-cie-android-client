@@ -2,7 +2,7 @@ package com.cube.arc.cie
 
 import android.app.Application
 import android.os.Environment
-import com.cube.arc.workflow.manager.ModulesManager
+import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.manager.SearchManager
 import java.io.File
 import java.io.FileInputStream
@@ -21,7 +21,7 @@ class MainApplication : Application()
 	{
 		super.onCreate()
 
-		// initialise module manager
+		// initialise directory manager
 		BASE_PATH = File(Environment.getExternalStorageDirectory().absoluteFile, "CIE-Documents")
 		initManagers()
 	}
@@ -31,14 +31,14 @@ class MainApplication : Application()
 	 */
 	fun initManagers()
 	{
-		var modulesStream = resources.assets.open("structure.json")
+		var directoriesStream = resources.assets.open("structure.json")
 		val cacheModules = File(filesDir, "structure.json")
 		if (cacheModules.exists())
 		{
-			modulesStream = FileInputStream(cacheModules)
+			directoriesStream = FileInputStream(cacheModules)
 		}
 
-		ModulesManager.init(modulesStream)
+		DirectoriesManager.init(directoriesStream)
 		SearchManager.init(this)
 	}
 }
