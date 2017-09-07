@@ -1,5 +1,6 @@
 package com.cube.arc.workflow.manager
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -15,10 +16,11 @@ import java.util.*
  */
 object SearchManager
 {
+	@SuppressLint("StaticFieldLeak")
 	private lateinit var sqliteHelper: SQLiteHelper
 
 	/**
-	 * @param context The application context used for loading the file
+	 * @param context The application context used for loading the database
 	 */
 	fun init(context: Context)
 	{
