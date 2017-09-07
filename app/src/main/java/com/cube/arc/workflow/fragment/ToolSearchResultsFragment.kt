@@ -15,9 +15,9 @@ import android.widget.EditText
 import android.widget.TextView
 import com.cube.arc.R
 import com.cube.arc.workflow.adapter.ToolsAdapter
-import com.cube.arc.workflow.manager.ModulesManager
+import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.manager.SearchManager
-import com.cube.arc.workflow.model.Module
+import com.cube.arc.workflow.model.Directory
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 import com.cube.lib.util.parent
@@ -76,24 +76,23 @@ class ToolSearchResultsFragment : Fragment()
 	{
 		this.query = searchQuery
 		val searchResults = SearchManager.search(searchQuery)
-		val adapterItems = LinkedHashSet<Module>()
-		val groupHeaders = LinkedHashSet<String>()
+		val adapterItems = LinkedHashSet<Directory>()
+		val groupHeaders = LinkedHashSet<Int>()
 
 		searchResults.forEach { searchResult ->
-			val module = ModulesManager.module(searchResult.moduleId)
+			val directory = DirectoriesManager.directory(searchResult.directoryId)
 
-			module?.apply {
-				// only tools will have null directories
-				if (directories == null)
+			directory?.also {
+				if (it.metadata?.get("tool") as Boolean? ?: false)
 				{
-					var parent = parent()
+					var parent = it.parent()
 
 					parent?.let { item ->
 						groupHeaders.add(item.id)
 						adapterItems.add(item)
 					}
 
-					adapterItems.add(this)
+					adapterItems.add(it)
 				}
 			}
 		}

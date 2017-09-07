@@ -15,22 +15,22 @@ import android.widget.EditText
 import android.widget.RadioButton
 import com.cube.arc.R
 import com.cube.arc.workflow.activity.ToolSearchResultsActivity
-import com.cube.arc.workflow.adapter.ModuleAdapter
+import com.cube.arc.workflow.adapter.DirectoryAdapter
 import com.cube.arc.workflow.adapter.ToolsAdapter
-import com.cube.arc.workflow.manager.ModulesManager
-import com.cube.arc.workflow.model.Module
+import com.cube.arc.workflow.manager.DirectoriesManager
+import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 import com.cube.lib.util.parent
 
 /**
- * Fragment for displaying and handling the workflow feature. Will display a list of modules and its directories/substeps
+ * Fragment for displaying and handling the workflow feature. Will display a list of directories and its directories/substeps
  */
 class WorkFlowFragment : Fragment()
 {
 	private val recyclerView by bind<RecyclerView>(R.id.recycler_view)
-	private val modulesFilter by bind<RadioButton>(R.id.filter_modules)
+	private val directoriesFilter by bind<RadioButton>(R.id.filter_directories)
 	private val criticalFilter by bind<RadioButton>(R.id.filter_critical)
 	private val scroller by bind<NestedScrollView>(R.id.scroller)
 	private val searchInput by bind<EditText>(R.id.search_input)
@@ -52,7 +52,7 @@ class WorkFlowFragment : Fragment()
 		ViewCompat.setNestedScrollingEnabled(recyclerView, false);
 		ViewCompat.setNestedScrollingEnabled(scroller.getChildAt(0), false);
 
-		modulesFilter.setOnClickListener {
+		directoriesFilter.setOnClickListener {
 			showModules()
 		}
 
@@ -79,15 +79,15 @@ class WorkFlowFragment : Fragment()
 	}
 
 	/**
-	 * Shows the modules in the list
+	 * Shows the directories in the list
 	 */
 	fun showModules()
 	{
-		modulesFilter.isChecked = true
+		directoriesFilter.isChecked = true
 		criticalFilter.isChecked = false
 		searchInput.visibility = View.VISIBLE
 
-		recyclerView.adapter = ModuleAdapter()
+		recyclerView.adapter = DirectoryAdapter()
 
 		recyclerView.setPadding(0, resources.getDimensionPixelSize(R.dimen.dp8), 0, 0)
 		recyclerView.post {
@@ -100,24 +100,24 @@ class WorkFlowFragment : Fragment()
 	 */
 	fun showCritical()
 	{
-		modulesFilter.isChecked = false
+		directoriesFilter.isChecked = false
 		criticalFilter.isChecked = true
 		searchInput.visibility = View.GONE
 
 		val adapter = ToolsAdapter()
-		val items = ModulesManager.modules(true, true, activity)
-		val adapterItems = LinkedHashSet<Module>()
-		val groupHeaders = LinkedHashSet<String>()
+		val items = DirectoriesManager.directories(true, true, activity)
+		val adapterItems = LinkedHashSet<Directory>()
+		val groupHeaders = LinkedHashSet<Int>()
 
-		items.forEach { module ->
-			var parent = module.parent()
+		items.forEach { directory ->
+			var parent = directory.parent()
 
 			parent?.let { item ->
 				groupHeaders.add(item.id)
 				adapterItems.add(item)
 			}
 
-			adapterItems.add(module)
+			adapterItems.add(directory)
 		}
 
 		adapter.items = adapterItems.toList()

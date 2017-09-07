@@ -5,7 +5,7 @@ import android.support.test.filters.SmallTest
 import android.support.test.runner.AndroidJUnit4
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.manager.ExportManager
-import com.cube.arc.workflow.manager.ModulesManager
+import com.cube.arc.workflow.manager.DirectoriesManager
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -23,10 +23,10 @@ class ExportTest
 
 	@Before fun setUp()
 	{
-		ModulesManager.init(appContext.assets.open("structure.json"))
+		DirectoriesManager.init(appContext.assets.open("structure.json"))
 		MainApplication.BASE_PATH = File("/")
 
-		Assert.assertTrue(ModulesManager.modules.isNotEmpty())
+		Assert.assertTrue(DirectoriesManager.directories.isNotEmpty())
 	}
 
 	@Test fun csvExport()

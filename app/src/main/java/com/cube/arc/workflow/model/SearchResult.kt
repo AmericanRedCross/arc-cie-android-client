@@ -7,7 +7,6 @@ package com.cube.arc.workflow.model
  */
 data class SearchResult(
 	var searchQuery: String,
-	var moduleId: String,
-	var title: String,
-	var content: String
+	var directoryId: Int,
+	var title: String
 )

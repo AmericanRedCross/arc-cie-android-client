@@ -1,7 +1,7 @@
 package com.cube.arc.workflow.model
 
 /**
- * Basic data class for describing attachments in [Module]
+ * Basic data class for describing attachments in [Directory]
  */
 data class FileDescriptor
 (

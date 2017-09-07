@@ -10,8 +10,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.cube.arc.R
-import com.cube.arc.workflow.manager.ModulesManager
-import com.cube.arc.workflow.model.Module
+import com.cube.arc.workflow.manager.DirectoriesManager
+import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
 
@@ -20,9 +20,9 @@ import com.cube.lib.util.bind
  */
 class NoteActivity : AppCompatActivity()
 {
-	private val id: String = IntentDataHelper.retrieve<String>(this::class.java)
+	private val id: Int = IntentDataHelper.retrieve<Int>(this::class.java)
 	private val prefs: SharedPreferences by lazy { getSharedPreferences("cie.notes", Context.MODE_PRIVATE) }
-	private var module: Module? = null
+	private var directory: Directory? = null
 
 	private val editor: EditText by bind<EditText>(R.id.editor)
 	private val save: View by bind<View>(R.id.save)
@@ -37,9 +37,9 @@ class NoteActivity : AppCompatActivity()
 
 		setContentView(R.layout.note_activity_view)
 
-		module = ModulesManager.module(id)
+		directory = DirectoriesManager.directory(id)
 
-		if (module == null)
+		if (directory == null)
 		{
 			finish()
 			return
@@ -47,7 +47,7 @@ class NoteActivity : AppCompatActivity()
 
 		if (savedInstanceState == null)
 		{
-			editor.setText(prefs.getString(id, ""))
+			editor.setText(prefs.getString(id.toString(), ""))
 			editor.setSelection(editor.text.length)
 		}
 
@@ -63,7 +63,7 @@ class NoteActivity : AppCompatActivity()
 			}
 		}
 
-		actionSubTitle.text = module?.order
+		actionSubTitle.text = directory?.metadata?.get("hierarchy") as String ?: ""
 
 		actionCancel.setOnClickListener { view ->
 			AlertDialog.Builder(view.context)
@@ -82,8 +82,8 @@ class NoteActivity : AppCompatActivity()
 			prefs.edit().let {
 				when (editor.text.isEmpty())
 				{
-					true -> it.remove(id)
-					else -> it.putString(id, editor.text.toString())
+					true -> it.remove(id.toString())
+					else -> it.putString(id.toString(), editor.text.toString())
 				}
 			}.apply()
 

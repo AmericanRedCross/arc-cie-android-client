@@ -21,7 +21,7 @@
 		<RadioButton
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/filter_modules"
+			android:id="@+id/filter_directories"
 			android:text="TOOLKIT"
 			android:drawableLeft="@drawable/ic_toolkit"
 			android:drawableTint="@drawable/selected_button_int_list"

@@ -1,0 +1,33 @@
+# Roadmap for set-up and implementation
+
+## INTRODUCTION
+After having selected the most feasible and appropriate response for your intervention, you will need to set it up and implement it. This process starts with planning the intervention, defining ways of working, establishing mechanisms for internal and external coordination as well as for communicating with beneficiaries. The implementation phase includes contracting service providers, identifying and registering beneficiaries, as well as carrying out distributions and encashment.
+
+For the purposes of the CiE Toolkit, the set-up and implementation process has been divided into steps and sub-steps. Each sub-step has been associated with tools selected for their potential to be adapted and used in different contexts and cash transfer programmes, by different organizations. When adapting tools to your context and needs, you can get detailed guidance on programme set-up and implementation from the reference documents suggested both at module and step levels.
+
+Steps and sub-steps are indicative and not necessarily sequential. You may need to move back and forth to reach the intended results. Sometimes, you may even need to skip some of the steps or sub-steps proposed, due to time and resource constraints that are common in emergency contexts. In any case, you should at least comply with the minimum standards set for the set-up and implementation module. For each step, you will also find minimum standards that may help you decide what to focus on.
+
+## MINIMUM STANDARDS
+* Develop a detailed operational plan of action including a logical framework with measurable indicators for each expected output and outcome.
+* Define roles and responsibilities in alignment with existing SOPs and in agreement with external stakeholders, including the government.
+* Set-up an internal coordination mechanism so as to actively engage each unit in the process of programme set-up and implementation.
+* Ensure participation in existing external coordination mechanisms, so as to harmonize approaches, avoid duplications and gaps, and share experiences.
+* Develop a beneficiary communication and accountability system with clear definition of roles and responsibilities.
+* When selecting and contracting service providers, involve finance and logistics, and respect the general contractual terms and conditions of the organisation.
+* Register only those who are eligible to receive cash or in-kind benefits, and ensure that beneficiary identification abide by national financial regulations.
+* In order to identify beneficiaries, at least an official identification (e.g. ID) should match an internal verification tool (e.g. distribution lists, cards, SIM).
+* Check at local level that distribution and encashment plans are consistent with the service providers’ location and capacity.
+* When implementing CFW, ensure that work conditions are culturally appropriate, consistent with the workers ‘physical’ capacity, and that wage rates reflect local legislation.
+
+## STEPS AND SUB-STEPS
+The CiE Toolkit suggests five steps for setting-up and implementing an emergency programme. The CiE Toolkit makes available resources that can help you:
+
+**Set-up the programme**, starting from developing a strong operational plan, with detailed overall strategy, objectives, field structure, resources, costs, and expected outputs and outcomes. At this phase, you should also establish sound internal and external coordination systems.
+
+**Communicate with and be accountable to beneficiaries (BCA)**. Again, it starts with the development of a plan defining the approach that the programme will use to communicate with communities. This plan should include the capacity building of staff, the selection of communication channels and tools, the development of messages for each different target audiences, as well as the design and set-up of a feedback mechanism. Reviewing and learning should also be part of BCA, either as a stand-alone activity or as part of an overall programme review.
+
+**Select and contract service providers.** This step can require in-depth analysis and dedicated staff working in collaboration with finance and logistics. This step may as well start during the assessment phase, as it might be opportune to take advantage of the expertise made available then. The process includes researching and narrowing down potential service providers according to established criteria, conducting a tendering and selection process, then finally contracting and defining ways of working with service providers. An important issue that has to be dealt with throughout this step regards beneficiary data management and protection, so as to address potential risks related to beneficiary privacy, as well as fraud and abuse.
+
+**Register and identify beneficiaries.** These two processes are closely interconnected. It is during registration that a link between each beneficiary and a unique identifier is created. In order to ensure a smooth registration process, some key preparatory measures include: deciding roles, responsibilities and ways of work; defining the type and level of information to be collected; creating a database; developing registration forms; organizing registration. During distributions/encashment, beneficiaries and/or their representatives will have to be identified by means of community lists, ID cards and other technological options. This ensures that the person presenting him/herself to receive their entitlement is indeed a registered beneficiary and/or their representatives.
+
+**Carry out distributions and encashment.** It is good practice to train and communicate with staff, either in-house or third party, directly involved. Distribution and encashment procedures should be based on agency’s SOPs. Distributions and encashment should be carefully planned in advance in collaboration with the community and the third parties involved. It is important that beneficiaries are treated with dignity and that local customs and cultural norms are respected. The required documentation includes distributions lists and plans, which are common for both in-kind distribution and encashment. In the case of in-kind, it also includes requisition forms and waybills. In the case of CTP, it includes an initial cash transfer order and encashment reports. Reconciliation is mandatory for both in-kind and CTP. It is aimed at ensuring book balances and clarifying discrepancies. Reconciliation data are gathered all along the programme and closed when the operation ends, preferably within the week following the last distribution/encashment.
