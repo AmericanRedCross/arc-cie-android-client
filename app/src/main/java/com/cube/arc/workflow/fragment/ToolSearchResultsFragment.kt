@@ -83,7 +83,6 @@ class ToolSearchResultsFragment : Fragment()
 			val directory = DirectoriesManager.directory(searchResult.directoryId)
 
 			directory?.also {
-				// only tools will have null directories
 				if (it.metadata?.get("tool") as Boolean? ?: false)
 				{
 					var parent = it.parent()

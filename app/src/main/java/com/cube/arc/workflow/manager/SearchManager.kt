@@ -79,11 +79,11 @@ object SearchManager
 		val results = ArrayList<SearchResult>()
 		synchronized (this)
 		{
-			val database = sqliteHelper.writableDatabase
+			val database = sqliteHelper.readableDatabase
 
-			val sql = "SELECT * FROM search WHERE id IN (SELECT docid FROM search_index WHERE search_index MATCH \"${query}*\")"
-//			val selectionArgs = arrayOf(query + "*")
-			val cursor = database.rawQuery(sql, null)
+			val sql = "SELECT * FROM search WHERE id IN (SELECT docid FROM search_index WHERE search_index MATCH ?)"
+			val selectionArgs = arrayOf(query + "*")
+			val cursor = database.rawQuery(sql, selectionArgs)
 
 			while (cursor.moveToNext())
 			{
