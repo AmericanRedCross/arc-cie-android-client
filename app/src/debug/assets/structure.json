@@ -1,7 +1,7 @@
 [{
 	"id": 1,
 	"title": "Preparedness",
-	"order": 1,
+	"order": 0,
 	"content": "/content/m1_0_roadmap_for_preparedness.md",
 	"metadata": {
 		"hierarchy": "1"
@@ -15,7 +15,7 @@
 	"directories": [{
 		"id": 2,
 		"title": "Prepare and Analyze",
-		"order": 1,
+		"order": 0,
 		"content": "/content/m1_1_roadmap_for_preparing_and_analysing.md",
 		"metadata": {
 			"hierarchy": "1.1"
@@ -29,7 +29,7 @@
 		"directories": [{
 				"id": 3,
 				"title": "Secondary data review and analysis",
-				"order": 1,
+				"order": 0,
 				"content": null,
 				"metadata": {
 					"hierarchy": "1.1.1"
@@ -38,7 +38,7 @@
 				"directories": [{
 					"id": 4,
 					"title": "Secondary Data Sources",
-					"order": 1,
+					"order": 0,
 					"content": "/content/m1_1_1_secondary_data_sources.md",
 					"metadata": {
 						"hierarchy": "1.1.1.1",
@@ -59,7 +59,7 @@
 				"directories": [{
 						"id": 5,
 						"title": "Key Stakeholders Matrix Template",
-						"order": 1,
+						"order": 0,
 						"content": null,
 						"metadata": {
 							"hierarchy": "1.1.2.1",
@@ -116,7 +116,7 @@
 }, {
 	"id": 8,
 	"title": "Assessment",
-	"order": 2,
+	"order": 1,
 	"content": "/content/m2_0_roadmap_for_assessment.md",
 	"metadata": {
 		"hierarchy": "2"
@@ -126,7 +126,7 @@
 }, {
 	"id": 9,
 	"title": "Response Analysis",
-	"order": 3,
+	"order": 2,
 	"content": "/content/m3_0_roadmap_for_response_analysis.md",
 	"metadata": {
 		"hierarchy": "3"
@@ -136,7 +136,7 @@
 }, {
 	"id": 10,
 	"title": "Set-Up & Implementation",
-	"order": 4,
+	"order": 3,
 	"content": "/content/m4_0_roadmap_for_implementation.md",
 	"metadata": {
 		"hierarchy": "4"
@@ -146,7 +146,7 @@
 }, {
 	"id": 11,
 	"title": "Monitoring & Evaluation",
-	"order": 5,
+	"order": 4,
 	"content": "/content/m5_0_roadmap_for_m_e.md",
 	"metadata": {
 		"hierarchy": "5"

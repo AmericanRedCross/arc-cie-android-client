@@ -20,19 +20,19 @@ object DirectoriesManager
 	lateinit var directories: List<Directory>
 
 	val directoryImages = mapOf(
-		1 to R.drawable.directory_1_backdrop,
-		2 to R.drawable.directory_2_backdrop,
-		3 to R.drawable.directory_3_backdrop,
-		4 to R.drawable.directory_4_backdrop,
-		5 to R.drawable.directory_5_backdrop
+		0 to R.drawable.directory_1_backdrop,
+		1 to R.drawable.directory_2_backdrop,
+		2 to R.drawable.directory_3_backdrop,
+		3 to R.drawable.directory_4_backdrop,
+		4 to R.drawable.directory_5_backdrop
 	)
 
 	val directoryColours = mapOf(
-		1 to R.color.directory_1,
-		2 to R.color.directory_2,
-		3 to R.color.directory_3,
-		4 to R.color.directory_4,
-		5 to R.color.directory_5
+		0 to R.color.directory_1,
+		1 to R.color.directory_2,
+		2 to R.color.directory_3,
+		3 to R.color.directory_4,
+		4 to R.color.directory_5
 	)
 
 	/**
