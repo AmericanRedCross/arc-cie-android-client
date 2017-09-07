@@ -65,6 +65,8 @@ class WorkFlowFragment : Fragment()
 			{
 				IntentDataHelper.store("search_query", searchInput.text.toString())
 				view.context.startActivity(Intent(view.context, ToolSearchResultsActivity::class.java))
+				searchInput.setText("")
+
 				true
 			}
 
