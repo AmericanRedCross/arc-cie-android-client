@@ -43,6 +43,6 @@ class ProgressDirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(item
 
 		directoryProgress.progress = totalComplete
 		name.text = model.title
-		hierarchy.text = model.order.toString()
+		hierarchy.text = model.metadata?.getOrElse("hierarchy", { null }) as String? ?: ""
 	}
 }

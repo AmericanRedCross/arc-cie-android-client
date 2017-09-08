@@ -93,15 +93,9 @@ fun <T : View> T.tint(@ColorRes colourRes: Int, alpha: Float = 1.0f): T
 				secondaryProgressTintList = ColorStateList.valueOf(tintColour)
 				progressBackgroundTintList = ColorStateList.valueOf(tintColour.alpha(alpha * 0.5f))
 			}
-			else
-			{
-				progressDrawable.tint(tintColour)
-				indeterminateDrawable.tint(tintColour)
-				background.tint(tintColour.alpha(alpha * 0.5f))
-			}
 		}
 
-		is ImageView -> drawable.tint(tintColour)
+		is ImageView -> drawable?.tint(tintColour)
 		is TextView -> compoundDrawables?.tint(tintColour)
 		else -> {
 			if (background == null) background = ColorDrawable(tintColour) else background.tint(tintColour)
