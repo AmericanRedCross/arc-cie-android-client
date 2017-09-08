@@ -121,7 +121,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 					}.apply()
 
 					R.id.action_note -> {
-						IntentDataHelper.store(NoteActivity::class.java, tool.id.toString())
+						IntentDataHelper.store(NoteActivity::class.java, tool.id)
 						view.context.startActivity(Intent(view.context, NoteActivity::class.java))
 					}
 
