@@ -120,6 +120,14 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 						}
 					}.apply()
 
+					R.id.action_share -> {
+						val shareUrl = "TODO://CHANGE_URL"
+						view.context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
+							intent.type = "text/plain"
+							intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+						}, "Share to"))
+					}
+
 					R.id.action_note -> {
 						IntentDataHelper.store(NoteActivity::class.java, tool.id)
 						view.context.startActivity(Intent(view.context, NoteActivity::class.java))
