@@ -44,7 +44,7 @@ object DirectoriesManager
 		{
 			directories = Gson().fromJson(InputStreamReader(dataSource), object : TypeToken<ArrayList<Directory>>(){}.type)
 		}
-		catch(e: Exception)
+		catch (e: Exception)
 		{
 			// failed to parse directories json
 			directories = listOf()
