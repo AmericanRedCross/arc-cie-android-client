@@ -56,11 +56,12 @@ object AnalyticsHelper
 	/* app specific tracking methods
 	 * Category (Onboarding) */
 	fun userWatchTutorialVideo() = sendPage("Tutorial video")
-	fun userTapTutorialVideo() = sendEvent("Pre-Onboarding", "Watch video")
-	fun userTapOnboardingSkip() = sendEvent("Pre-Onboarding", "Skip")
+	fun userTapsTutorialVideo() = sendEvent("Pre-Onboarding", "Watch video")
+	fun userTapsOnboardingSkip() = sendEvent("Pre-Onboarding", "Skip")
 
 	/* Category (Workflow) */
 	fun userTapsToolkit() = sendEvent("Workflow", "Toolkit")
+	fun userTapsCriticalTools() = sendEvent("Workflow", "Critical tools")
 	fun userViewExportDialog() = sendPage("Export content")
 	fun userViewSettings() = sendPage("Settings")
 	fun userExpandsDirectory(directory: Directory) = sendEvent("%s %s".format(directory.metadata?.getOrDefault("hierarchy", null) ?: "", directory.title), "Expanded")

@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.cube.arc.R
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
@@ -29,6 +30,7 @@ class VideoPlayerActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 
+		AnalyticsHelper.userWatchTutorialVideo()
 		setContentView(R.layout.video_player_view)
 
 		val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)

@@ -17,6 +17,7 @@ import com.cube.arc.cie.MainApplication
 import com.cube.arc.cie.fragment.DownloadHelper
 import com.cube.arc.onboarding.activity.VideoPlayerActivity
 import com.cube.arc.workflow.model.FileDescriptor
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.extractTo
 import com.google.gson.Gson
@@ -46,14 +47,20 @@ class SettingsActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 
+		AnalyticsHelper.userViewSettings()
+
 		setContentView(R.layout.settings_activity_view)
 		setSupportActionBar(findViewById(R.id.toolbar) as Toolbar)
 
 		video.setOnClickListener {
+			AnalyticsHelper.userTapsTutorialVideo()
+
 			startActivity(Intent(this, VideoPlayerActivity::class.java))
 		}
 
 		reset.setOnClickListener {
+			AnalyticsHelper.userTapsResetData()
+
 			AlertDialog.Builder(this)
 				.setTitle(R.string.reset_dialog_title)
 				.setMessage(R.string.reset_dialog_description)
