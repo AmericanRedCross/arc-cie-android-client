@@ -15,6 +15,7 @@ import com.cube.arc.cie.activity.DocumentViewerActivity
 import com.cube.arc.workflow.activity.NoteActivity
 import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.model.Directory
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.inflate
 import com.cube.lib.util.tint
@@ -55,8 +56,14 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			when
 			{
-				stepsContainer.visibility == View.VISIBLE -> hideView(model, stepsContainer)
-				else -> showView(model, stepsContainer)
+				stepsContainer.visibility == View.VISIBLE -> {
+					AnalyticsHelper.userCollapsesDirectory(model)
+					hideView(model, stepsContainer)
+				}
+				else -> {
+					AnalyticsHelper.userExpandsDirectory(model)
+					showView(model, stepsContainer)
+				}
 			}
 
 			chevron.setImageResource(when
@@ -67,6 +74,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			roadmap.visibility = if (model.content != null && stepsContainer.visibility == View.VISIBLE) View.VISIBLE else View.GONE
 			roadmap.setOnClickListener { view ->
+				AnalyticsHelper.userTapsDirectoryRoadmap(model)
 				IntentDataHelper.store(DocumentViewerActivity::class.java, model)
 				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
 			}
@@ -89,6 +97,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			stepRoadmap.visibility = if (step.content != null) View.VISIBLE else View.GONE
 			stepRoadmap.setOnClickListener { view ->
+				AnalyticsHelper.userTapsDirectoryRoadmap(model)
 				IntentDataHelper.store(DocumentViewerActivity::class.java, step)
 				view.context.startActivity(Intent(view.context, DocumentViewerActivity::class.java))
 			}
@@ -118,6 +127,12 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			subStepHierarchy.text = subStep.metadata?.get("hierarchy") as String? ?: ""
 			subStepTitle.text = subStep.title
 			subStepNoteButton.setOnClickListener { view ->
+				when
+				{
+					notePrefs.contains(subStep.id.toString()) -> AnalyticsHelper.userTapsEditNote(subStep)
+					else -> AnalyticsHelper.userTapsAddNote(subStep)
+				}
+
 				val noteIntent = Intent(view.context, NoteActivity::class.java)
 				IntentDataHelper.store(NoteActivity::class.java, subStep.id)
 				view.context.startActivity(noteIntent)
@@ -129,8 +144,14 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				checkPrefs.edit().apply {
 					when
 					{
-						isChecked -> putBoolean(subStep.id.toString(), true)
-						else -> remove(subStep.id.toString())
+						isChecked -> {
+							AnalyticsHelper.userChecksDirectoryCheckbox(subStep)
+							putBoolean(subStep.id.toString(), true)
+						}
+						else -> {
+							AnalyticsHelper.userUnchecksDirectoryCheckbox(subStep)
+							remove(subStep.id.toString())
+						}
 					}
 				}.apply()
 			}
@@ -169,10 +190,12 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			when
 			{
 				toolContainer.visibility == View.VISIBLE -> {
+					AnalyticsHelper.userCollapsesDirectory(subStep)
 					hideView(subStep, toolContainer)
 					hideView(subStep, subStepView.findViewById(R.id.add_note))
 				}
 				else -> {
+					AnalyticsHelper.userExpandsDirectory(subStep)
 					showView(subStep, toolContainer)
 					showView(subStep, subStepView.findViewById(R.id.add_note))
 				}

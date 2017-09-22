@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.manager.ExportManager
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 import java.io.File
@@ -29,6 +30,8 @@ class ExportActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 
+		AnalyticsHelper.userViewExportDialog()
+
 		setContentView(R.layout.export_activity_view)
 		setUi()
 	}
@@ -39,6 +42,8 @@ class ExportActivity : AppCompatActivity()
 		inflateExportable(
 			exportTitle = R.string.export_critical_title,
 			exportClick = { view ->
+				AnalyticsHelper.userTapsExportCriticalPath()
+
 				val shareUrl = "TODO://CHANGE_URL"
 				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
 					intent.type = "text/plain"
@@ -51,6 +56,8 @@ class ExportActivity : AppCompatActivity()
 		inflateExportable(
 			exportTitle = R.string.export_toolkit_title,
 			exportClick = { view ->
+				AnalyticsHelper.userTapsExportEntireToolkit()
+
 				val shareUrl = "TODO://CHANGE_URL"
 				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
 					intent.type = "text/plain"
@@ -63,6 +70,8 @@ class ExportActivity : AppCompatActivity()
 		inflateExportable(
 			exportTitle = R.string.export_critical_progress_title,
 			exportClick = { view ->
+				AnalyticsHelper.userTapsExportCriticalProgress()
+
 				val toShare = ExportManager.generateUserContent(view.context, true)
 				val path = File(MainApplication.BASE_PATH, "critical_user_content.csv")
 				path.bufferedWriter().use { out ->
@@ -86,6 +95,8 @@ class ExportActivity : AppCompatActivity()
 		inflateExportable(
 			exportTitle = R.string.export_entire_progress_title,
 			exportClick = { view ->
+				AnalyticsHelper.userTapsExportEntireProgress()
+
 				val toShare = ExportManager.generateUserContent(view.context)
 				val path = File(MainApplication.BASE_PATH, "all_user_content.csv")
 				path.bufferedWriter().use { out ->

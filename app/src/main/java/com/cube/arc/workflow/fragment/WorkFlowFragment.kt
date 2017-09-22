@@ -19,6 +19,7 @@ import com.cube.arc.workflow.adapter.DirectoryAdapter
 import com.cube.arc.workflow.adapter.ToolsAdapter
 import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.model.Directory
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
@@ -41,6 +42,8 @@ class WorkFlowFragment : Fragment()
 	{
 		super.onActivityCreated(savedInstanceState)
 
+		AnalyticsHelper.userViewsWorkflow()
+
 		setUi()
 		showModules()
 	}
@@ -53,16 +56,20 @@ class WorkFlowFragment : Fragment()
 		ViewCompat.setNestedScrollingEnabled(scroller.getChildAt(0), false);
 
 		directoriesFilter.setOnClickListener {
+			AnalyticsHelper.userTapsToolkit()
 			showModules()
 		}
 
 		criticalFilter.setOnClickListener {
+			AnalyticsHelper.userTapsCriticalTools()
 			showCritical()
 		}
 
 		searchInput.setOnEditorActionListener { view, actionId, event ->
 			if (actionId == EditorInfo.IME_ACTION_SEARCH)
 			{
+				AnalyticsHelper.userSearches(searchInput.text.toString())
+
 				IntentDataHelper.store("search_query", searchInput.text.toString())
 				view.context.startActivity(Intent(view.context, ToolSearchResultsActivity::class.java))
 				searchInput.setText("")

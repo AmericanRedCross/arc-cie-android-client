@@ -11,6 +11,7 @@ import android.widget.Button
 import com.cube.arc.R
 import com.cube.arc.cie.activity.MainActivity
 import com.cube.arc.onboarding.activity.VideoPlayerActivity
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 
 /**
@@ -28,10 +29,12 @@ class OnboardingFragment : Fragment()
 		super.onActivityCreated(savedInstanceState)
 
 		videoButton.setOnClickListener {
+			AnalyticsHelper.userTapsTutorialVideo()
 			startActivity(Intent(activity, VideoPlayerActivity::class.java))
 		}
 
 		skipButton.setOnClickListener {
+			AnalyticsHelper.userTapsOnboardingSkip()
 			PreferenceManager.getDefaultSharedPreferences(activity).edit()
 				.putBoolean("seen_onboarding", true)
 				.apply()

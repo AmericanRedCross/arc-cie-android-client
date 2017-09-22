@@ -14,6 +14,7 @@ import com.cube.arc.workflow.activity.NoteActivity
 import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.Directory
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.mimeIcon
 import com.cube.lib.util.tint
@@ -67,8 +68,14 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			checkPrefs.edit().apply {
 				when
 				{
-					isChecked -> putBoolean(tool.id.toString(), true)
-					else -> remove(tool.id.toString())
+					isChecked -> {
+						AnalyticsHelper.userChecksDirectoryCheckbox(tool)
+						putBoolean(tool.id.toString(), true)
+					}
+					else -> {
+						AnalyticsHelper.userUnchecksDirectoryCheckbox(tool)
+						remove(tool.id.toString())
+					}
 				}
 			}.apply()
 		}
@@ -110,10 +117,12 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 						when (criticalPrefs.contains(tool.id.toString()))
 						{
 							false -> {
+								AnalyticsHelper.userMarksToolCritical(tool)
 								putBoolean(tool.id.toString(), true)
 								critical.visibility = View.VISIBLE
 							}
 							else -> {
+								AnalyticsHelper.userUnmarksToolCritical(tool)
 								remove(tool.id.toString())
 								critical.visibility = View.GONE
 							}
@@ -121,6 +130,8 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 					}.apply()
 
 					R.id.action_share -> {
+						AnalyticsHelper.userTapsToolShare(tool)
+
 						val shareUrl = "TODO://CHANGE_URL"
 						view.context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
 							intent.type = "text/plain"
@@ -129,6 +140,12 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 					}
 
 					R.id.action_note -> {
+						when
+						{
+							notePrefs.contains(tool.id.toString()) -> AnalyticsHelper.userTapsEditNote(tool)
+							else -> AnalyticsHelper.userTapsAddNote(tool)
+						}
+
 						IntentDataHelper.store(NoteActivity::class.java, tool.id)
 						view.context.startActivity(Intent(view.context, NoteActivity::class.java))
 					}
@@ -141,6 +158,8 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 							}
 							else
 							{
+								AnalyticsHelper.userTapsToolDownload(tool)
+
 								val appContext = view.context.applicationContext
 								val exportNotification: NotificationCompat.Builder
 								val notificationManager = appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

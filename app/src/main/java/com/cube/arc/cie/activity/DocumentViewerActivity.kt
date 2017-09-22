@@ -9,6 +9,7 @@ import com.cube.arc.R
 import com.cube.arc.cie.fragment.DownloadHelper
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.arc.workflow.model.Directory
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.BundleHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.parser.ListTagParser
@@ -113,6 +114,7 @@ class DocumentViewerActivity : AppCompatActivity()
 
 				export.setText(if (ExportManager.isFileDownloaded(files[0])) R.string.document_viewer_button_open else R.string.document_viewer_button_export)
 				export.setOnClickListener {
+					AnalyticsHelper.userTapsExportDocument(files[0])
 					if (ExportManager.isFileDownloaded(files[0]))
 					{
 						ExportManager.open(files[0], this)

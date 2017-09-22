@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.cube.arc.R
 import com.cube.arc.progress.adapter.ProgressDirectoryAdapter
 import com.cube.arc.workflow.manager.DirectoriesManager
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
 
@@ -31,6 +32,8 @@ class ProgressFragment : Fragment()
 	override fun onActivityCreated(savedInstanceState: Bundle?)
 	{
 		super.onActivityCreated(savedInstanceState)
+
+		AnalyticsHelper.userViewsProgress()
 
 		adapter.items = DirectoriesManager.directories
 

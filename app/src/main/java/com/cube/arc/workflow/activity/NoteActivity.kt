@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.cube.arc.R
 import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.model.Directory
+import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
 
@@ -34,6 +35,8 @@ class NoteActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
+
+		AnalyticsHelper.userViewsNoteEditor()
 
 		setContentView(R.layout.note_activity_view)
 
@@ -66,6 +69,8 @@ class NoteActivity : AppCompatActivity()
 		actionSubTitle.text = directory?.metadata?.get("hierarchy") as String ?: ""
 
 		actionCancel.setOnClickListener { view ->
+			AnalyticsHelper.userCancelsNoteEditor()
+
 			AlertDialog.Builder(view.context)
 				.setTitle(R.string.note_dialog_cancel_confirm_title)
 				.setMessage(R.string.note_dialog_cancel_confirm_message)
@@ -79,6 +84,8 @@ class NoteActivity : AppCompatActivity()
 		}
 
 		save.setOnClickListener {
+			AnalyticsHelper.userCompletesNoteEditor()
+
 			prefs.edit().let {
 				when (editor.text.isEmpty())
 				{
