@@ -45,6 +45,8 @@ class SettingsActivity : AppCompatActivity()
 		}
 	}
 
+	private var updateTask: () -> Unit = {}
+
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
@@ -68,6 +70,17 @@ class SettingsActivity : AppCompatActivity()
 				.setMessage(R.string.reset_dialog_description)
 				.setPositiveButton(R.string.reset_dialog_button_confirm, resetData)
 				.setNegativeButton(R.string.reset_dialog_button_cancel, null)
+				.show()
+		}
+
+		updateButton.setOnClickListener {
+			AlertDialog.Builder(this@SettingsActivity)
+				.setTitle(R.string.setting_update_warning_title)
+				.setMessage(R.string.setting_update_warning_message)
+				.setPositiveButton(R.string.setting_update_warning_positive, { dialog, which ->
+					updateTask.invoke()
+				})
+				.setNegativeButton(R.string.setting_update_warning_negative, null)
 				.show()
 		}
 
@@ -131,7 +144,7 @@ class SettingsActivity : AppCompatActivity()
 			}
 		}
 
-		updateButton.setOnClickListener {
+		updateTask = {
 			downloadTask = downloadTask.attach(this)
 			downloadTask.file = FileDescriptor(url = "http://ec2-54-193-52-173.us-west-1.compute.amazonaws.com/api/projects/1/publishes/latest")
 			downloadTask.execute(outFile = File(filesDir, "content-check.json"))
@@ -193,7 +206,7 @@ class SettingsActivity : AppCompatActivity()
 			}
 		}
 
-		updateButton.setOnClickListener {
+		updateTask = {
 			downloadProgress.show()
 			updateButton.isEnabled = false
 

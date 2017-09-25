@@ -63,6 +63,11 @@
 	<string name="setting_locale_title">Change Language</string>
 	<string name="setting_locale_description">Downloads the App Content in another Language</string>
 
+	<string name="setting_update_warning_title">Warning!</string>
+	<string name="setting_update_warning_message">We recommend you not do this during an active operation, as the structure and content of the toolkit may have changed significantly</string>
+	<string name="setting_update_warning_positive">Proceed</string>
+	<string name="setting_update_warning_negative">Cancel</string>
+
 	<string name="reset_dialog_title">Reset All Data</string>
 	<string name="reset_dialog_description">This will clear all progress and notes in the app</string>
 	<string name="reset_dialog_button_confirm">OKAY</string>
