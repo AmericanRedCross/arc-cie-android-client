@@ -34,13 +34,13 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".cie.activity.MainActivity" android:windowSoftInputMode="stateAlwaysHidden" />
-		<activity android:name=".cie.activity.SettingsActivity" android:windowSoftInputMode="stateAlwaysHidden" />
-		<activity android:name=".cie.activity.DocumentViewerActivity" android:theme="@style/AppTheme.Dialog" />
-		<activity android:name=".cie.activity.ExportActivity" android:theme="@style/AppTheme.Dialog" />
+		<activity android:name=".cie.activity.MainActivity" android:windowSoftInputMode="stateAlwaysHidden" android:screenOrientation="portrait" />
+		<activity android:name=".cie.activity.SettingsActivity" android:windowSoftInputMode="stateAlwaysHidden" android:screenOrientation="portrait" />
+		<activity android:name=".cie.activity.DocumentViewerActivity" android:theme="@style/AppTheme.Dialog" android:screenOrientation="portrait" />
+		<activity android:name=".cie.activity.ExportActivity" android:theme="@style/AppTheme.Dialog" android:screenOrientation="portrait" />
 
-		<activity android:name=".workflow.activity.NoteActivity" android:windowSoftInputMode="adjustResize" />
-		<activity android:name=".workflow.activity.ToolSearchResultsActivity" android:windowSoftInputMode="stateAlwaysHidden" />
+		<activity android:name=".workflow.activity.NoteActivity" android:windowSoftInputMode="adjustResize" android:screenOrientation="portrait" />
+		<activity android:name=".workflow.activity.ToolSearchResultsActivity" android:windowSoftInputMode="stateAlwaysHidden" android:screenOrientation="portrait" />
 
 		<activity android:name=".onboarding.activity.OnboardingActivity" android:screenOrientation="portrait" />
 		<activity android:name=".onboarding.activity.VideoPlayerActivity" android:theme="@style/AppTheme.Fullscreen" android:screenOrientation="portrait" />
