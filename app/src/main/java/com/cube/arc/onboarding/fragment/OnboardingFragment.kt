@@ -3,6 +3,7 @@ package com.cube.arc.onboarding.fragment
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
@@ -151,9 +152,9 @@ class OnboardingFragment : Fragment()
 	fun startMain()
 	{
 		AnalyticsHelper.userTapsOnboardingSkip()
-//		PreferenceManager.getDefaultSharedPreferences(activity).edit()
-//			.putBoolean("seen_onboarding", true)
-//			.apply()
+		PreferenceManager.getDefaultSharedPreferences(activity).edit()
+			.putBoolean("seen_onboarding", true)
+			.apply()
 
 		startActivity(Intent(activity, MainActivity::class.java))
 	}
