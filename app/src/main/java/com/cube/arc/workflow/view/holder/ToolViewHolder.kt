@@ -57,7 +57,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		toolDescription.visibility = View.GONE
 		tool.attachments.getOrNull(0)?.let {
 			toolDescription.text = it.description
-			toolDescription.visibility = if (it.description.isEmpty()) View.GONE else View.VISIBLE
+			toolDescription.visibility = if (it.description?.isEmpty() ?: true) View.GONE else View.VISIBLE
 		}
 
 		toolIcon.setImageResource(tool.attachments.getOrNull(0)?.mimeIcon() ?: R.drawable.ic_mime_misc)
@@ -130,13 +130,15 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 					}.apply()
 
 					R.id.action_share -> {
-						AnalyticsHelper.userTapsToolShare(tool)
+						tool.attachments.getOrNull(0)?.let { file ->
+							AnalyticsHelper.userTapsToolShare(tool)
 
-						val shareUrl = "TODO://CHANGE_URL"
-						view.context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
-							intent.type = "text/plain"
-							intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
-						}, "Share to"))
+							val shareUrl = "${tool.title} - ${file.url}"
+							view.context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
+								intent.type = "text/plain"
+								intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+							}, "Share to"))
+						}
 					}
 
 					R.id.action_note -> {
