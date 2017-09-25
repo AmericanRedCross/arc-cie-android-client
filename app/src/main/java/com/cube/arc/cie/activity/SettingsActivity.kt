@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
@@ -24,6 +25,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileReader
+import java.text.SimpleDateFormat
 
 /**
  * Settings activity to allow users to download content updates or reset app state
@@ -102,15 +104,29 @@ class SettingsActivity : AppCompatActivity()
 
 		downloadTask.callbackLambda = { success, filePath ->
 			updateButton.isEnabled = true
+			downloadTask.detach()
 
 			if (success)
 			{
 				val response = Gson().fromJson<Map<Any?, Any?>>(FileReader(filePath), object : TypeToken<Map<Any?, Any?>>(){}.type)
 				response.getOrElse("data", { null })?.let {
-					downloadTask.detach()
+					var publishDate = (it as Map<Any?, Any?>).get("publish_date") as String
+					val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+					val date = sdf.parse(publishDate).time
+					val contentDate = PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getLong("content_date", 0)
 
-					Toast.makeText(this@SettingsActivity, "There are content updates available to download", Toast.LENGTH_SHORT).show()
-					setDownloadUi()
+					if (date > contentDate)
+					{
+						Toast.makeText(this@SettingsActivity, "There are content updates available to download", Toast.LENGTH_SHORT).show()
+						setDownloadUi()
+					}
+					else
+					{
+						Toast.makeText(this@SettingsActivity, "You are already on the latest content version", Toast.LENGTH_SHORT).show()
+						File(filesDir, "content-check.json").delete()
+						downloadProgress.dismiss()
+						setCheckUi()
+					}
 				}
 			}
 		}
@@ -119,6 +135,8 @@ class SettingsActivity : AppCompatActivity()
 			downloadTask = downloadTask.attach(this)
 			downloadTask.file = FileDescriptor(url = "http://ec2-54-193-52-173.us-west-1.compute.amazonaws.com/api/projects/1/publishes/latest")
 			downloadTask.execute(outFile = File(filesDir, "content-check.json"))
+
+			downloadProgress.show()
 		}
 	}
 
@@ -144,6 +162,9 @@ class SettingsActivity : AppCompatActivity()
 		}
 
 		downloadTask.callbackLambda = { success, filePath ->
+			downloadProgress.dismiss()
+			downloadTask.detach()
+
 			if (success)
 			{
 				File(filesDir, "content-check.json").delete()
@@ -168,6 +189,7 @@ class SettingsActivity : AppCompatActivity()
 			else
 			{
 				Toast.makeText(this, "There was a problem downloading the content update", Toast.LENGTH_LONG).show()
+				setDownloadUi()
 			}
 		}
 
