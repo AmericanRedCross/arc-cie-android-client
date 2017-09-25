@@ -24,6 +24,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileReader
+import java.text.SimpleDateFormat
 
 /**
  * Fragment that hosts the UI component of the onboarding feature
@@ -81,7 +82,14 @@ class OnboardingFragment : Fragment()
 				if (response.containsKey("data"))
 				{
 					// TODO: Use language code
-					downloadContent((response["data"] as Map<Any?, Any?>).getOrElse("download_url", { null }) as String? ?: "")
+					var publishDate = (response["data"] as Map<Any?, Any?>).get("publish_date") as String
+					val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+					val date = sdf.parse(publishDate)
+					PreferenceManager.getDefaultSharedPreferences(activity).edit()
+						.putLong("content_date", date.time)
+						.apply()
+
+					downloadContent((response["data"] as Map<Any?, Any?>).get("download_url") as String)
 				}
 				else
 				{
@@ -116,7 +124,7 @@ class OnboardingFragment : Fragment()
 		downloadTask.callbackLambda = { success, filePath ->
 			if (success)
 			{
-//				File(activity.filesDir, "content-check.json").delete()
+				File(activity.filesDir, "content-check.json").delete()
 
 				// extract tar
 				Thread({
