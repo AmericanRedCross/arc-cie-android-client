@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<resources>
-	<string name="onboarding_title">Welcome to the Cash in Emergencies toolkit</string>
-	<string name="onboarding_body">Watch our quick tutorial to find out how it can help you support those affected by emergencies</string>
-	<string name="onboarding_video_button">Watch the Video Tutorial</string>
-	<string name="onboarding_skip_button">SKIP</string>
-</resources>

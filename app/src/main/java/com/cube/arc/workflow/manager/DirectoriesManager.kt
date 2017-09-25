@@ -4,7 +4,6 @@ import android.content.Context
 import com.cube.arc.R
 import com.cube.arc.workflow.model.Directory
 import com.cube.lib.util.flatSteps
-import com.cube.lib.util.parent
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.InputStream
@@ -15,8 +14,6 @@ import java.io.InputStreamReader
  */
 object DirectoriesManager
 {
-	// Tree map of the structure,  <Id, Depth>. position in tree will be position in directories list
-	lateinit var tree : LinkedHashMap<Int, Int>
 	lateinit var directories: List<Directory>
 
 	val directoryImages = mapOf(
@@ -48,30 +45,6 @@ object DirectoriesManager
 		{
 			// failed to parse directories json
 			directories = listOf()
-		}
-
-		tree = LinkedHashMap<Int, Int>()
-
-		directories.forEach { directory ->
-			mapTree(directory)
-		}
-	}
-
-	private fun mapTree(directory: Directory)
-	{
-		var depth = 0
-		var parent: Directory? = directory
-
-		while (true)
-		{
-			parent = parent?.parent() ?: break
-			depth++
-		}
-
-		tree.put(directory.id, depth)
-
-		directory.directories.forEach { step ->
-			mapTree(step)
 		}
 	}
 

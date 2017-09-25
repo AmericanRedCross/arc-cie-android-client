@@ -5,6 +5,12 @@
 	<string name="menu_workflow">Workflow</string>
 	<string name="menu_progress">Progress</string>
 
+	<string name="onboarding_title">Welcome to the Cash in Emergencies toolkit</string>
+	<string name="onboarding_body">Watch our quick tutorial to find out how it can help you support those affected by emergencies</string>
+	<string name="onboarding_video_button">Watch the Video Tutorial</string>
+	<string name="onboarding_skip_button">SKIP</string>
+	<string name="onboarding_setup_progress">Setting up application...</string>
+
 	<string name="actionbar_menu_export_title">Export</string>
 
 	<string name="note_dialog_button_save">Save</string>

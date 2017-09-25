@@ -34,14 +34,11 @@ class MainApplication : Application()
 	 */
 	fun initManagers()
 	{
-		var directoriesStream = resources.assets.open("structure.json")
 		val cacheModules = File(filesDir, "structure.json")
 		if (cacheModules.exists())
 		{
-			directoriesStream = FileInputStream(cacheModules)
+			DirectoriesManager.init(FileInputStream(cacheModules))
+			SearchManager.init(this)
 		}
-
-		DirectoriesManager.init(directoriesStream)
-		SearchManager.init(this)
 	}
 }

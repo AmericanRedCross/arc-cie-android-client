@@ -78,14 +78,14 @@ class DownloadHelper : Fragment()
 	 */
 	fun detach()
 	{
+		progressLambda = null
+		callbackLambda = null
+
+		downloadTask?.cancel(true)
+		isDownloading.set(false)
+
 		if (isAdded && activity != null)
 		{
-			progressLambda = null
-			callbackLambda = null
-
-			downloadTask?.cancel(true)
-			isDownloading.set(false)
-
 			activity.supportFragmentManager.beginTransaction()
 				.remove(this@DownloadHelper)
 				.commit()
