@@ -9,7 +9,7 @@ data class FileDescriptor
 	var url : String = "",
 	var mime : String = "",
 	var size : Long = 0,
-	var description: String = "",
+	var description: String? = null,
 	var timestamp: Long = 0,
 	var featured: Boolean = false
 )
