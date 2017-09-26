@@ -58,7 +58,7 @@ def getKeyPassword = { ->
 	return password
 }
 
-def getGaCode = project.hasProperty('gaCode') ? gaCode.toString() : ""
+def getGaCode = { -> return project.hasProperty('gaCode') ? gaCode.toString() : "" }
 
 android {
 	compileSdkVersion 25
