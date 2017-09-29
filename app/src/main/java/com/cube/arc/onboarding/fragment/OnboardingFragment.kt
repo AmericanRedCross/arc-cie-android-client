@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import com.cube.arc.BuildConfig
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.cie.activity.MainActivity
@@ -61,7 +62,7 @@ class OnboardingFragment : Fragment()
 	fun checkContent()
 	{
 		downloadTask = DownloadHelper.newInstance(activity as AppCompatActivity, "initial_content")
-		downloadTask.file = FileDescriptor(url = "http://ec2-54-193-52-173.us-west-1.compute.amazonaws.com/api/projects/1/publishes/latest")
+		downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest")
 
 		if (downloadTask.isDownloading.get())
 		{

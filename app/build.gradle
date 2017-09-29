@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def console = System.console();
+
 def getKeystoreFile = { ->
 	def filePath = project.hasProperty('keystore') ? keystore.toString() : null
 	def storeFile
@@ -59,6 +61,8 @@ def getKeyPassword = { ->
 }
 
 def getGaCode = { -> return project.hasProperty('gaCode') ? gaCode.toString() : "" }
+def getApiUrl = { -> return project.hasProperty('apiUrl') ? apiUrl.toString() : "" }
+def getProjectId = { -> return project.hasProperty('projectId') ? projectId.toString() : "" }
 
 android {
 	compileSdkVersion 25
@@ -73,6 +77,8 @@ android {
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 		buildConfigField "String", "GA_CODE", "\"" + getGaCode() + "\""
+		buildConfigField "String", "API_URL", "\"" + getApiUrl() + "\""
+		buildConfigField "String", "PROJECT_ID", "\"" + getProjectId() + "\""
 	}
 
 	signingConfigs {

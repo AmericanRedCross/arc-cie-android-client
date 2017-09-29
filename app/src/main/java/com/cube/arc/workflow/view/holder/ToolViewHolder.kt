@@ -103,6 +103,9 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			}
 
 			tool.attachments.getOrNull(0)?.let {
+				popup.menu.findItem(R.id.action_download).isVisible = true
+				popup.menu.findItem(R.id.action_share).isVisible = true
+
 				popup.menu.findItem(R.id.action_download).title = when
 				{
 					ExportManager.isFileDownloaded(it) -> view.resources.getString(R.string.tool_menu_open)

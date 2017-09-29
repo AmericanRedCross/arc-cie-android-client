@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.cube.arc.BuildConfig
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.cie.fragment.DownloadHelper
@@ -146,7 +147,7 @@ class SettingsActivity : AppCompatActivity()
 
 		updateTask = {
 			downloadTask = downloadTask.attach(this)
-			downloadTask.file = FileDescriptor(url = "http://ec2-54-193-52-173.us-west-1.compute.amazonaws.com/api/projects/1/publishes/latest")
+			downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest")
 			downloadTask.execute(outFile = File(filesDir, "content-check.json"))
 
 			downloadProgress.show()
@@ -211,7 +212,7 @@ class SettingsActivity : AppCompatActivity()
 			updateButton.isEnabled = false
 
 			downloadTask = downloadTask.attach(this)
-			downloadTask.file = FileDescriptor(url = "http://ec2-54-193-52-173.us-west-1.compute.amazonaws.com/api/projects/1/publishes/latest?redirect=true&language=en")
+			downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest?redirect=true&language=en")
 			downloadTask.execute(outFile = File(filesDir, "content.tar.gz"))
 		}
 	}
