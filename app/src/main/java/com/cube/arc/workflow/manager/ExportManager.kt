@@ -58,7 +58,7 @@ object ExportManager
 			registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<ArrayList<Registry>>(){}.type)
 		}
 
-		val fileRegistry = Registry(file.title, file.timestamp)
+		val fileRegistry = Registry(file.title, 0)//file.timestamp)
 		registry.add(fileRegistry)
 
 		File(MainApplication.BASE_PATH, REGISTRY).bufferedWriter().use { out -> out.write(Gson().toJson(registry).toString()); out.flush() }
@@ -207,11 +207,11 @@ object ExportManager
 
 				val rfc1123 = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US)
 				rfc1123.timeZone = TimeZone.getTimeZone("GMT")
-				val lastModified = rfc1123.format(Date(file.timestamp));
+				val lastModified = rfc1123.format(Date())//file.timestamp));
 
 				val request = Request.Builder()
 					.addHeader("User-Agent", "Android/ARC-" + BuildConfig.APPLICATION_ID + "-" + BuildConfig.VERSION_NAME)
-					.addHeader("Last-Modified", lastModified)
+//					.addHeader("Last-Modified", lastModified)
 					.addHeader("Cache-Control", "max-age=0")
 					.url(file.url)
 					.build()
