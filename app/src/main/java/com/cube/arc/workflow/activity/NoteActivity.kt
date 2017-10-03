@@ -66,7 +66,7 @@ class NoteActivity : AppCompatActivity()
 			}
 		}
 
-		actionSubTitle.text = directory?.metadata?.get("hierarchy") as String ?: ""
+		actionSubTitle.text = directory?.metadata?.get("hierarchy") as String? ?: ""
 
 		actionCancel.setOnClickListener { view ->
 			AnalyticsHelper.userCancelsNoteEditor()

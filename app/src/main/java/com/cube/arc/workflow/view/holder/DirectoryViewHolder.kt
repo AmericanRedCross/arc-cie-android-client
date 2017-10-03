@@ -37,7 +37,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 	fun populate(model: Directory)
 	{
-		directoryHierarchy = model.metadata?.get("hierarchy") as String ?: ""
+		directoryHierarchy = model.metadata?.get("hierarchy") as String? ?: ""
 
 		title.text = model.title
 		hierarchy.text = (directoryHierarchy).toString()

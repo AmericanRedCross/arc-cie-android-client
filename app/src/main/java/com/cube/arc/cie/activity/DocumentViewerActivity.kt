@@ -59,7 +59,7 @@ class DocumentViewerActivity : AppCompatActivity()
 	{
 		if (directory.content == null) return
 
-		val files = directory.attachments.filter { file -> file.featured }
+		val files = directory.attachments
 		documentFooter.visibility = if (files.isEmpty()) View.GONE else View.VISIBLE
 
 		BundleHelper.resolve(directory.content ?: "", this)?.let {
@@ -70,11 +70,11 @@ class DocumentViewerActivity : AppCompatActivity()
 
 			preview.setText(Html.fromHtml(htmlContent, URLImageParser(preview), ListTagParser()))
 
-			files.getOrNull(0)?.let {
-				title.text = files[0].title
-				documentTitle.text = files[0].title
-				documentSize.text = "%.2fMB".format(files[0].size.toDouble() / 1024.0 / 1024.0)
-				documentIcon.setImageResource(files[0].mimeIcon())
+			files.getOrNull(0)?.also { file ->
+				title.text = file.title
+				documentTitle.text = file.title
+				documentSize.text = "%.2fMB".format(file.size.toDouble() / 1024.0 / 1024.0)
+				documentIcon.setImageResource(file.mimeIcon())
 
 				downloadProgress.isIndeterminate = true
 
@@ -112,12 +112,12 @@ class DocumentViewerActivity : AppCompatActivity()
 					}
 				}
 
-				export.setText(if (ExportManager.isFileDownloaded(files[0])) R.string.document_viewer_button_open else R.string.document_viewer_button_export)
+				export.setText(if (ExportManager.isFileDownloaded(file)) R.string.document_viewer_button_open else R.string.document_viewer_button_export)
 				export.setOnClickListener {
-					AnalyticsHelper.userTapsExportDocument(files[0])
-					if (ExportManager.isFileDownloaded(files[0]))
+					AnalyticsHelper.userTapsExportDocument(file)
+					if (ExportManager.isFileDownloaded(file))
 					{
-						ExportManager.open(files[0], this)
+						ExportManager.open(file, this)
 					}
 					else
 					{
@@ -126,7 +126,7 @@ class DocumentViewerActivity : AppCompatActivity()
 						downloadProgress.progress = 0
 
 						downloadTask = downloadTask.attach(this@DocumentViewerActivity)
-						downloadTask.file = files[0]
+						downloadTask.file = file
 						downloadTask.execute()
 					}
 				}
