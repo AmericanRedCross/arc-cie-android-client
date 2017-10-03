@@ -84,7 +84,7 @@ class OnboardingFragment : Fragment()
 				{
 					// TODO: Use language code
 					var publishDate = (response["data"] as Map<Any?, Any?>).get("publish_date") as String
-					val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+					val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 					val date = sdf.parse(publishDate)
 					PreferenceManager.getDefaultSharedPreferences(activity).edit()
 						.putLong("content_date", date.time)
@@ -166,5 +166,6 @@ class OnboardingFragment : Fragment()
 			.apply()
 
 		startActivity(Intent(activity, MainActivity::class.java))
+		activity.finish()
 	}
 }
