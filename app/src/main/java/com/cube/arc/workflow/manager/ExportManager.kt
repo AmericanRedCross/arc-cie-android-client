@@ -11,6 +11,7 @@ import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.arc.workflow.model.Registry
+import com.cube.lib.util.escapeCsv
 import com.cube.lib.util.times
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -143,12 +144,12 @@ object ExportManager
 					rows.add(linkedMapOf<String, String>())
 					rows[0].putAll(columns.associate { it to "" })
 
-					rows[0][columns[0]] = step.title
+					rows[0][columns[0]] = step.title.escapeCsv()
 					rows[0][columns[1]] = if (checkPrefs.contains(step.id.toString())) "yes" else "no"
 
-					rows[0][columns[2]] = "${substep.order}"
-					rows[0][columns[3]] = substep.title
-					rows[0][columns[4]] = notesPrefs.getString(substep.id.toString(), "")
+					rows[0][columns[2]] = step.metadata?.get("hierarchy") as String? ?: "${step.order}"
+					rows[0][columns[3]] = substep.title.escapeCsv()
+					rows[0][columns[4]] = notesPrefs.getString(substep.id.toString(), "").escapeCsv()
 
 					substep.directories.forEachIndexed { index, tool ->
 						if (onlyCritical && ((tool.metadata?.getOrElse("critical_path", { false }) as Boolean ?: false) || criticalPrefs.contains(tool.id.toString())) || !onlyCritical)
@@ -158,8 +159,14 @@ object ExportManager
 								rows.add(rows[0].clone() as LinkedHashMap<String, String>)
 							}
 
-							rows[index][columns[5]] = tool.title
-							rows[index][columns[6]] = notesPrefs.getString(tool.id.toString(), "")
+							var capIndex = index
+							if (capIndex >= rows.size)
+							{
+								capIndex = rows.size - 1
+							}
+
+							rows[capIndex][columns[5]] = tool.title.escapeCsv()
+							rows[capIndex][columns[6]] = notesPrefs.getString(tool.id.toString(), "").escapeCsv()
 						}
 					}
 
