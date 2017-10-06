@@ -124,6 +124,8 @@ class SettingsActivity : AppCompatActivity()
 			{
 				val response = Gson().fromJson<Map<Any?, Any?>>(FileReader(filePath), object : TypeToken<Map<Any?, Any?>>(){}.type)
 				response.getOrElse("data", { null })?.let {
+					downloadProgress.dismiss()
+
 					var publishDate = (it as Map<Any?, Any?>).get("publish_date") as String
 					val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 					val date = sdf.parse(publishDate).time
@@ -138,7 +140,6 @@ class SettingsActivity : AppCompatActivity()
 					{
 						Toast.makeText(this@SettingsActivity, "You are already on the latest content version", Toast.LENGTH_SHORT).show()
 						File(filesDir, "content-check.json").delete()
-						downloadProgress.dismiss()
 						setCheckUi()
 					}
 				}
