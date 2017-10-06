@@ -262,7 +262,10 @@ object ExportManager
 						}
 					}
 				}
-				catch (e: Exception){}
+				catch (e: Exception)
+				{
+					e.printStackTrace()
+				}
 
 				return false
 			}

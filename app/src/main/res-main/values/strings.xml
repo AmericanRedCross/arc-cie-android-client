@@ -68,6 +68,8 @@
 	<string name="setting_update_warning_positive">Proceed</string>
 	<string name="setting_update_warning_negative">Cancel</string>
 
+	<string name="setting_locale_dialog_title">Select language</string>
+
 	<string name="reset_dialog_title">Reset All Data</string>
 	<string name="reset_dialog_description">This will clear all progress and notes in the app</string>
 	<string name="reset_dialog_button_confirm">OKAY</string>

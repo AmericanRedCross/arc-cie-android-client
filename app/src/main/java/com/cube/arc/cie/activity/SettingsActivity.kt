@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileReader
 import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Settings activity to allow users to download content updates or reset app state
@@ -85,6 +86,32 @@ class SettingsActivity : AppCompatActivity()
 				.show()
 		}
 
+		locale.setOnClickListener {
+			val availableLocales = PreferenceManager.getDefaultSharedPreferences(it.context).getStringSet("languages", setOf("en"))
+			val selected = PreferenceManager.getDefaultSharedPreferences(it.context).getString("content_language", "en")
+			val index = availableLocales.indexOf(selected)
+
+			val locales = arrayListOf<String>()
+			availableLocales.forEach { locales.add(Locale(it).displayLanguage) }
+
+			AlertDialog.Builder(this@SettingsActivity)
+				.setTitle(R.string.setting_locale_dialog_title)
+				.setSingleChoiceItems(locales.toTypedArray(), index, {dialog, which ->
+					dialog.dismiss()
+
+					if (which != index)
+					{
+						PreferenceManager.getDefaultSharedPreferences(it.context).edit()
+							.putString("content_language", availableLocales.toTypedArray()[which])
+							.apply()
+
+						setDownloadUi()
+						updateButton.performClick()
+					}
+				})
+				.show()
+		}
+
 		// Check for update
 		if (File(filesDir, "content-check.json").exists())
 		{
@@ -117,16 +144,32 @@ class SettingsActivity : AppCompatActivity()
 		}
 
 		downloadTask.callbackLambda = { success, filePath ->
+			downloadProgress.dismiss()
+
 			updateButton.isEnabled = true
 			downloadTask.detach()
 
+			val latestVersion = ({
+				Toast.makeText(this@SettingsActivity, "You are already on the latest content version", Toast.LENGTH_SHORT).show()
+				File(filesDir, "content-check.json").delete()
+				setCheckUi()
+			})
+
 			if (success)
 			{
-				val response = Gson().fromJson<Map<Any?, Any?>>(FileReader(filePath), object : TypeToken<Map<Any?, Any?>>(){}.type)
-				response.getOrElse("data", { null })?.let {
-					downloadProgress.dismiss()
+				val response = Gson().fromJson<Map<Any?, Any?>>(FileReader(filePath), object : TypeToken<Map<Any?, Any?>>(){}.type) ?: mapOf()
 
-					var publishDate = (it as Map<Any?, Any?>).get("publish_date") as String
+				response.getOrElse("data", {
+					latestVersion.invoke()
+				})?.let {
+					val data = it as Map<Any?, Any?>
+					val languages = data["languages"] as List<String> ?: listOf()
+
+					PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).edit()
+						.putStringSet("languages", languages.toSet())
+						.apply()
+
+					var publishDate = data["publish_date"] as String
 					val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 					val date = sdf.parse(publishDate).time
 					val contentDate = PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getLong("content_date", 0)
@@ -138,11 +181,13 @@ class SettingsActivity : AppCompatActivity()
 					}
 					else
 					{
-						Toast.makeText(this@SettingsActivity, "You are already on the latest content version", Toast.LENGTH_SHORT).show()
-						File(filesDir, "content-check.json").delete()
-						setCheckUi()
+						latestVersion.invoke()
 					}
 				}
+			}
+			else
+			{
+				latestVersion.invoke()
 			}
 		}
 
@@ -212,8 +257,10 @@ class SettingsActivity : AppCompatActivity()
 			downloadProgress.show()
 			updateButton.isEnabled = false
 
+			var selectedLocale = PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getString("content_language", "en")
+
 			downloadTask = downloadTask.attach(this)
-			downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest?redirect=true&language=en")
+			downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest?redirect=true&language=$selectedLocale")
 			downloadTask.execute(outFile = File(filesDir, "content.tar.gz"))
 		}
 	}

@@ -27,6 +27,8 @@ import java.io.File
 import java.io.FileReader
 import java.text.SimpleDateFormat
 
+
+
 /**
  * Fragment that hosts the UI component of the onboarding feature
  */
@@ -82,15 +84,23 @@ class OnboardingFragment : Fragment()
 				val response = Gson().fromJson<Map<Any?, Any?>>(FileReader(filePath), object : TypeToken<Map<Any?, Any?>>(){}.type)
 				if (response.containsKey("data"))
 				{
-					// TODO: Use language code
-					var publishDate = (response["data"] as Map<Any?, Any?>).get("publish_date") as String
+					val data = response["data"] as Map<Any?, Any?>
+
+					val locale = context.resources.configuration.locale.language.toLowerCase()
+					val languages = data["languages"] as List<String> ?: listOf()
+					var selectedLocale = languages.find { it.toLowerCase() == locale } ?: "en"
+
+					var publishDate = data["publish_date"] as String
 					val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 					val date = sdf.parse(publishDate)
+
 					PreferenceManager.getDefaultSharedPreferences(activity).edit()
 						.putLong("content_date", date.time)
+						.putString("content_language", selectedLocale)
+						.putStringSet("languages", languages.toSet())
 						.apply()
 
-					downloadContent((response["data"] as Map<Any?, Any?>).get("download_url") as String)
+					downloadContent((data["download_url"] as String) + "&language=$selectedLocale")
 				}
 				else
 				{
