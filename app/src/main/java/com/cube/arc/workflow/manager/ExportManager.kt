@@ -42,8 +42,8 @@ object ExportManager
 	{
 		if (!File(MainApplication.BASE_PATH, REGISTRY).exists()) return false
 
-		val registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<List<Registry>>(){}.type)
-		return registry.filter{ it.fileName == file.title }.filter { /*it.timestamp >= file.timestamp &&*/ File(MainApplication.BASE_PATH, it.fileName).exists() }.isNotEmpty()
+		val registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<List<Registry>>(){}.type) ?: listOf<Registry>()
+		return registry.filter{ it.fileName == file.title && File(MainApplication.BASE_PATH, it.fileName).exists() }.isNotEmpty()
 	}
 
 	/**
