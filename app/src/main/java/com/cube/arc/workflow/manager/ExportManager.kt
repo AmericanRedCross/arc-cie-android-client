@@ -40,7 +40,7 @@ object ExportManager
 	 */
 	fun isFileDownloaded(file: FileDescriptor): Boolean
 	{
-		if (!File(MainApplication.BASE_PATH, REGISTRY).exists()) return false
+		if (!File(MainApplication.BASE_PATH, REGISTRY).exists() || File(MainApplication.BASE_PATH, REGISTRY).length() <= 0) return false
 
 		val registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<List<Registry>>(){}.type) ?: listOf<Registry>()
 		return registry.filter{ it.fileName == file.title && File(MainApplication.BASE_PATH, it.fileName).exists() }.isNotEmpty()
@@ -54,9 +54,9 @@ object ExportManager
 	{
 		var registry = arrayListOf<Registry>()
 
-		if (File(MainApplication.BASE_PATH, REGISTRY).exists())
+		if (File(MainApplication.BASE_PATH, REGISTRY).exists() && File(MainApplication.BASE_PATH, REGISTRY).length() > 0)
 		{
-			registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<ArrayList<Registry>>(){}.type)
+			registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<ArrayList<Registry>>(){}.type) ?: arrayListOf<Registry>()
 		}
 
 		val fileRegistry = Registry(file.title, 0)//file.timestamp)
