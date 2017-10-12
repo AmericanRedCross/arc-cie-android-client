@@ -16,6 +16,9 @@ class MainApplication : Application()
 	companion object
 	{
 		public lateinit var BASE_PATH: File
+
+		// module visibility to persist throughout lifecycle
+		public val visibilityMap = HashMap<String, Boolean>()
 	}
 
 	override fun onCreate()

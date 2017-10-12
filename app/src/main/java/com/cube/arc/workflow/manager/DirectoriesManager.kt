@@ -16,8 +16,8 @@ import java.io.InputStreamReader
 object DirectoriesManager
 {
 	// Tree map of the structure,  <Id, Depth>. position in tree will be position in directories list
-	lateinit var tree : LinkedHashMap<Int, Int>
-	lateinit var directories: List<Directory>
+	var tree : LinkedHashMap<Int, Int> = linkedMapOf()
+	var directories: List<Directory> = listOf()
 
 	val directoryImages = mapOf(
 		0 to R.drawable.directory_1_backdrop,
@@ -47,6 +47,7 @@ object DirectoriesManager
 		catch (e: Exception)
 		{
 			// failed to parse directories json
+			e.printStackTrace()
 			directories = listOf()
 		}
 

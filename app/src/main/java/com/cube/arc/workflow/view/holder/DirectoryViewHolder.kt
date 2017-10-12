@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.cube.arc.R
+import com.cube.arc.cie.MainApplication
 import com.cube.arc.cie.activity.DocumentViewerActivity
 import com.cube.arc.workflow.activity.NoteActivity
 import com.cube.arc.workflow.manager.DirectoriesManager
@@ -25,7 +26,6 @@ import com.cube.lib.util.tint
  */
 class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
-	private val visibilityMap = HashMap<String, Boolean>()
 	private val stepsContainer = itemView.findViewById(R.id.steps_container) as LinearLayout
 	private val directoryClickArea = itemView.findViewById(R.id.directory_click_area)
 	private var chevron = itemView.findViewById(R.id.directory_chevron) as ImageView
@@ -37,7 +37,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 	fun populate(model: Directory)
 	{
-		directoryHierarchy = model.metadata?.get("hierarchy") as String ?: ""
+		directoryHierarchy = model.metadata?.get("hierarchy") as String? ?: ""
 
 		title.text = model.title
 		hierarchy.text = (directoryHierarchy).toString()
@@ -45,10 +45,11 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		hierarchy.background.tint(hierarchy.resources.getColor(DirectoriesManager.directoryColours[model.order] ?: R.color.directory_1))
 		image.setImageResource(DirectoriesManager.directoryImages[model.order] ?: R.drawable.directory_1_backdrop)
 
-		if (stepsContainer.childCount > 0)
+		if (stepsContainer.childCount > 0 || MainApplication.visibilityMap[model.id.toString()] as Boolean? ?: false)
 		{
 			// force refresh views
 			populateSteps(model)
+			chevron.setImageResource(R.drawable.chevron_collapse)
 		}
 
 		directoryClickArea.setOnClickListener { view ->
@@ -211,18 +212,18 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 	fun restoreVisibility(directory: Directory, view: View)
 	{
-		view.visibility = if (visibilityMap[directory.id.toString()] as Boolean? ?: false) View.VISIBLE else View.GONE
+		view.visibility = if (MainApplication.visibilityMap[directory.id.toString()] as Boolean? ?: false) View.VISIBLE else View.GONE
 	}
 
 	fun showView(directory: Directory, view: View)
 	{
 		view.visibility = View.VISIBLE
-		visibilityMap[directory.id.toString()] = true // expanded
+		MainApplication.visibilityMap[directory.id.toString()] = true // expanded
 	}
 
 	fun hideView(directory: Directory, view: View)
 	{
 		view.visibility = View.GONE
-		visibilityMap[directory.id.toString()] = false // collapsed
+		MainApplication.visibilityMap[directory.id.toString()] = false // collapsed
 	}
 }

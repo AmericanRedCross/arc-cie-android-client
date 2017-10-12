@@ -11,6 +11,7 @@ import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.arc.workflow.model.Registry
+import com.cube.lib.util.escapeCsv
 import com.cube.lib.util.times
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -39,10 +40,10 @@ object ExportManager
 	 */
 	fun isFileDownloaded(file: FileDescriptor): Boolean
 	{
-		if (!File(MainApplication.BASE_PATH, REGISTRY).exists()) return false
+		if (!File(MainApplication.BASE_PATH, REGISTRY).exists() || File(MainApplication.BASE_PATH, REGISTRY).length() <= 0) return false
 
-		val registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<List<Registry>>(){}.type)
-		return registry.filter{ it.fileName == file.title }.filter { it.timestamp >= file.timestamp && File(MainApplication.BASE_PATH, it.fileName).exists() }.isNotEmpty()
+		val registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<List<Registry>>(){}.type) ?: listOf<Registry>()
+		return registry.filter{ it.fileName == file.title && File(MainApplication.BASE_PATH, it.fileName).exists() }.isNotEmpty()
 	}
 
 	/**
@@ -53,12 +54,12 @@ object ExportManager
 	{
 		var registry = arrayListOf<Registry>()
 
-		if (File(MainApplication.BASE_PATH, REGISTRY).exists())
+		if (File(MainApplication.BASE_PATH, REGISTRY).exists() && File(MainApplication.BASE_PATH, REGISTRY).length() > 0)
 		{
-			registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<ArrayList<Registry>>(){}.type)
+			registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<ArrayList<Registry>>(){}.type) ?: arrayListOf<Registry>()
 		}
 
-		val fileRegistry = Registry(file.title, file.timestamp)
+		val fileRegistry = Registry(file.title, 0)//file.timestamp)
 		registry.add(fileRegistry)
 
 		File(MainApplication.BASE_PATH, REGISTRY).bufferedWriter().use { out -> out.write(Gson().toJson(registry).toString()); out.flush() }
@@ -143,12 +144,12 @@ object ExportManager
 					rows.add(linkedMapOf<String, String>())
 					rows[0].putAll(columns.associate { it to "" })
 
-					rows[0][columns[0]] = step.title
+					rows[0][columns[0]] = step.title.escapeCsv()
 					rows[0][columns[1]] = if (checkPrefs.contains(step.id.toString())) "yes" else "no"
 
-					rows[0][columns[2]] = "${substep.order}"
-					rows[0][columns[3]] = substep.title
-					rows[0][columns[4]] = notesPrefs.getString(substep.id.toString(), "")
+					rows[0][columns[2]] = step.metadata?.get("hierarchy") as String? ?: "${step.order}"
+					rows[0][columns[3]] = substep.title.escapeCsv()
+					rows[0][columns[4]] = notesPrefs.getString(substep.id.toString(), "").escapeCsv()
 
 					substep.directories.forEachIndexed { index, tool ->
 						if (onlyCritical && ((tool.metadata?.getOrElse("critical_path", { false }) as Boolean ?: false) || criticalPrefs.contains(tool.id.toString())) || !onlyCritical)
@@ -158,8 +159,14 @@ object ExportManager
 								rows.add(rows[0].clone() as LinkedHashMap<String, String>)
 							}
 
-							rows[index][columns[5]] = tool.title
-							rows[index][columns[6]] = notesPrefs.getString(tool.id.toString(), "")
+							var capIndex = index
+							if (capIndex >= rows.size)
+							{
+								capIndex = rows.size - 1
+							}
+
+							rows[capIndex][columns[5]] = tool.title.escapeCsv()
+							rows[capIndex][columns[6]] = notesPrefs.getString(tool.id.toString(), "").escapeCsv()
 						}
 					}
 
@@ -207,11 +214,11 @@ object ExportManager
 
 				val rfc1123 = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US)
 				rfc1123.timeZone = TimeZone.getTimeZone("GMT")
-				val lastModified = rfc1123.format(Date(file.timestamp));
+				val lastModified = rfc1123.format(Date())//file.timestamp));
 
 				val request = Request.Builder()
 					.addHeader("User-Agent", "Android/ARC-" + BuildConfig.APPLICATION_ID + "-" + BuildConfig.VERSION_NAME)
-					.addHeader("Last-Modified", lastModified)
+//					.addHeader("Last-Modified", lastModified)
 					.addHeader("Cache-Control", "max-age=0")
 					.url(file.url)
 					.build()
@@ -255,7 +262,10 @@ object ExportManager
 						}
 					}
 				}
-				catch (e: Exception){}
+				catch (e: Exception)
+				{
+					e.printStackTrace()
+				}
 
 				return false
 			}

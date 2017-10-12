@@ -13,3 +13,11 @@ operator fun String.times(amount: Int): String
 
 	return newStr
 }
+
+/**
+ * Escapes certain characters for use in a CSV export
+ */
+fun String.escapeCsv(): String
+{
+	return "\"" + replace("\"", "\"\"") + "\""
+}

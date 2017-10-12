@@ -2,6 +2,68 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def console = System.console();
+
+def getKeystoreFile = { ->
+	def filePath = project.hasProperty('keystore') ? keystore.toString() : null
+	def storeFile
+
+	if (filePath != null)
+	{
+		storeFile = file(filePath)
+	}
+
+	if (storeFile == null && console != null)
+	{
+		storeFile = file(console.readLine("Enter keystore file path: ").trim())
+	}
+
+	println "Using keystore $storeFile"
+
+	return storeFile
+}
+
+def getKeystorePassword = { ->
+	def password = project.hasProperty('keystorePassword') ? keystorePassword.toString() : null
+
+	if (password == null && console != null)
+	{
+		password = file(console.readLine("Enter keystore file path: ").trim())
+	}
+
+	println "Keystore password set to $password"
+
+	return password
+}
+
+def getKeyAlias = { ->
+	def alias = project.hasProperty('keyAlias') ? keyAlias.toString() : null
+
+	if (alias == null && console != null)
+	{
+		alias = console.readLine("Enter key alias: ").trim()
+	}
+
+	println "Using signing key $alias"
+
+	return alias
+}
+
+def getKeyPassword = { ->
+	def password = project.hasProperty('keyPassword') ? keyPassword.toString() : null
+
+	if (password == null && console != null)
+	{
+		password = console.readLine("Enter key password: ").trim()
+	}
+
+	return password
+}
+
+def getGaCode = { -> return project.hasProperty('gaCode') ? gaCode.toString() : "" }
+def getApiUrl = { -> return project.hasProperty('apiUrl') ? apiUrl.toString() : "" }
+def getProjectId = { -> return project.hasProperty('projectId') ? projectId.toString() : "" }
+
 android {
 	compileSdkVersion 25
 	buildToolsVersion "25.0.3"
@@ -10,17 +72,27 @@ android {
 		applicationId "com.cube.arc.cie"
 		minSdkVersion 17
 		targetSdkVersion 25
-		versionCode 1
+		versionCode 3
 		versionName "1.0"
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-		buildConfigField "String", "GA_CODE", "\"ABC-123\""
+		buildConfigField "String", "GA_CODE", "\"" + getGaCode() + "\""
+		buildConfigField "String", "API_URL", "\"" + getApiUrl() + "\""
+		buildConfigField "String", "PROJECT_ID", "\"" + getProjectId() + "\""
+	}
+
+	signingConfigs {
+		release {
+			storeFile getKeystoreFile()
+			storePassword getKeystorePassword()
+			keyAlias getKeyAlias()
+			keyPassword getKeyPassword()
+		}
 	}
 
 	buildTypes {
 		release {
-			minifyEnabled false
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			signingConfig signingConfigs.release
 		}
 	}
 
