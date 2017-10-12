@@ -1,0 +1,97 @@
+<resources>
+	<string name="app_name">Cash in Emergencies Toolkit</string>
+
+	<string name="splash_title">Cash in Emergencies</string>
+	<string name="menu_workflow">Workflow</string>
+	<string name="menu_progress">Progress</string>
+
+	<string name="onboarding_title">Welcome to the Cash in Emergencies toolkit</string>
+	<string name="onboarding_body">Watch our quick tutorial to find out how it can help you support those affected by emergencies</string>
+	<string name="onboarding_video_button">Watch the Video Tutorial</string>
+	<string name="onboarding_skip_button">SKIP</string>
+	<string name="onboarding_setup_progress">Setting up application...</string>
+
+	<string name="actionbar_menu_export_title">Export</string>
+
+	<string name="note_dialog_button_save">Save</string>
+	<string name="note_dialog_button_cancel">Cancel</string>
+	<string name="note_dialog_title_add">Add Note</string>
+	<string name="note_dialog_title_edit">Edit Note</string>
+	<string name="note_dialog_cancel_confirm_title">Are you sure?</string>
+	<string name="note_dialog_cancel_confirm_message">Any unsaved changes will be lost</string>
+	<string name="note_dialog_cancel_confirm_positive">Discard</string>
+	<string name="note_dialog_cancel_confirm_negative">Cancel</string>
+
+	<string name="directory_substep_add_note">Add Note</string>
+	<string name="directory_substep_edit_note">Edit Note</string>
+	<string name="directory_tool_critical">CRITICAL TOOL</string>
+	<string name="directory_tool_user_critical">MARKED AS CRITICAL</string>
+	<string name="directory_tool_note">NOTE ADDED</string>
+	<string name="directory_tool_exported">EXPORTED</string>
+
+	<string name="progress_substep_summary">%s/%s\nSUB-STEPS</string>
+	<string name="progress_tool_summary">%s/%s\nCRITICAL</string>
+	<string name="progress_text">%s%% COMPLETE</string>
+	<string name="progress_title">WORKFLOW PROGRESS</string>
+	<string name="progress_summary">OVERALL COMPLETION: %s%%</string>
+
+	<string name="tool_menu_unmark">Unmark as critical</string>
+	<string name="tool_menu_mark">Mark as critical</string>
+	<string name="tool_menu_add_note">Add note</string>
+	<string name="tool_menu_edit_note">Edit note</string>
+	<string name="tool_menu_export">Export or share</string>
+	<string name="tool_menu_download">Download</string>
+	<string name="tool_menu_open">Open</string>
+
+	<string name="tool_search_results_count">%s Tools shown for \'%s\'</string>
+
+	<string name="document_viewer_title">Document</string>
+	<string name="document_viewer_button_export">@string/export</string>
+	<string name="document_viewer_button_open">OPEN</string>
+
+	<string name="setting_title">Settings</string>
+	<string name="setting_update_download_title">Content Update Available</string>
+	<string name="setting_update_download_description">Download the latest content available</string>
+	<string name="setting_update_download_button">DOWNLOAD</string>
+	<string name="setting_update_check_title">Check for Updates</string>
+	<string name="setting_update_check_description">Check for content updates</string>
+	<string name="setting_update_check_button">CHECK</string>
+	<string name="setting_video_title">Watch the Video</string>
+	<string name="setting_video_description">Watch the tutorial video</string>
+	<string name="setting_reset_title">Reset All Data</string>
+	<string name="setting_reset_description">Clears all progress and note data</string>
+	<string name="setting_locale_title">Change Language</string>
+	<string name="setting_locale_description">Downloads the App Content in another Language</string>
+
+	<string name="setting_update_warning_title">Warning!</string>
+	<string name="setting_update_warning_message">We recommend you not do this during an active operation, as the structure and content of the toolkit may have changed significantly</string>
+	<string name="setting_update_warning_positive">Proceed</string>
+	<string name="setting_update_warning_negative">Cancel</string>
+
+	<string name="setting_locale_dialog_title">Select language</string>
+
+	<string name="reset_dialog_title">Reset All Data</string>
+	<string name="reset_dialog_description">This will clear all progress and notes in the app</string>
+	<string name="reset_dialog_button_confirm">OKAY</string>
+	<string name="reset_dialog_button_cancel">CANCEL</string>
+	<string name="reset_complete_toast">All data reset successfully</string>
+
+	<string name="export_title">Export Content</string>
+	<string name="export_critical_title">Critical Path Tools</string>
+	<string name="export_toolkit_title">Entire Toolkit</string>
+	<string name="export_critical_progress_title">Critical Path Progress</string>
+	<string name="export_entire_progress_title">Entire Progress</string>
+	<string name="export_notes_title">Your Notes</string>
+
+	<string name="export">EXPORT</string>
+
+	<string-array name="csv_columns">
+		<item>Step</item>
+		<item>Done</item>
+		<item>No.</item>
+		<item>Sub-Step Action &amp; Guidance</item>
+		<item>Sub-Step Notes</item>
+		<item>Critical Tool</item>
+		<item>Critical Notes</item>
+	</string-array>
+</resources>

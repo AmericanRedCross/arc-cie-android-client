@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+>
+	<ImageView
+		android:layout_width="match_parent"
+		android:layout_height="104dp"
+		android:id="@+id/directory_image"
+		android:alpha="0.15"
+		android:layout_marginTop="6dp"
+		android:scaleType="centerCrop"
+	/>
+
+	<ImageView
+		android:layout_width="120dp"
+		android:layout_height="match_parent"
+		android:background="@drawable/card_left_fade"
+		android:layout_gravity="left|start"
+	/>
+
+	<ImageView
+		android:layout_width="match_parent"
+		android:layout_height="6dp"
+		android:background="@drawable/card_top_fade"
+		android:layout_gravity="top"
+	/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:orientation="vertical"
+		android:layout_marginTop="6dp"
+	>
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+		>
+			<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="46dp"
+				android:background="@drawable/card_bottom_fade"
+				android:layout_gravity="bottom"
+			/>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="104dp"
+				android:id="@+id/directory_click_area"
+				android:paddingLeft="24dp"
+				android:paddingStart="24dp"
+				android:paddingRight="16dp"
+				android:paddingEnd="16dp"
+			>
+				<TextView
+					android:layout_width="48dp"
+					android:layout_height="48dp"
+					android:id="@+id/directory_hierarchy"
+					android:text="1"
+					android:gravity="center"
+					android:textColor="#ffffff"
+					android:textStyle="bold"
+					android:textSize="18dp"
+					android:background="@drawable/circle_bg_drawable"
+					android:layout_centerVertical="true"
+				/>
+
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/directory_chevron"
+					android:src="@drawable/chevron_expand"
+					android:layout_centerVertical="true"
+					android:layout_alignParentRight="true"
+					android:layout_alignParentEnd="true"
+				/>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/directory_name"
+					android:layout_centerVertical="true"
+					android:textSize="22sp"
+					android:textColor="#ff000000"
+					android:textStyle="bold"
+					android:text="Preparedness"
+					android:layout_toLeftOf="@id/directory_chevron"
+					android:layout_toStartOf="@id/directory_chevron"
+					android:layout_toRightOf="@id/directory_hierarchy"
+					android:layout_toEndOf="@id/directory_hierarchy"
+					android:layout_marginLeft="12dp"
+					android:layout_marginRight="12dp"
+				/>
+
+				<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/directory_roadmap"
+					android:layout_below="@id/directory_name"
+					android:layout_toRightOf="@id/directory_hierarchy"
+					android:layout_toEndOf="@id/directory_hierarchy"
+					android:layout_marginTop="8dp"
+					android:layout_marginLeft="12dp"
+					android:layout_marginStart="12dp"
+					android:text="Module Roadmap"
+					android:visibility="gone"
+					style="@style/SmallButton"
+				/>
+			</RelativeLayout>
+		</FrameLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/steps_container"
+			android:orientation="vertical"
+			android:showDividers="beginning"
+			android:divider="@drawable/step_divider"
+			android:paddingTop="8dp"
+		>
+			<!-- directoriesteps here -->
+		</LinearLayout>
+	</LinearLayout>
+</FrameLayout>

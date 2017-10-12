@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#ffffff"
+>
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/progress_title"
+		android:text="@string/progress_title"
+		android:textSize="16sp"
+		android:textColor="#ff000000"
+		android:gravity="center"
+		android:layout_marginTop="8dp"
+		android:layout_marginLeft="8dp"
+		android:layout_marginStart="8dp"
+		android:layout_marginRight="8dp"
+		android:layout_marginEnd="8dp"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+	/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/progress_summary"
+		android:textSize="12sp"
+		android:textColor="#6D6E70"
+		android:gravity="center"
+		android:layout_marginTop="4dp"
+		android:layout_marginLeft="8dp"
+		android:layout_marginStart="8dp"
+		android:layout_marginRight="8dp"
+		android:layout_marginEnd="8dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/progress_title"
+	/>
+
+	<ProgressBar
+		android:layout_width="match_parent"
+		android:layout_height="6dp"
+		android:id="@+id/progress"
+		android:layout_marginTop="8dp"
+		android:minHeight="6dp"
+		android:progressDrawable="@drawable/horizontal_progress_drawable"
+		android:progressTint="@color/colorPrimary"
+		android:max="100"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/progress_summary"
+		style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+	/>
+
+	<android.support.v7.widget.RecyclerView
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:id="@+id/recycler_view"
+		android:background="#F5F5F4"
+		android:padding="4dp"
+		android:clipToPadding="false"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/progress"
+		app:layout_constraintBottom_toBottomOf="parent"
+	/>
+</android.support.constraint.ConstraintLayout>
