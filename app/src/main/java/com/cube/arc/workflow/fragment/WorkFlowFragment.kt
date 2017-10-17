@@ -14,16 +14,16 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.RadioButton
 import com.cube.arc.R
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.activity.ToolSearchResultsActivity
 import com.cube.arc.workflow.adapter.DirectoryAdapter
 import com.cube.arc.workflow.adapter.ToolsAdapter
-import com.cube.arc.workflow.manager.DirectoriesManager
-import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
+import com.cube.lib.util.criticalDirectories
 import com.cube.lib.util.inflate
-import com.cube.lib.util.parent
 
 /**
  * Fragment for displaying and handling the workflow feature. Will display a list of directories and its directories/substeps
@@ -114,12 +114,12 @@ class WorkFlowFragment : Fragment()
 		searchInput.visibility = View.GONE
 
 		val adapter = ToolsAdapter()
-		val items = DirectoriesManager.directories(true, true, activity)
+		val items = DirectoryManager.criticalDirectories(true, true, activity)
 		val adapterItems = LinkedHashSet<Directory>()
 		val groupHeaders = LinkedHashSet<Int>()
 
 		items.forEach { directory ->
-			var parent = directory.parent()
+			var parent = DirectoryManager.parent(directory)
 
 			parent?.let { item ->
 				groupHeaders.add(item.id)

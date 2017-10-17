@@ -3,8 +3,8 @@ package com.cube.arc.workflow.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.cube.arc.R
-import com.cube.arc.workflow.manager.DirectoriesManager
-import com.cube.arc.workflow.model.Directory
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.view.holder.DirectoryViewHolder
 import com.cube.lib.util.inflate
 
@@ -13,7 +13,7 @@ import com.cube.lib.util.inflate
  */
 class DirectoryAdapter : RecyclerView.Adapter<DirectoryViewHolder>()
 {
-	var items : List<Directory> = DirectoriesManager.directories
+	var items : List<Directory> = DirectoryManager.directories
 
 	override fun onBindViewHolder(holder: DirectoryViewHolder?, position: Int)
 	{

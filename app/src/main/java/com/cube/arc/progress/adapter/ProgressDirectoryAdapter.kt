@@ -3,8 +3,8 @@ package com.cube.arc.progress.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.cube.arc.R
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.progress.view.holder.ProgressDirectoryViewHolder
-import com.cube.arc.workflow.model.Directory
 import com.cube.lib.util.inflate
 
 /**

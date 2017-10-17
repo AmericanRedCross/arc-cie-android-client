@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.cie.fragment.DownloadHelper
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.manager.ExportManager
-import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.BundleHelper
 import com.cube.lib.helper.IntentDataHelper

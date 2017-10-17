@@ -9,8 +9,9 @@ import android.support.v4.content.FileProvider
 import com.cube.arc.BuildConfig
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
-import com.cube.arc.workflow.model.Directory
-import com.cube.arc.workflow.model.FileDescriptor
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.Directory
+import com.cube.arc.dmsdk.model.FileDescriptor
 import com.cube.arc.workflow.model.Registry
 import com.cube.lib.util.escapeCsv
 import com.cube.lib.util.times
@@ -136,7 +137,7 @@ object ExportManager
 		val notesPrefs = context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 		val checkPrefs = context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		DirectoriesManager.directories.forEach { directory ->
+		DirectoryManager.directories.forEach { directory ->
 			val data = arrayListOf<LinkedHashMap<String, String>>()
 
 			directory.directories.forEach { step ->

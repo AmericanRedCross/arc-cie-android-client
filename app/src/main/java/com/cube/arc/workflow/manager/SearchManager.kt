@@ -5,8 +5,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.flat
 import com.cube.arc.workflow.model.SearchResult
-import com.cube.lib.util.flatSteps
 import java.util.*
 
 /**
@@ -111,7 +112,7 @@ object SearchManager
 		database.execSQL("DELETE FROM search_index;")
 		database.beginTransaction()
 
-		DirectoriesManager.directories.flatSteps().forEach { directory ->
+		DirectoryManager.directories.flat().forEach { directory ->
 			val values = ContentValues()
 			values.put("title", directory.title)
 			values.put("directory_id", directory.id)
