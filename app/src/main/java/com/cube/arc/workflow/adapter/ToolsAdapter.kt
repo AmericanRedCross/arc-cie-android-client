@@ -3,7 +3,7 @@ package com.cube.arc.workflow.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.cube.arc.R
-import com.cube.arc.workflow.model.Directory
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.view.holder.ToolDividerViewHolder
 import com.cube.arc.workflow.view.holder.ToolViewHolder
 import com.cube.lib.util.inflate

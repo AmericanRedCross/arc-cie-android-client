@@ -13,11 +13,13 @@ import android.widget.TextView
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.cie.activity.DocumentViewerActivity
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.activity.NoteActivity
-import com.cube.arc.workflow.manager.DirectoriesManager
-import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
+import com.cube.lib.util.directoryColours
+import com.cube.lib.util.directoryImages
 import com.cube.lib.util.inflate
 import com.cube.lib.util.tint
 
@@ -42,8 +44,8 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		title.text = model.title
 		hierarchy.text = (directoryHierarchy).toString()
 
-		hierarchy.background.tint(hierarchy.resources.getColor(DirectoriesManager.directoryColours[model.order] ?: R.color.directory_1))
-		image.setImageResource(DirectoriesManager.directoryImages[model.order] ?: R.drawable.directory_1_backdrop)
+		hierarchy.background.tint(hierarchy.resources.getColor(DirectoryManager.directoryColours[model.order] ?: R.color.directory_1))
+		image.setImageResource(DirectoryManager.directoryImages[model.order] ?: R.drawable.directory_1_backdrop)
 
 		if (stepsContainer.childCount > 0 || MainApplication.visibilityMap[model.id.toString()] as Boolean? ?: false)
 		{
@@ -139,7 +141,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 				view.context.startActivity(noteIntent)
 			}
 
-			subStepCheck.tint(DirectoriesManager.directoryColours[root.order] ?: R.color.directory_1)
+			subStepCheck.tint(DirectoryManager.directoryColours[root.order] ?: R.color.directory_1)
 			subStepCheck.isChecked = checkPrefs.contains(subStep.id.toString())
 			subStepCheck.setOnCheckedChangeListener { buttonView, isChecked ->
 				checkPrefs.edit().apply {
@@ -174,9 +176,9 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		var subStepChevron = subStepView.findViewById(R.id.substep_chevron) as ImageView
 		var checkPrefs = subStepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		toolContainer.getChildAt(0).tint(DirectoriesManager.directoryColours[root.order] ?: R.color.directory_1)
-		toolContainer.getChildAt(1).tint(DirectoriesManager.directoryColours[root.order] ?: R.color.directory_1)
-		toolContainer.tint(DirectoriesManager.directoryColours[root.order] ?: R.color.directory_1, 0.2f)
+		toolContainer.getChildAt(0).tint(DirectoryManager.directoryColours[root.order] ?: R.color.directory_1)
+		toolContainer.getChildAt(1).tint(DirectoryManager.directoryColours[root.order] ?: R.color.directory_1)
+		toolContainer.tint(DirectoryManager.directoryColours[root.order] ?: R.color.directory_1, 0.2f)
 
 		subStep.directories.forEach { tool ->
 			val toolViewHolder = ToolViewHolder(subStepView.inflate<View>(R.layout.substep_tool_stub))

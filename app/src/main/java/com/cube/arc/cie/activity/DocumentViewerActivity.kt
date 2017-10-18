@@ -7,10 +7,9 @@ import android.view.View
 import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.cie.fragment.DownloadHelper
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.manager.ExportManager
-import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.AnalyticsHelper
-import com.cube.lib.helper.BundleHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.parser.ListTagParser
 import com.cube.lib.parser.URLImageParser
@@ -18,6 +17,8 @@ import com.cube.lib.util.bind
 import com.cube.lib.util.mimeIcon
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
+import java.io.File
+import java.io.FileInputStream
 import java.io.InputStreamReader
 
 /**
@@ -62,9 +63,14 @@ class DocumentViewerActivity : AppCompatActivity()
 		val files = directory.attachments
 		documentFooter.visibility = if (files.isEmpty()) View.GONE else View.VISIBLE
 
-		BundleHelper.resolve(directory.content ?: "", this)?.let {
+		val filePath = directory.content ?: ""
+		val absFilePath = if (filePath.startsWith("/")) filePath.substring(1) else filePath
+		val cachePath = File(filesDir, absFilePath)
+
+		if (cachePath.exists())
+		{
 			val parser = Parser.builder().build()
-			val document = parser.parseReader(InputStreamReader(it))
+			val document = parser.parseReader(InputStreamReader(FileInputStream(cachePath)))
 			val renderer = HtmlRenderer.builder().build()
 			val htmlContent = renderer.render(document)
 

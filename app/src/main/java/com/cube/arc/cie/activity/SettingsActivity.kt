@@ -17,8 +17,8 @@ import com.cube.arc.BuildConfig
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.cie.fragment.DownloadHelper
+import com.cube.arc.dmsdk.model.FileDescriptor
 import com.cube.arc.onboarding.activity.VideoPlayerActivity
-import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.extractTo

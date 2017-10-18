@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.cube.arc.R
+import com.cube.arc.dmsdk.manager.DirectoryManager
 import com.cube.arc.progress.adapter.ProgressDirectoryAdapter
-import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
+import com.cube.lib.util.completedToolCount
 import com.cube.lib.util.inflate
+import com.cube.lib.util.toolCount
 
 /**
  * Fragment for progress UI of directories
@@ -35,13 +37,13 @@ class ProgressFragment : Fragment()
 
 		AnalyticsHelper.userViewsProgress()
 
-		adapter.items = DirectoriesManager.directories
+		adapter.items = DirectoryManager.directories
 
 		recyclerView.layoutManager = LinearLayoutManager(activity)
 		recyclerView.adapter = adapter
 
-		val totalTools = DirectoriesManager.directories.fold(0, { acc, directory -> acc + DirectoriesManager.toolCount(directory, true) })
-		val toolsCompleted = DirectoriesManager.directories.fold(0, { acc, directory -> acc + DirectoriesManager.completedToolCount(context, directory, true) })
+		val totalTools = DirectoryManager.directories.fold(0, { acc, directory -> acc + DirectoryManager.toolCount(directory, true) })
+		val toolsCompleted = DirectoryManager.directories.fold(0, { acc, directory -> acc + DirectoryManager.completedToolCount(context, directory, true) })
 		val progressPercent = Math.round((toolsCompleted.toDouble() / totalTools.toDouble()) * 100)
 
 		summary.text = resources.getString(R.string.progress_summary, progressPercent.toString())

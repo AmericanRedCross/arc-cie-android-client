@@ -2,7 +2,7 @@ package com.cube.arc.cie
 
 import android.app.Application
 import android.os.Environment
-import com.cube.arc.workflow.manager.DirectoriesManager
+import com.cube.arc.dmsdk.manager.DirectoryManager
 import com.cube.arc.workflow.manager.SearchManager
 import com.cube.lib.helper.AnalyticsHelper
 import java.io.File
@@ -40,7 +40,7 @@ class MainApplication : Application()
 		val cacheModules = File(filesDir, "structure.json")
 		if (cacheModules.exists())
 		{
-			DirectoriesManager.init(FileInputStream(cacheModules))
+			DirectoryManager.init(FileInputStream(cacheModules))
 			SearchManager.init(this)
 		}
 	}

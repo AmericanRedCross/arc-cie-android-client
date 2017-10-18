@@ -10,12 +10,13 @@ import android.view.View
 import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.activity.NoteActivity
-import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.manager.ExportManager
-import com.cube.arc.workflow.model.Directory
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
+import com.cube.lib.util.directoryColours
 import com.cube.lib.util.mimeIcon
 import com.cube.lib.util.tint
 import java.io.File
@@ -61,8 +62,8 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 
 		toolIcon.setImageResource(tool.attachments.getOrNull(0)?.mimeIcon() ?: R.drawable.ic_mime_misc)
-		toolIcon.tint(DirectoriesManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)
-		toolCheck.tint(DirectoriesManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)
+		toolIcon.tint(DirectoryManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)
+		toolCheck.tint(DirectoryManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)
 		toolCheck.isChecked = checkPrefs.contains(tool.id.toString())
 		toolCheck.setOnCheckedChangeListener { buttonView, isChecked ->
 			checkPrefs.edit().apply {

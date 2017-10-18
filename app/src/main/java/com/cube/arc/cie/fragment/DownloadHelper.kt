@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.cie.fragment.DownloadHelper.Companion.newInstance
+import com.cube.arc.dmsdk.model.FileDescriptor
 import com.cube.arc.workflow.manager.ExportManager
-import com.cube.arc.workflow.model.FileDescriptor
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 

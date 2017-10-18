@@ -2,7 +2,7 @@ package com.cube.lib.util
 
 import android.support.annotation.DrawableRes
 import com.cube.arc.R
-import com.cube.arc.workflow.model.FileDescriptor
+import com.cube.arc.dmsdk.model.FileDescriptor
 
 /**
  * Returns an icon for given filedescriptor based on [FileDescriptor.mime]
