@@ -35,7 +35,7 @@ fun DirectoryManager.criticalDirectories(onlyCritical: Boolean, includeUserCriti
 {
 	val criticalPrefs = context?.getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
 	return DirectoryManager.directories.flat().filter {
-		((includeUserCritical && criticalPrefs?.contains(it.id.toString()) ?: false) || (it.metadata?.getOrElse("critical_path", { false }) as Boolean ?: false)) || (onlyCritical && !includeUserCritical && (it.metadata?.get("critical_path") as Boolean ?: false))
+		((includeUserCritical && criticalPrefs?.contains(it.id.toString()) ?: false) || (it.metadata?.get("critical_path") as Boolean? ?: false)) || (onlyCritical && !includeUserCritical && (it.metadata?.get("critical_path") as Boolean? ?: false))
 	}
 }
 
