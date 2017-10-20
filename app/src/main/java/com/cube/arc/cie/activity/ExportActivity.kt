@@ -40,20 +40,20 @@ class ExportActivity : AppCompatActivity()
 
 	fun setUi()
 	{
-//		// critical path tools
-//		inflateExportable(
-//			exportTitle = R.string.export_critical_title,
-//			exportClick = { view ->
-//				AnalyticsHelper.userTapsExportCriticalPath()
-//
-//				val shareUrl = "TODO://CHANGE_URL"
-//				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
-//					intent.type = "text/plain"
-//					intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
-//				}, "Share to"))
-//			}
-//		)
-//
+		// critical path tools
+		inflateExportable(
+			exportTitle = R.string.export_critical_title,
+			exportClick = { view ->
+				AnalyticsHelper.userTapsExportCriticalPath()
+
+				val shareUrl = "TODO://CHANGE_URL"
+				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
+					intent.type = "text/plain"
+					intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+				}, "Share to"))
+			}
+		)
+
 		// entire toolkit
 		inflateExportable(
 			exportTitle = R.string.export_toolkit_title,
