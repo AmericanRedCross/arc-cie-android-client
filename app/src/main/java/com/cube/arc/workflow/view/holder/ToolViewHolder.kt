@@ -35,7 +35,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	private val exported = itemView.findViewById(R.id.exported) as TextView
 	private val options = itemView.findViewById(R.id.options_menu) as ImageButton
 
-	fun populate(directory: Directory?, tool: Directory)
+	fun populate(root: Directory?, tool: Directory)
 	{
 		val notePrefs = itemView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 		val checkPrefs = itemView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
@@ -62,8 +62,8 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		}
 
 		toolIcon.setImageResource(tool.attachments.getOrNull(0)?.mimeIcon() ?: R.drawable.ic_mime_misc)
-		toolIcon.tint(DirectoryManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)
-		toolCheck.tint(DirectoryManager.directoryColours[directory?.order ?: 1] ?: R.color.directory_1)
+		toolIcon.tint(DirectoryManager.directoryColours[root?.order ?: 1] ?: R.color.directory_1)
+		toolCheck.tint(DirectoryManager.directoryColours[root?.order ?: 1] ?: R.color.directory_1)
 		toolCheck.isChecked = checkPrefs.contains(tool.id.toString())
 		toolCheck.setOnCheckedChangeListener { buttonView, isChecked ->
 			checkPrefs.edit().apply {

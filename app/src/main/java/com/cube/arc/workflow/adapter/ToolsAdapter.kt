@@ -36,11 +36,11 @@ class ToolsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 		{
 			is ToolViewHolder ->
 			{
-				var parent = DirectoryManager.parent(items[position])
+				var parent = items[position]
 
-				while (parent != null)
+				while (parent?.id != null)
 				{
-					parent = DirectoryManager.parent(parent) ?: parent; break
+					parent = (DirectoryManager.parent(parent) ?: break)
 				}
 
 				holder?.populate(parent, items[position])
