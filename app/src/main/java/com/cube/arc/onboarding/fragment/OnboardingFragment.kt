@@ -154,6 +154,7 @@ class OnboardingFragment : Fragment()
 			}
 			else
 			{
+				downloadProgress.dismiss()
 				Toast.makeText(activity, "There was a problem downloading the content update", Toast.LENGTH_LONG).show()
 			}
 		}
