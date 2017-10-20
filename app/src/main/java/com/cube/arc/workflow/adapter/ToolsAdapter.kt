@@ -3,6 +3,7 @@ package com.cube.arc.workflow.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.cube.arc.R
+import com.cube.arc.dmsdk.manager.DirectoryManager
 import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.view.holder.ToolDividerViewHolder
 import com.cube.arc.workflow.view.holder.ToolViewHolder
@@ -33,7 +34,17 @@ class ToolsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 	{
 		when (holder)
 		{
-			is ToolViewHolder -> holder?.populate(null, items[position])
+			is ToolViewHolder ->
+			{
+				var parent = DirectoryManager.parent(items[position])
+
+				while (parent != null)
+				{
+					parent = DirectoryManager.parent(parent) ?: parent; break
+				}
+
+				holder?.populate(parent, items[position])
+			}
 			is ToolDividerViewHolder -> holder?.populate(items[position])
 		}
 	}
