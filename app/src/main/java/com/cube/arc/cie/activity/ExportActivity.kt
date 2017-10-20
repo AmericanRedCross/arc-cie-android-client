@@ -2,6 +2,7 @@ package com.cube.arc.cie.activity;
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.annotation.StringRes
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.cube.arc.BuildConfig
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.workflow.manager.ExportManager
@@ -52,19 +54,20 @@ class ExportActivity : AppCompatActivity()
 //			}
 //		)
 //
-//		// entire toolkit
-//		inflateExportable(
-//			exportTitle = R.string.export_toolkit_title,
-//			exportClick = { view ->
-//				AnalyticsHelper.userTapsExportEntireToolkit()
-//
-//				val shareUrl = "TODO://CHANGE_URL"
-//				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
-//					intent.type = "text/plain"
-//					intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
-//				}, "Share to"))
-//			}
-//		)
+		// entire toolkit
+		inflateExportable(
+			exportTitle = R.string.export_toolkit_title,
+			exportClick = { view ->
+				AnalyticsHelper.userTapsExportEntireToolkit()
+
+				val lang = PreferenceManager.getDefaultSharedPreferences(view.context).getString("content_language", "en")
+				val shareUrl = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/files/export?language=$lang"
+				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
+					intent.type = "text/plain"
+					intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+				}, "Share to"))
+			}
+		)
 
 		// critical progress
 		inflateExportable(
