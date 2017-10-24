@@ -5,8 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.preference.PreferenceManager
 import com.cube.arc.dmsdk.manager.DirectoryManager
-import com.cube.arc.dmsdk.model.flat
 import com.cube.arc.workflow.model.SearchResult
 import java.util.*
 
@@ -28,14 +28,15 @@ object SearchManager
 		sqliteHelper = SQLiteHelper(context.applicationContext)
 
 		Thread(Runnable {
-			index()
+			val contentDate = PreferenceManager.getDefaultSharedPreferences(context).getLong("content_date", 0)
+			index(contentDate)
 		}).start()
 	}
 
 	/**
 	 * This method should not be called on the UI thread.
 	 */
-	@Synchronized fun index()
+	@Synchronized fun index(contentDate: Long)
 	{
 		var lastUpdate: Long = 0
 		val database = sqliteHelper.writableDatabase
@@ -48,25 +49,27 @@ object SearchManager
 			cursor.close()
 		}
 
-		//if (lastUpdate < contentVersion)
-		run {
-			// index
-			indexFiles(database)
+		if (lastUpdate < contentDate)
+		{
+			run {
+				// index
+				indexFiles(database)
 
-			val metaValues = ContentValues()
-			metaValues.put("last_update", System.currentTimeMillis())
+				val metaValues = ContentValues()
+				metaValues.put("last_update", System.currentTimeMillis())
 
-			if (hasMeta)
-			{
-				database.update("meta", metaValues, "id=?", arrayOf("1"))
+				if (hasMeta)
+				{
+					database.update("meta", metaValues, "id=?", arrayOf("1"))
+				}
+				else
+				{
+					metaValues.put("id", "1")
+					database.insert("meta", null, metaValues)
+				}
+
+				database.close()
 			}
-			else
-			{
-				metaValues.put("id", "1")
-				database.insert("meta", null, metaValues)
-			}
-
-			database.close()
 		}
 	}
 
@@ -112,12 +115,16 @@ object SearchManager
 		database.execSQL("DELETE FROM search_index;")
 		database.beginTransaction()
 
-		DirectoryManager.directories.flat().forEach { directory ->
-			val values = ContentValues()
-			values.put("title", directory.title)
-			values.put("directory_id", directory.id)
+		DirectoryManager.directories.forEach { step ->
+			step.directories.forEach { subStep ->
+				subStep.directories.forEach { tool ->
+					val values = ContentValues()
+					values.put("title", tool.title)
+					values.put("directory_id", tool.id)
 
-			database.insert("search", null, values)
+					database.insert("search", null, values)
+				}
+			}
 		}
 
 		// perform virtual table index
@@ -140,7 +147,7 @@ object SearchManager
 			try
 			{
 				val commands = arrayOf(
-					"CREATE TABLE search (id INTEGER PRIMARY KEY, title TEXT, directory_id INTEGER, is_attachment INTEGER);",
+					"CREATE TABLE search (id INTEGER PRIMARY KEY, title TEXT, directory_id INTEGER);",
 					"CREATE VIRTUAL TABLE search_index USING fts4 (content='search', title);",
 					"CREATE TABLE meta (id INTEGER PRIMARY KEY, last_update NUMERIC);",
 					"INSERT INTO meta VALUES (1, 0);"
