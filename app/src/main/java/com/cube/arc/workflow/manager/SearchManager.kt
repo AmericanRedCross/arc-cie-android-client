@@ -36,40 +36,14 @@ object SearchManager
 	/**
 	 * This method should not be called on the UI thread.
 	 */
-	@Synchronized fun index(contentDate: Long)
+	@Synchronized fun index()
 	{
-		var lastUpdate: Long = 0
 		val database = sqliteHelper.writableDatabase
-		val cursor = database.rawQuery("SELECT * FROM meta", arrayOf<String>())
-		val hasMeta = cursor.moveToFirst()
 
-		if (hasMeta)
-		{
-			lastUpdate = cursor.getLong(cursor.getColumnIndex("last_update"))
-			cursor.close()
-		}
-
-		if (lastUpdate < contentDate)
-		{
-			run {
-				// index
-				indexFiles(database)
-
-				val metaValues = ContentValues()
-				metaValues.put("last_update", System.currentTimeMillis())
-
-				if (hasMeta)
-				{
-					database.update("meta", metaValues, "id=?", arrayOf("1"))
-				}
-				else
-				{
-					metaValues.put("id", "1")
-					database.insert("meta", null, metaValues)
-				}
-
-				database.close()
-			}
+		run {
+			// index
+			indexFiles(database)
+			database.close()
 		}
 	}
 
