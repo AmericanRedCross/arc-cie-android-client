@@ -47,7 +47,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 		hierarchy.background.tint(hierarchy.resources.getColor(DirectoryManager.directoryColours[model.order] ?: R.color.directory_1))
 		image.setImageResource(DirectoryManager.directoryImages[model.order] ?: R.drawable.directory_1_backdrop)
 
-		if (stepsContainer.childCount > 0 || MainApplication.visibilityMap[model.id.toString()] as Boolean? ?: false)
+		if (stepsContainer.childCount > 0 || MainApplication.visibilityMap[model.id.toString()] as Boolean? == true)
 		{
 			// force refresh views
 			populateSteps(model)
@@ -88,7 +88,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	{
 		stepsContainer.removeAllViews()
 
-		model.directories?.forEach { step ->
+		model.directories.forEach { step ->
 			val stepView = stepsContainer.inflate<View>(R.layout.directory_step_stub)
 
 			val stepHierarchy = stepView.findViewById(R.id.step_hierarchy) as TextView
@@ -166,14 +166,49 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 			})
 
 			subStepContainer.addView(subStepView)
-			populateSubStepTools(root, step, subStep, subStepView)
+
+			subStepView.setOnClickListener {
+				var toolContainer = subStepView.findViewById(R.id.tools_container) as ViewGroup
+				if (toolContainer.childCount - 2 > 0)
+				{
+					toolContainer.removeViews(1, toolContainer.childCount - 2)
+				}
+
+				when
+				{
+					toolContainer.visibility == View.VISIBLE -> {
+						AnalyticsHelper.userCollapsesDirectory(subStep)
+
+						hideView(subStep, toolContainer)
+						hideView(subStep, subStepView.findViewById(R.id.add_note))
+					}
+					else -> {
+						AnalyticsHelper.userExpandsDirectory(subStep)
+
+						populateSubStepTools(root, step, subStep, subStepView)
+						showView(subStep, toolContainer)
+						showView(subStep, subStepView.findViewById(R.id.add_note))
+					}
+				}
+
+				var subStepChevron = subStepView.findViewById(R.id.substep_chevron) as ImageView
+				subStepChevron.setImageResource(when
+				{
+					toolContainer.visibility == View.VISIBLE -> R.drawable.chevron_collapse
+					else -> R.drawable.chevron_expand
+				})
+			}
+
+			if (MainApplication.visibilityMap[subStep.id.toString()] as Boolean? == true)
+			{
+				subStepView.performClick()
+			}
 		}
 	}
 
 	private fun populateSubStepTools(root: Directory, step: Directory, subStep: Directory, subStepView: View)
 	{
 		var toolContainer = subStepView.findViewById(R.id.tools_container) as ViewGroup
-		var subStepChevron = subStepView.findViewById(R.id.substep_chevron) as ImageView
 		var checkPrefs = subStepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
 		toolContainer.getChildAt(0).tint(DirectoryManager.directoryColours[root.order] ?: R.color.directory_1)
@@ -186,35 +221,11 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 			toolContainer.addView(toolViewHolder.itemView, toolContainer.childCount - 1)
 		}
-
-		restoreVisibility(subStep, toolContainer)
-
-		subStepView.setOnClickListener {
-			when
-			{
-				toolContainer.visibility == View.VISIBLE -> {
-					AnalyticsHelper.userCollapsesDirectory(subStep)
-					hideView(subStep, toolContainer)
-					hideView(subStep, subStepView.findViewById(R.id.add_note))
-				}
-				else -> {
-					AnalyticsHelper.userExpandsDirectory(subStep)
-					showView(subStep, toolContainer)
-					showView(subStep, subStepView.findViewById(R.id.add_note))
-				}
-			}
-
-			subStepChevron.setImageResource(when
-			{
-				toolContainer.visibility == View.VISIBLE -> R.drawable.chevron_collapse
-				else -> R.drawable.chevron_expand
-			})
-		}
 	}
 
 	fun restoreVisibility(directory: Directory, view: View)
 	{
-		view.visibility = if (MainApplication.visibilityMap[directory.id.toString()] as Boolean? ?: false) View.VISIBLE else View.GONE
+		view.visibility = if (MainApplication.visibilityMap[directory.id.toString()] as Boolean? == true) View.VISIBLE else View.GONE
 	}
 
 	fun showView(directory: Directory, view: View)
