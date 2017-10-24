@@ -46,7 +46,8 @@ class ExportActivity : AppCompatActivity()
 			exportClick = { view ->
 				AnalyticsHelper.userTapsExportCriticalPath()
 
-				val shareUrl = "TODO://CHANGE_URL"
+				val lang = PreferenceManager.getDefaultSharedPreferences(view.context).getString("content_language", "en")
+				val shareUrl = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/directories/export?language=$lang&meta=critical_path&value=true"
 				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
 					intent.type = "text/plain"
 					intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
@@ -131,7 +132,6 @@ class ExportActivity : AppCompatActivity()
 	{
 		val view = exportablesContainer.inflate<View>(R.layout.exportable_view_stub).apply {
 			val title = findViewById(R.id.document_title) as TextView
-			val size = findViewById(R.id.document_size) as TextView
 			val export = findViewById(R.id.export) as Button
 
 			title.setText(exportTitle)

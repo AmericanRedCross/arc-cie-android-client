@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.preference.PreferenceManager
 import com.cube.arc.dmsdk.manager.DirectoryManager
 import com.cube.arc.workflow.model.SearchResult
 import java.util.*
@@ -28,8 +27,7 @@ object SearchManager
 		sqliteHelper = SQLiteHelper(context.applicationContext)
 
 		Thread(Runnable {
-			val contentDate = PreferenceManager.getDefaultSharedPreferences(context).getLong("content_date", 0)
-			index(contentDate)
+			index()
 		}).start()
 	}
 
