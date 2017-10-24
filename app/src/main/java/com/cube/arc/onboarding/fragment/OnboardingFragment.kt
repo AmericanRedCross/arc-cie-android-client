@@ -27,8 +27,6 @@ import java.io.File
 import java.io.FileReader
 import java.text.SimpleDateFormat
 
-
-
 /**
  * Fragment that hosts the UI component of the onboarding feature
  */
