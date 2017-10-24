@@ -82,17 +82,14 @@ class ToolSearchResultsFragment : Fragment()
 			val directory = DirectoryManager.directory(searchResult.directoryId)
 
 			directory?.also {
-				if (it.metadata?.get("tool") as Boolean? == true)
-				{
-					var parent = DirectoryManager.parent(it)
+				var parent = DirectoryManager.parent(it)
 
-					parent?.let { item ->
-						groupHeaders.add(item.id)
-						adapterItems.add(item)
-					}
-
-					adapterItems.add(it)
+				parent?.let { item ->
+					groupHeaders.add(item.id)
+					adapterItems.add(item)
 				}
+
+				adapterItems.add(it)
 			}
 		}
 
