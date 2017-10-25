@@ -47,7 +47,7 @@ class ExportActivity : AppCompatActivity()
 				AnalyticsHelper.userTapsExportCriticalPath()
 
 				val lang = PreferenceManager.getDefaultSharedPreferences(view.context).getString("content_language", "en")
-				val shareUrl = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/directories/export?language=$lang&meta=critical_path&value=true"
+				val shareUrl = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/directories/files/export?language=$lang&meta=critical_path&value=true"
 				startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).also { intent ->
 					intent.type = "text/plain"
 					intent.putExtra(Intent.EXTRA_TEXT, shareUrl)

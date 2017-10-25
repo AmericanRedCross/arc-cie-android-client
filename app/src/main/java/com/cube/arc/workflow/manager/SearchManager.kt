@@ -87,14 +87,16 @@ object SearchManager
 		database.execSQL("DELETE FROM search_index;")
 		database.beginTransaction()
 
-		DirectoryManager.directories.forEach { step ->
-			step.directories.forEach { subStep ->
-				subStep.directories.forEach { tool ->
-					val values = ContentValues()
-					values.put("title", tool.title)
-					values.put("directory_id", tool.id)
+		DirectoryManager.directories.forEach { directories ->
+			directories.directories.forEach { step ->
+				step.directories.forEach { subStep ->
+					subStep.directories.forEach { tool ->
+						val values = ContentValues()
+						values.put("title", tool.title)
+						values.put("directory_id", tool.id)
 
-					database.insert("search", null, values)
+						database.insert("search", null, values)
+					}
 				}
 			}
 		}
