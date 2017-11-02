@@ -13,8 +13,8 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:layout_gravity="center_horizontal"
-		android:paddingLeft="16dp"
-		android:paddingRight="16dp"
+		android:paddingStart="16dp"
+		android:paddingEnd="16dp"
 		android:paddingTop="8dp"
 		android:paddingBottom="8dp"
 	>
@@ -23,7 +23,7 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/filter_directories"
 			android:text="TOOLKIT"
-			android:drawableLeft="@drawable/ic_toolkit"
+			android:drawableStart="@drawable/ic_toolkit"
 			android:drawableTint="@drawable/selected_button_int_list"
 			android:drawablePadding="12dp"
 			android:textColor="@drawable/selected_button_int_list"
@@ -31,7 +31,7 @@
 			android:checked="true"
 			android:padding="8dp"
 			android:button="@null"
-			android:layout_marginRight="4dp"
+			android:layout_marginEnd="4dp"
 		/>
 
 		<RadioButton
@@ -39,7 +39,7 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/filter_critical"
 			android:text="CRITICAL TOOLS"
-			android:drawableLeft="@drawable/ic_critical_tools"
+			android:drawableStart="@drawable/ic_critical_tools"
 			android:drawableTint="@drawable/selected_button_int_list"
 			android:drawablePadding="12dp"
 			android:textColor="@drawable/selected_button_int_list"
@@ -47,7 +47,7 @@
 			android:checked="false"
 			android:padding="8dp"
 			android:button="@null"
-			android:layout_marginLeft="4dp"
+			android:layout_marginStart="4dp"
 		/>
 	</LinearLayout>
 
@@ -67,11 +67,11 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:id="@+id/search_input"
-				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp"
+				android:layout_marginStart="8dp"
+				android:layout_marginEnd="8dp"
 				android:layout_marginTop="8dp"
 				android:background="#E7E7E9"
-				android:drawableLeft="@drawable/ic_input_search"
+				android:drawableStart="@drawable/ic_input_search"
 				android:padding="12dp"
 				android:drawablePadding="12dp"
 				android:singleLine="true"

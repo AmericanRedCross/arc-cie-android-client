@@ -58,7 +58,7 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/substep_title"
 			android:text="Initial decision For Cash"
-			android:gravity="center_vertical"
+			android:textAlignment="viewStart"
 			android:layout_marginRight="12dp"
 			android:layout_marginEnd="12dp"
 			android:layout_marginLeft="8dp"
