@@ -5,8 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.cube.arc.dmsdk.manager.DirectoryManager
 import com.cube.arc.workflow.model.SearchResult
-import com.cube.lib.util.flatSteps
 import java.util.*
 
 /**
@@ -36,35 +36,11 @@ object SearchManager
 	 */
 	@Synchronized fun index()
 	{
-		var lastUpdate: Long = 0
 		val database = sqliteHelper.writableDatabase
-		val cursor = database.rawQuery("SELECT * FROM meta", arrayOf<String>())
-		val hasMeta = cursor.moveToFirst()
 
-		if (hasMeta)
-		{
-			lastUpdate = cursor.getLong(cursor.getColumnIndex("last_update"))
-			cursor.close()
-		}
-
-		//if (lastUpdate < contentVersion)
 		run {
 			// index
 			indexFiles(database)
-
-			val metaValues = ContentValues()
-			metaValues.put("last_update", System.currentTimeMillis())
-
-			if (hasMeta)
-			{
-				database.update("meta", metaValues, "id=?", arrayOf("1"))
-			}
-			else
-			{
-				metaValues.put("id", "1")
-				database.insert("meta", null, metaValues)
-			}
-
 			database.close()
 		}
 	}
@@ -111,12 +87,18 @@ object SearchManager
 		database.execSQL("DELETE FROM search_index;")
 		database.beginTransaction()
 
-		DirectoriesManager.directories.flatSteps().forEach { directory ->
-			val values = ContentValues()
-			values.put("title", directory.title)
-			values.put("directory_id", directory.id)
+		DirectoryManager.directories.forEach { directories ->
+			directories.directories.forEach { step ->
+				step.directories.forEach { subStep ->
+					subStep.directories.forEach { tool ->
+						val values = ContentValues()
+						values.put("title", tool.title)
+						values.put("directory_id", tool.id)
 
-			database.insert("search", null, values)
+						database.insert("search", null, values)
+					}
+				}
+			}
 		}
 
 		// perform virtual table index
@@ -139,7 +121,7 @@ object SearchManager
 			try
 			{
 				val commands = arrayOf(
-					"CREATE TABLE search (id INTEGER PRIMARY KEY, title TEXT, directory_id INTEGER, is_attachment INTEGER);",
+					"CREATE TABLE search (id INTEGER PRIMARY KEY, title TEXT, directory_id INTEGER);",
 					"CREATE VIRTUAL TABLE search_index USING fts4 (content='search', title);",
 					"CREATE TABLE meta (id INTEGER PRIMARY KEY, last_update NUMERIC);",
 					"INSERT INTO meta VALUES (1, 0);"

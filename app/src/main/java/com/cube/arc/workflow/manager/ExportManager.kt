@@ -9,7 +9,9 @@ import android.support.v4.content.FileProvider
 import com.cube.arc.BuildConfig
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
-import com.cube.arc.workflow.model.FileDescriptor
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.Directory
+import com.cube.arc.dmsdk.model.FileDescriptor
 import com.cube.arc.workflow.model.Registry
 import com.cube.lib.util.escapeCsv
 import com.cube.lib.util.times
@@ -135,7 +137,7 @@ object ExportManager
 		val notesPrefs = context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
 		val checkPrefs = context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		DirectoriesManager.directories.forEach { directory ->
+		DirectoryManager.directories.forEach { directory ->
 			val data = arrayListOf<LinkedHashMap<String, String>>()
 
 			directory.directories.forEach { step ->
@@ -144,33 +146,42 @@ object ExportManager
 					rows.add(linkedMapOf<String, String>())
 					rows[0].putAll(columns.associate { it to "" })
 
-					rows[0][columns[0]] = step.title.escapeCsv()
-					rows[0][columns[1]] = if (checkPrefs.contains(step.id.toString())) "yes" else "no"
+					rows[0][columns[0]] = ((step.metadata?.get("hierarchy") as String? ?: "${step.order}") + " " + step.title).escapeCsv()
+					rows[0][columns[1]] = ((substep.metadata?.get("hierarchy") as String? ?: "${substep.order}") + " " + substep.title).escapeCsv()
+					rows[0][columns[2]] = if (checkPrefs.contains(substep.id.toString())) "yes" else "no"
+					rows[0][columns[3]] = notesPrefs.getString(substep.id.toString(), "").escapeCsv()
 
-					rows[0][columns[2]] = step.metadata?.get("hierarchy") as String? ?: "${step.order}"
-					rows[0][columns[3]] = substep.title.escapeCsv()
-					rows[0][columns[4]] = notesPrefs.getString(substep.id.toString(), "").escapeCsv()
-
-					substep.directories.forEachIndexed { index, tool ->
-						if (onlyCritical && ((tool.metadata?.getOrElse("critical_path", { false }) as Boolean ?: false) || criticalPrefs.contains(tool.id.toString())) || !onlyCritical)
+					// tools
+					val toolIterator = ({ index: Int, tool: Directory ->
+						// add new row
+						if (rows.size - 1 < index)
 						{
-							if (rows.size - 1 < index)
-							{
-								rows.add(rows[0].clone() as LinkedHashMap<String, String>)
-							}
+							rows.add(rows[0].clone() as LinkedHashMap<String, String>)
+						}
 
-							var capIndex = index
-							if (capIndex >= rows.size)
-							{
-								capIndex = rows.size - 1
-							}
+						val capIndex = Math.min(index, rows.size - 1)
 
-							rows[capIndex][columns[5]] = tool.title.escapeCsv()
-							rows[capIndex][columns[6]] = notesPrefs.getString(tool.id.toString(), "").escapeCsv()
+						rows[capIndex][columns[4]] = tool.title.escapeCsv()
+						rows[capIndex][columns[5]] = if (checkPrefs.contains(tool.id.toString())) "yes" else "no"
+						rows[capIndex][columns[6]] = notesPrefs.getString(tool.id.toString(), "").escapeCsv()
+					})
+
+					if (onlyCritical)
+					{
+						val tools = substep.directories
+							.filter { it.metadata?.get("critical_path") as Boolean? ?: false || criticalPrefs.contains(it.id.toString()) }
+
+						if (tools.isNotEmpty())
+						{
+							tools.forEachIndexed(toolIterator)
+							data.addAll(rows)
 						}
 					}
-
-					data.addAll(rows)
+					else
+					{
+						substep.directories.forEachIndexed(toolIterator)
+						data.addAll(rows)
+					}
 				}
 			}
 

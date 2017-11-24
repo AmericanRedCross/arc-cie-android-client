@@ -16,8 +16,8 @@ import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
 import com.cube.arc.cie.activity.MainActivity
 import com.cube.arc.cie.fragment.DownloadHelper
+import com.cube.arc.dmsdk.model.FileDescriptor
 import com.cube.arc.onboarding.activity.VideoPlayerActivity
-import com.cube.arc.workflow.model.FileDescriptor
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.extractTo
@@ -26,8 +26,6 @@ import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileReader
 import java.text.SimpleDateFormat
-
-
 
 /**
  * Fragment that hosts the UI component of the onboarding feature
@@ -154,6 +152,7 @@ class OnboardingFragment : Fragment()
 			}
 			else
 			{
+				downloadProgress.dismiss()
 				Toast.makeText(activity, "There was a problem downloading the content update", Toast.LENGTH_LONG).show()
 			}
 		}

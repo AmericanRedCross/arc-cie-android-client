@@ -14,13 +14,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import com.cube.arc.R
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.adapter.ToolsAdapter
-import com.cube.arc.workflow.manager.DirectoriesManager
 import com.cube.arc.workflow.manager.SearchManager
-import com.cube.arc.workflow.model.Directory
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
-import com.cube.lib.util.parent
 
 /**
  * Fragment that displays tool search results
@@ -80,20 +79,17 @@ class ToolSearchResultsFragment : Fragment()
 		val groupHeaders = LinkedHashSet<Int>()
 
 		searchResults.forEach { searchResult ->
-			val directory = DirectoriesManager.directory(searchResult.directoryId)
+			val directory = DirectoryManager.directory(searchResult.directoryId)
 
 			directory?.also {
-				if (it.metadata?.get("tool") as Boolean? ?: false)
-				{
-					var parent = it.parent()
+				var parent = DirectoryManager.parent(it)
 
-					parent?.let { item ->
-						groupHeaders.add(item.id)
-						adapterItems.add(item)
-					}
-
-					adapterItems.add(it)
+				parent?.let { item ->
+					groupHeaders.add(item.id)
+					adapterItems.add(item)
 				}
+
+				adapterItems.add(it)
 			}
 		}
 

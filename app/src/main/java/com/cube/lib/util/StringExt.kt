@@ -19,5 +19,5 @@ operator fun String.times(amount: Int): String
  */
 fun String.escapeCsv(): String
 {
-	return "\"" + replace("\"", "\"\"") + "\""
+	return if (isEmpty()) "" else "\"" + replace("\"", "\"\"") + "\""
 }

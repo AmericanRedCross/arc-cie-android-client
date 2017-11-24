@@ -2,8 +2,8 @@ package com.cube.lib.helper
 
 import android.content.Context
 import com.cube.arc.BuildConfig
-import com.cube.arc.workflow.model.Directory
-import com.cube.arc.workflow.model.FileDescriptor
+import com.cube.arc.dmsdk.model.Directory
+import com.cube.arc.dmsdk.model.FileDescriptor
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.HitBuilders
 import com.google.android.gms.analytics.Tracker

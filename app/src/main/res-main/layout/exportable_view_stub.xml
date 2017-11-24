@@ -8,6 +8,8 @@
 	android:id="@+id/critical_path_container"
 	android:paddingLeft="24dp"
 	android:paddingRight="24dp"
+	android:paddingTop="12dp"
+	android:paddingBottom="12dp"
 >
 	<ImageView
 		android:layout_width="wrap_content"
@@ -27,6 +29,7 @@
 		android:text="@string/export"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="@id/mime_icon"
+		app:layout_constraintBottom_toBottomOf="@id/mime_icon"
 		style="@style/SmallButton"
 	/>
 
@@ -42,21 +45,7 @@
 		app:layout_constraintEnd_toStartOf="@id/export"
 		app:layout_constraintStart_toEndOf="@id/mime_icon"
 		app:layout_constraintTop_toTopOf="@id/mime_icon"
-	/>
-
-	<TextView
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:id="@+id/document_size"
-		android:layout_marginTop="4dp"
-		android:fontFamily="sans-serif-light"
-		android:textSize="12sp"
-		android:layout_marginRight="8dp"
-		android:layout_marginLeft="8dp"
-		android:text="&lt; 1MB"
-		app:layout_constraintEnd_toStartOf="@id/export"
-		app:layout_constraintStart_toEndOf="@id/mime_icon"
-		app:layout_constraintTop_toBottomOf="@id/document_title"
+		app:layout_constraintBottom_toBottomOf="@id/mime_icon"
 	/>
 
 	<ProgressBar
@@ -74,7 +63,7 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/document_size"
+		app:layout_constraintTop_toBottomOf="@id/document_title"
 		style="@style/Widget.AppCompat.ProgressBar.Horizontal"
 	/>
 </android.support.constraint.ConstraintLayout>

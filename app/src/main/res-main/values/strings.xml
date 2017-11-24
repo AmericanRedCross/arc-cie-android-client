@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">Cash in Emergencies Toolkit</string>
+	<string name="app_name">Cash Toolkit</string>
 
 	<string name="splash_title">Cash in Emergencies</string>
 	<string name="menu_workflow">Workflow</string>
@@ -87,11 +87,11 @@
 
 	<string-array name="csv_columns">
 		<item>Step</item>
-		<item>Done</item>
-		<item>No.</item>
 		<item>Sub-Step Action &amp; Guidance</item>
+		<item>Sub-Step Done</item>
 		<item>Sub-Step Notes</item>
-		<item>Critical Tool</item>
-		<item>Critical Notes</item>
+		<item>Tool</item>
+		<item>Tool Done</item>
+		<item>Tool Notes</item>
 	</string-array>
 </resources>

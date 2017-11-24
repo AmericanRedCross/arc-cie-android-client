@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.cube.arc.R
-import com.cube.arc.workflow.model.Directory
+import com.cube.arc.dmsdk.model.Directory
 
 /**
  * View holder for directory in WorkFlowFragment recycler view

@@ -10,8 +10,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.cube.arc.R
-import com.cube.arc.workflow.manager.DirectoriesManager
-import com.cube.arc.workflow.model.Directory
+import com.cube.arc.dmsdk.manager.DirectoryManager
+import com.cube.arc.dmsdk.model.Directory
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
 import com.cube.lib.util.bind
@@ -40,7 +40,7 @@ class NoteActivity : AppCompatActivity()
 
 		setContentView(R.layout.note_activity_view)
 
-		directory = DirectoriesManager.directory(id)
+		directory = DirectoryManager.directory(id)
 
 		if (directory == null)
 		{
