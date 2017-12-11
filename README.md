@@ -10,9 +10,9 @@ Import the project into Android Studio by importing the `settings.gradle` file.
 
 The main entry point to the application is the [MainApplication.kt](app/src/main/java/com/cube/arc/cie/MainApplication.kt) singleton. Here the analytics helper and the `DirectoryManager` class is initialised.
 
-`DirectoryManager` is the main 'brain' of the application, this deals with loading the app content structure into models and provides various convinience methods (as part of the DMSDK). Extension method/properties can be found in [lib/util/](app/src/main/java/com/cube/lib/util/)
+`DirectoryManager` is the main 'brain' of the application, this deals with loading the app content structure into models and provides various convinience methods (as part of the DMSSDK). Extension method/properties can be found in [lib/util/](app/src/main/java/com/cube/lib/util/)
 
-The `workflow` section of the app is the main feature, which displays a multi-nested structure of `Directory`s with related documents attached to those directories. These contain the tools and documents necessary for (xxx) to follow the procedure and protocol to distribute cash in an emergency.
+The `workflow` section of the app is the main feature, which displays a multi-nested structure of `Directory`s with related documents attached to those directories. These contain the tools and documents necessary for ARC to follow the procedure and protocol to distribute cash in an emergency.
 
 Each feature of the app is split into its own package with a standard sub-package structure with a corresponding `res` folder.
 
@@ -50,7 +50,7 @@ The only exception is the `com/cube/arc/cie` package. This is the 'main' entry t
 
 ## Pre-requisites
 
-This project requires the [DMSDK]() to function, this can be located in the `sdk/dmsdk/` folder.
+This project requires the [DMSSDK](https://github.com/AmericanRedCross/dmssdk-android-framework) to function, this can be located in the `sdk/dmsdk/` folder.
 
 Also required is Android Studio 3, Kotlin lang version `1.1.3-2`
 
