@@ -34,6 +34,6 @@ class SearchManagerTest
 	@Test fun testSearch()
 	{
 		val results = SearchManager.search("ID: 1")
-		Assert.assertEquals(6, results.size)
+		Assert.assertEquals(2, results.size)
 	}
 }
