@@ -59,7 +59,7 @@ object DirectoryManager
 	 */
 	public fun directory(id: Int?, subList: List<Directory> = directories): Directory?
 	{
-		var found = subList.forEach { subDirectory ->
+		subList.forEach { subDirectory ->
 			if (subDirectory.id == id) return subDirectory
 
 			directory(id, subDirectory.directories)?.let {

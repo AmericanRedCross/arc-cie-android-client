@@ -1,0 +1,202 @@
+[
+	{
+		"id": 1,
+		"parentId": null,
+		"title": "Directory ID: 1",
+		"order": 0,
+		"content": "path/to/file.md",
+		"metadata": {
+			"hierarchy": "1"
+		},
+		"directories": [
+			{
+				"id": 10,
+				"parentId": 1,
+				"title": "Directory ID: 2",
+				"order": 0,
+				"content": "path/to/file.md",
+				"metadata": {
+					"hierarchy": "1.1"
+				},
+				"directories": [
+					{
+						"id": 100,
+						"parentId": 10,
+						"title": "Directory ID: 100",
+						"order": 0,
+						"content": null,
+						"metadata": {
+							"hierarchy": "1.1.1"
+						},
+						"directories": [
+							{
+								"id": 1000,
+								"parentId": 100,
+								"title": "Directory ID: 1000",
+								"order": 0,
+								"content": null,
+								"metadata": {},
+								"directories": [],
+								"attachments": [
+									{
+										"title": "Attachment Title directory 1000",
+										"description": null,
+										"url": "http://path/to/file.doc",
+										"mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+										"size": 10000
+									}
+								]
+							}
+						],
+						"attachments": []
+					}
+				]
+			},
+			{
+				"id": 11,
+				"parentId": 1,
+				"title": "Directory ID: 11",
+				"order": 1,
+				"content": "path/to/file.md",
+				"metadata": {
+					"hierarchy": "1.2"
+				},
+				"directories": [
+					{
+						"id": 110,
+						"parentId": 11,
+						"title": "Directory ID: 110",
+						"order": 0,
+						"content": null,
+						"metadata": {
+							"hierarchy": "1.1.1"
+						},
+						"directories": [
+							{
+								"id": 1100,
+								"parentId": 110,
+								"title": "Directory ID: 1100",
+								"order": 0,
+								"content": null,
+								"metadata": {},
+								"directories": [],
+								"attachments": [
+									{
+										"title": "Attachment Title directory 1100",
+										"description": null,
+										"url": "http://path/to/file.doc",
+										"mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+										"size": 10000
+									}
+								]
+							}
+						],
+						"attachments": []
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": 2,
+		"parentId": null,
+		"title": "Directory ID: 2",
+		"order": 0,
+		"content": "path/to/file.md",
+		"metadata": {
+			"hierarchy": "2"
+		},
+		"directories": [
+			{
+				"id": 20,
+				"parentId": 2,
+				"title": "Directory ID: 20",
+				"order": 0,
+				"content": "path/to/file.md",
+				"metadata": {
+					"hierarchy": "2.1"
+				},
+				"directories": [
+					{
+						"id": 200,
+						"parentId": 20,
+						"title": "Directory ID: 200",
+						"order": 0,
+						"content": null,
+						"metadata": {
+							"hierarchy": "2.1.1"
+						},
+						"directories": [
+							{
+								"id": 2000,
+								"parentId": 200,
+								"title": "Directory ID: 2000",
+								"order": 0,
+								"content": null,
+								"metadata": {
+									"critical_path": true
+								},
+								"directories": [],
+								"attachments": [
+									{
+										"title": "Attachment Title directory 2000",
+										"description": null,
+										"url": "http://path/to/file.doc",
+										"mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+										"size": 10000
+									}
+								]
+							}
+						],
+						"attachments": []
+					}
+				]
+			},
+			{
+				"id": 21,
+				"parentId": 2,
+				"title": "Directory ID: 21",
+				"order": 1,
+				"content": "path/to/file.md",
+				"metadata": {
+					"hierarchy": "2.2"
+				},
+				"directories": [
+					{
+						"id": 210,
+						"parentId": 21,
+						"title": "Directory ID: 210",
+						"order": 0,
+						"content": null,
+						"metadata": {
+							"hierarchy": "2.2.1"
+						},
+						"directories": [
+							{
+								"id": 2100,
+								"parentId": 210,
+								"title": "Directory ID: 2100",
+								"order": 0,
+								"content": null,
+								"metadata": {
+									"critical_path": true
+								},
+								"directories": [],
+								"attachments": [
+									{
+										"title": "Attachment Title directory 2100",
+										"description": null,
+										"url": "http://path/to/file.doc",
+										"mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+										"size": 10000
+									}
+								]
+							}
+						],
+						"attachments": []
+					}
+				]
+			}
+		]
+	}
+]
