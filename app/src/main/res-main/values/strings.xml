@@ -1,7 +1,9 @@
 <resources>
 	<string name="app_name">Cash Toolkit</string>
 
-	<string name="splash_title">Cash in Emergencies</string>
+	<string name="splash_title">Welcome to the Cash in Emergencies Toolkit</string>
+	<string name="splash_body">Created on behalf of the International Red Cross and Red Crescent Movement by:</string>
+
 	<string name="menu_workflow">Workflow</string>
 	<string name="menu_progress">Progress</string>
 
