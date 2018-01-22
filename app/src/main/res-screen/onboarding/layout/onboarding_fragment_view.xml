@@ -15,28 +15,19 @@
 		android:adjustViewBounds="true"
 	/>
 
-	<android.support.constraint.Guideline
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:id="@+id/spacer"
-		android:orientation="horizontal"
-		app:layout_constraintGuide_percent=".40"
-	/>
-
 	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		app:layout_constraintTop_toBottomOf="@+id/spacer"
-		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintBottom_toTopOf="@id/button_container"
 		android:fillViewport="true"
 	>
 		<android.support.constraint.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/root_view"
+			android:id="@+id/content_view"
 			android:paddingLeft="12dp"
 			android:paddingRight="12dp"
-			android:paddingBottom="12dp"
+			app:layout_constraintTop_toTopOf="parent"
 		>
 			<TextView
 				android:layout_width="match_parent"
@@ -70,40 +61,54 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/body"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintBottom_toTopOf="@id/skip"
-				android:layout_marginBottom="12dp"
+				app:layout_constraintBottom_toBottomOf="parent"
 			>
 				<ImageView
 					android:layout_width="wrap_content"
-					android:layout_height="72dp"
+					android:layout_height="92dp"
 					android:src="@drawable/onboarding_video_thumb"
 					android:adjustViewBounds="true"
-					android:layout_gravity="center_horizontal"
-				/>
-
-				<Button
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:id="@+id/video"
-					android:text="@string/onboarding_video_button"
 					android:layout_gravity="center_horizontal|bottom"
-					android:layout_marginTop="60dp"
-					android:drawableLeft="@drawable/ic_play_small"
-					android:drawablePadding="12dp"
-					style="@style/RedButton"
 				/>
 			</FrameLayout>
-
-			<Button
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:id="@+id/skip"
-				android:text="@string/onboarding_skip_button"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintBottom_toBottomOf="parent"
-				style="@style/RedButton.Borderless"
-			/>
 		</android.support.constraint.ConstraintLayout>
 	</ScrollView>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="#cccccc"
+		app:layout_constraintTop_toTopOf="@id/button_container"
+		app:layout_constraintBottom_toTopOf="@id/button_container"
+	/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/button_container"
+		android:orientation="horizontal"
+		android:padding="18dp"
+		android:background="#ffffff"
+		app:layout_constraintBottom_toBottomOf="parent"
+	>
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/skip"
+			android:text="@string/onboarding_skip_button"
+			android:layout_gravity="center_vertical"
+			style="@style/RedButton.Borderless"
+		/>
+
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/video"
+			android:text="@string/onboarding_video_button"
+			android:layout_gravity="center_vertical|bottom"
+			android:drawableStart="@drawable/ic_play_small"
+			android:drawablePadding="12dp"
+			style="@style/RedButton"
+		/>
+	</LinearLayout>
 </android.support.constraint.ConstraintLayout>
