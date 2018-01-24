@@ -17,17 +17,19 @@
 
 	<ScrollView
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
+		android:layout_height="wrap_content"
 		app:layout_constraintBottom_toTopOf="@id/button_container"
+		app:layout_constraintStart_toEndOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
 		android:fillViewport="true"
 	>
-		<android.support.constraint.ConstraintLayout
+		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:orientation="vertical"
 			android:id="@+id/content_view"
 			android:paddingLeft="12dp"
 			android:paddingRight="12dp"
-			app:layout_constraintTop_toTopOf="parent"
 		>
 			<TextView
 				android:layout_width="match_parent"
@@ -35,8 +37,8 @@
 				android:id="@+id/title"
 				android:text="@string/onboarding_title"
 				android:layout_marginTop="8dp"
-				android:layout_marginLeft="24dp"
-				android:layout_marginRight="24dp"
+				android:layout_marginStart="24dp"
+				android:layout_marginEnd="24dp"
 				style="@style/Onboarding_Title"
 			/>
 
@@ -47,10 +49,8 @@
 				android:text="@string/onboarding_body"
 				android:layout_marginTop="8dp"
 				android:layout_marginBottom="24dp"
-				android:layout_marginLeft="24dp"
-				android:layout_marginRight="24dp"
-				app:layout_constraintTop_toBottomOf="@+id/title"
-				app:layout_constraintBottom_toTopOf="@+id/video_thumb"
+				android:layout_marginStart="24dp"
+				android:layout_marginEnd="24dp"
 				style="@style/Onboarding_Body"
 			/>
 
@@ -58,10 +58,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/video_thumb"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/body"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintBottom_toBottomOf="parent"
+				android:layout_gravity="center_horizontal"
 			>
 				<ImageView
 					android:layout_width="wrap_content"
@@ -71,7 +68,7 @@
 					android:layout_gravity="center_horizontal|bottom"
 				/>
 			</FrameLayout>
-		</android.support.constraint.ConstraintLayout>
+		</LinearLayout>
 	</ScrollView>
 
 	<View
