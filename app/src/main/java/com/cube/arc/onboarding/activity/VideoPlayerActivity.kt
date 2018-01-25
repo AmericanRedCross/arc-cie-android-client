@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.cube.arc.R
+import com.cube.arc.onboarding.fragment.OnboardingFragment
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 import com.google.android.exoplayer2.*
@@ -53,6 +54,7 @@ class VideoPlayerActivity : AppCompatActivity()
 			{
 				if (playbackState == ExoPlayer.STATE_ENDED)
 				{
+					setResult(OnboardingFragment.REQUEST_WATCH_VIDEO)
 					finish()
 				}
 			}
