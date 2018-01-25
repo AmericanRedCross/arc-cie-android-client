@@ -184,7 +184,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 								ExportManager.download(
 									file = file,
-									path = File(MainApplication.BASE_PATH, file.title),
+									path = File(MainApplication.BASE_PATH, file.titleWithExtension),
 									progress = { progress ->
 										exportNotification.setProgress(100, progress, false);
 										notificationManager.notify(file.url.hashCode(), exportNotification.build());

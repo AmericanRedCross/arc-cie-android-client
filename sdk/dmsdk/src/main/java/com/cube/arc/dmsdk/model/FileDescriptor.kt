@@ -30,3 +30,13 @@ data class FileDescriptor
 	 */
 	var description: String? = null
 )
+{
+	/**
+	 * Title with extension to ensure file is saved correctly
+	 */
+	val titleWithExtension: String
+		get() {
+			val urlParts = url.split(".")
+			return "${title}.${urlParts.last()}"
+		}
+}
