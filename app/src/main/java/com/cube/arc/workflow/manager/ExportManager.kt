@@ -45,7 +45,9 @@ object ExportManager
 		if (!File(MainApplication.BASE_PATH, REGISTRY).exists() || File(MainApplication.BASE_PATH, REGISTRY).length() <= 0) return false
 
 		val registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<List<Registry>>(){}.type) ?: listOf<Registry>()
-		return registry.filter{ it.fileName == file.title && File(MainApplication.BASE_PATH, it.fileName).exists() }.isNotEmpty()
+		return registry.filter {
+			(it.fileName == file.title || it.fileName == file.titleWithExtension) && File(MainApplication.BASE_PATH, it.fileName).exists()
+		}.isNotEmpty()
 	}
 
 	/**
@@ -61,7 +63,7 @@ object ExportManager
 			registry = Gson().fromJson<ArrayList<Registry>>(FileReader(File(MainApplication.BASE_PATH, REGISTRY)), object : TypeToken<ArrayList<Registry>>(){}.type) ?: arrayListOf<Registry>()
 		}
 
-		val fileRegistry = Registry(file.title, 0)//file.timestamp)
+		val fileRegistry = Registry(file.titleWithExtension, 0)//file.timestamp)
 		registry.add(fileRegistry)
 
 		File(MainApplication.BASE_PATH, REGISTRY).bufferedWriter().use { out -> out.write(Gson().toJson(registry).toString()); out.flush() }
@@ -104,8 +106,8 @@ object ExportManager
 	 */
 	fun open(file: FileDescriptor, context: Context)
 	{
-		// open file intent
-		val path = File(MainApplication.BASE_PATH, file.title)
+		// open file intent, check without extension for backwards compatibility with older versions of the app
+		val path = if (File(MainApplication.BASE_PATH, file.title).exists()) File(MainApplication.BASE_PATH, file.title) else File(MainApplication.BASE_PATH, file.titleWithExtension)
 		val contentUri = FileProvider.getUriForFile(context, context.packageName + ".provider", path)
 
 		val shareIntent = Intent()

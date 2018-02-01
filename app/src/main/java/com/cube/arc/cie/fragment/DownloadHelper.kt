@@ -96,7 +96,7 @@ class DownloadHelper : Fragment()
 	 * Executes the download task and updates the UI within [DocumentViewerActivity], can only be called once
 	 * during a download.
 	 */
-	fun execute(outFile: File = File(MainApplication.BASE_PATH, file.title))
+	fun execute(outFile: File = File(MainApplication.BASE_PATH, file.titleWithExtension))
 	{
 		if (isDownloading.get()) return
 
