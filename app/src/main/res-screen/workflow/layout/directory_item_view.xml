@@ -89,6 +89,7 @@
 					android:textColor="#ff000000"
 					android:textStyle="bold"
 					android:text="Preparedness"
+					android:textAlignment="viewStart"
 					android:layout_toLeftOf="@id/directory_chevron"
 					android:layout_toStartOf="@id/directory_chevron"
 					android:layout_toRightOf="@id/directory_hierarchy"

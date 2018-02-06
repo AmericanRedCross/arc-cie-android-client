@@ -53,6 +53,7 @@
 					android:src="@drawable/ic_update"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
 				/>
 
 				<Button
@@ -73,6 +74,7 @@
 					android:text="@string/setting_update_check_title"
 					app:layout_constraintStart_toEndOf="@id/update_icon"
 					app:layout_constraintEnd_toStartOf="@id/update_download"
+					android:textAlignment="viewStart"
 					style="@style/Setting.Title"
 				/>
 
@@ -84,6 +86,7 @@
 					app:layout_constraintStart_toEndOf="@id/update_icon"
 					app:layout_constraintTop_toBottomOf="@id/update_title"
 					app:layout_constraintEnd_toStartOf="@id/update_download"
+					android:textAlignment="viewStart"
 					style="@style/Setting.Description"
 				/>
 			</android.support.constraint.ConstraintLayout>
@@ -102,6 +105,7 @@
 					android:src="@drawable/ic_play"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
 				/>
 
 				<TextView
@@ -111,6 +115,7 @@
 					android:text="@string/setting_video_title"
 					app:layout_constraintStart_toEndOf="@id/video_icon"
 					app:layout_constraintEnd_toEndOf="parent"
+					android:textAlignment="viewStart"
 					style="@style/Setting.Title"
 				/>
 
@@ -122,6 +127,7 @@
 					app:layout_constraintStart_toEndOf="@id/video_icon"
 					app:layout_constraintTop_toBottomOf="@id/video_title"
 					app:layout_constraintEnd_toEndOf="parent"
+					android:textAlignment="viewStart"
 					style="@style/Setting.Description"
 				/>
 			</android.support.constraint.ConstraintLayout>
@@ -140,6 +146,7 @@
 					android:src="@drawable/ic_reset"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
 				/>
 
 				<TextView
@@ -149,6 +156,7 @@
 					android:text="@string/setting_reset_title"
 					app:layout_constraintStart_toEndOf="@id/reset_icon"
 					app:layout_constraintEnd_toEndOf="parent"
+					android:textAlignment="viewStart"
 					style="@style/Setting.Title"
 				/>
 
@@ -160,6 +168,7 @@
 					app:layout_constraintStart_toEndOf="@id/reset_icon"
 					app:layout_constraintTop_toBottomOf="@id/reset_title"
 					app:layout_constraintEnd_toEndOf="parent"
+					android:textAlignment="viewStart"
 					style="@style/Setting.Description"
 				/>
 			</android.support.constraint.ConstraintLayout>
@@ -178,6 +187,7 @@
 					android:src="@drawable/ic_reset"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
 				/>
 
 				<TextView
@@ -187,6 +197,7 @@
 					android:text="@string/setting_locale_title"
 					app:layout_constraintStart_toEndOf="@id/locale_icon"
 					app:layout_constraintEnd_toEndOf="parent"
+					android:textAlignment="viewStart"
 					style="@style/Setting.Title"
 				/>
 
@@ -198,6 +209,7 @@
 					app:layout_constraintStart_toEndOf="@id/locale_icon"
 					app:layout_constraintTop_toBottomOf="@id/locale_title"
 					app:layout_constraintEnd_toEndOf="parent"
+					android:textAlignment="viewStart"
 					style="@style/Setting.Description"
 				/>
 			</android.support.constraint.ConstraintLayout>

@@ -4,9 +4,6 @@ import android.text.Editable
 import android.text.Html
 import org.xml.sax.XMLReader
 
-
-
-
 /**
  * Parser class for handling <li> and <ul> tags
  */

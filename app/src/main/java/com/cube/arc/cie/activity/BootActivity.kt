@@ -8,8 +8,6 @@ import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.TextView
 import com.cube.arc.R
 import com.cube.arc.onboarding.activity.OnboardingActivity
 import com.cube.lib.helper.PermissionHelper
@@ -51,22 +49,10 @@ class BootActivity : AppCompatActivity()
 		{
 			setContentView(R.layout.splash_view)
 
-			with (findViewById(R.id.logo) as ImageView)
+			with (findViewById(R.id.content))
 			{
 				animation = AnimationSet(true).apply {
 					addAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-					addAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_in_top))
-				}
-
-				animation.fillAfter = true
-				animation.start()
-			}
-
-			with (findViewById(R.id.title) as TextView)
-			{
-				animation = AnimationSet(true).apply {
-					addAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-					addAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_in_top))
 				}
 
 				animation.fillAfter = true
