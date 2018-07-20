@@ -2,7 +2,7 @@
 
 Welcome to the Cash in Emergencies app source code.
 
-The app is designed to be a tool for ARC to distribute cash during emergency situations. The requirement for distributing cash is to follow certain guidelines outlined in documents served by a Document Management System.
+The app is designed to be a tool for American Red Cross to distribute cash during emergency situations. The requirement for distributing cash is to follow certain guidelines outlined in documents served by a Document Management System.
 
 ## Usage
 
@@ -63,7 +63,7 @@ Build values are required for the app to work correctly, see [example.properties
 ## License
 
 BSD 3-Clause License
-Copyright (c) 2017, 3 SIDED CUBE
+Copyright (c) 2017, AMERICAN RED CROSS
 All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
