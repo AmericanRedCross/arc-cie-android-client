@@ -8,7 +8,7 @@ def getProjectId = { -> return project.hasProperty('projectId') ? projectId.toSt
 
 android {
 	compileSdkVersion 25
-	buildToolsVersion '26.0.2'
+	buildToolsVersion '27.0.3'
 
 	defaultConfig {
 		applicationId "com.cube.arc.cie"
