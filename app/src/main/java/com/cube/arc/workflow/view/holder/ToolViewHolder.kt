@@ -16,6 +16,7 @@ import com.cube.arc.workflow.activity.NoteActivity
 import com.cube.arc.workflow.manager.ExportManager
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
+import com.cube.lib.util.bind
 import com.cube.lib.util.directoryColours
 import com.cube.lib.util.mimeIcon
 import com.cube.lib.util.tint
@@ -26,14 +27,14 @@ import java.io.File
  */
 class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
-	private val toolTitle = itemView.findViewById(R.id.tool_title) as TextView
-	private val toolIcon = itemView.findViewById(R.id.tool_icon) as ImageView
-	private val toolDescription = itemView.findViewById(R.id.tool_description) as TextView
-	private val toolCheck = itemView.findViewById(R.id.tool_check) as CheckBox
-	private val critical = itemView.findViewById(R.id.critical_tool) as TextView
-	private val note = itemView.findViewById(R.id.note_added) as TextView
-	private val exported = itemView.findViewById(R.id.exported) as TextView
-	private val options = itemView.findViewById(R.id.options_menu) as ImageButton
+	private val toolTitle by bind<TextView>(R.id.tool_title)
+	private val toolIcon by bind<ImageView>(R.id.tool_icon)
+	private val toolDescription by bind<TextView>(R.id.tool_description)
+	private val toolCheck by bind<CheckBox>(R.id.tool_check)
+	private val critical by bind<TextView>(R.id.critical_tool)
+	private val note by bind<TextView>(R.id.note_added)
+	private val exported by bind<TextView>(R.id.exported)
+	private val options by bind<ImageButton>(R.id.options_menu)
 
 	fun populate(root: Directory?, tool: Directory)
 	{

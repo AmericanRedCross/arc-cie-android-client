@@ -24,6 +24,8 @@ import com.cube.lib.util.bind
 import com.cube.lib.util.extractTo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.settings_activity_view.*
+import kotlinx.android.synthetic.main.settings_activity_view.view.*
 import java.io.File
 import java.io.FileReader
 import java.text.SimpleDateFormat
@@ -56,7 +58,7 @@ class SettingsActivity : AppCompatActivity()
 		AnalyticsHelper.userViewSettings()
 
 		setContentView(R.layout.settings_activity_view)
-		setSupportActionBar(findViewById(R.id.toolbar) as Toolbar)
+		setSupportActionBar(toolbar)
 
 		video.setOnClickListener {
 			AnalyticsHelper.userTapsTutorialVideo()
@@ -128,9 +130,9 @@ class SettingsActivity : AppCompatActivity()
 	 */
 	fun setCheckUi()
 	{
-		(contentUpdate.findViewById(R.id.update_download) as TextView).setText(R.string.setting_update_check_button)
-		(contentUpdate.findViewById(R.id.update_title) as TextView).setText(R.string.setting_update_check_title)
-		(contentUpdate.findViewById(R.id.update_description) as TextView).setText(R.string.setting_update_check_description)
+		contentUpdate.update_download.setText(R.string.setting_update_check_button)
+		contentUpdate.update_title.setText(R.string.setting_update_check_title)
+		contentUpdate.update_description.setText(R.string.setting_update_check_description)
 
 		downloadTask = DownloadHelper.newInstance(this, "content_check")
 
@@ -205,9 +207,9 @@ class SettingsActivity : AppCompatActivity()
 	 */
 	fun setDownloadUi()
 	{
-		(contentUpdate.findViewById(R.id.update_download) as TextView).setText(R.string.setting_update_download_button)
-		(contentUpdate.findViewById(R.id.update_title) as TextView).setText(R.string.setting_update_download_title)
-		(contentUpdate.findViewById(R.id.update_description) as TextView).setText(R.string.setting_update_download_description)
+		contentUpdate.update_download.setText(R.string.setting_update_download_button)
+		contentUpdate.update_title.setText(R.string.setting_update_download_title)
+		contentUpdate.update_description.setText(R.string.setting_update_download_description)
 
 		downloadTask = DownloadHelper.newInstance(this, "content_update")
 

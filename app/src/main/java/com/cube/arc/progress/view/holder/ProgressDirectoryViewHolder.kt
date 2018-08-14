@@ -14,18 +14,18 @@ import com.cube.lib.util.*
  */
 class ProgressDirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
-	private val name = itemView.findViewById(R.id.directory_name) as TextView
-	private val hierarchy = itemView.findViewById(R.id.directory_hierarchy) as TextView
-	private val stepsProgress = itemView.findViewById(R.id.directory_substeps_progress_text) as TextView
-	private val toolsProgress = itemView.findViewById(R.id.directory_critical_progress_text) as TextView
-	private val totalProgress = itemView.findViewById(R.id.progress_text) as TextView
-	private val directoryProgress = itemView.findViewById(R.id.directory_progress) as ProgressBar
-	private val subStepsDivider = itemView.findViewById(R.id.substeps_divider) as View
-	private val criticalDivider = itemView.findViewById(R.id.critical_divider) as View
+	private val name by bind<TextView>(R.id.directory_name)
+	private val hierarchy by bind<TextView>(R.id.directory_hierarchy)
+	private val stepsProgress by bind<TextView>(R.id.directory_substeps_progress_text)
+	private val toolsProgress by bind<TextView>(R.id.directory_critical_progress_text)
+	private val totalProgress by bind<TextView>(R.id.progress_text)
+	private val directoryProgress by bind<ProgressBar>(R.id.directory_progress)
+	private val subStepsDivider by bind<View>(R.id.substeps_divider)
+	private val criticalDivider by bind<View>(R.id.critical_divider)
 
 	fun populate(model: Directory)
 	{
-		hierarchy.background.tint(hierarchy.resources.getColor(DirectoryManager.directoryColours[model.order] ?: R.color.directory_1))
+		hierarchy.background.tint(hierarchy.context.getColorCompat(DirectoryManager.directoryColours[model.order] ?: R.color.directory_1))
 		directoryProgress.tint(DirectoryManager.directoryColours[model.order] ?: R.color.directory_1)
 		subStepsDivider.tint(DirectoryManager.directoryColours[model.order] ?: R.color.directory_1)
 		criticalDivider.tint(DirectoryManager.directoryColours[model.order] ?: R.color.directory_1)
