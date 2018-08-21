@@ -108,7 +108,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private fun populateSubSteps(root: Directory, step: Directory, stepView: View) {
-        val subStepContainer = stepView.bind<ViewGroup>(R.id.substeps_container) as ViewGroup
+        val subStepContainer by stepView.bind<ViewGroup>(R.id.substeps_container)
         val notePrefs = stepView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
         val checkPrefs = stepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
@@ -159,7 +159,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             subStepContainer.addView(subStepView)
 
             subStepView.setOnClickListener {
-                var toolContainer = subStepView.bind<ViewGroup>(R.id.tools_container) as ViewGroup
+                val toolContainer by subStepView.bind<ViewGroup>(R.id.tools_container)
                 if (toolContainer.childCount - 2 > 0) {
                     toolContainer.removeViews(1, toolContainer.childCount - 2)
                 }
@@ -194,7 +194,7 @@ class DirectoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private fun populateSubStepTools(root: Directory, step: Directory, subStep: Directory, subStepView: View) {
-        var toolContainer = subStepView.bind<ViewGroup>(R.id.tools_container) as ViewGroup
+        val toolContainer by subStepView.bind<ViewGroup>(R.id.tools_container)
         var checkPrefs = subStepView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
         toolContainer.getChildAt(0).tint(DirectoryManager.directoryColours[root.order]
