@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -34,251 +35,247 @@ import java.util.*
 /**
  * Settings activity to allow users to download content updates or reset app state
  */
-class SettingsActivity : AppCompatActivity()
-{
-	private val contentUpdate by bind<View>(R.id.update_container)
-	private val updateButton by bind<Button>(R.id.update_download)
-	private val video by bind<View>(R.id.video_container)
-	private val reset by bind<View>(R.id.reset_container)
-	private val locale by bind<View>(R.id.locale_container)
+class SettingsActivity : AppCompatActivity() {
+    private val contentUpdate by bind<View>(R.id.update_container)
+    private val updateButton by bind<Button>(R.id.update_download)
+    private val video by bind<View>(R.id.video_container)
+    private val reset by bind<View>(R.id.reset_container)
+    private val locale by bind<View>(R.id.locale_container)
 
-	private lateinit var downloadTask: DownloadHelper
-	private val downloadProgress: ProgressDialog by lazy {
-		ProgressDialog(this).also { progress ->
-			progress.setMessage("Downloading content update")
-		}
-	}
+    private lateinit var downloadTask: DownloadHelper
+    private val downloadProgress: ProgressDialog by lazy {
+        ProgressDialog(this).also { progress ->
+            progress.setMessage("Downloading content update")
+        }
+    }
 
-	private var updateTask: () -> Unit = {}
+    private var updateTask: () -> Unit = {}
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
-		super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-		AnalyticsHelper.userViewSettings()
+        AnalyticsHelper.userViewSettings()
 
-		setContentView(R.layout.settings_activity_view)
-		setSupportActionBar(toolbar)
+        setContentView(R.layout.settings_activity_view)
+        setSupportActionBar(toolbar)
 
-		video.setOnClickListener {
-			AnalyticsHelper.userTapsTutorialVideo()
+        video.setOnClickListener {
+            AnalyticsHelper.userTapsTutorialVideo()
 
-			startActivity(Intent(this, VideoPlayerActivity::class.java))
-		}
+            startActivity(Intent(this, VideoPlayerActivity::class.java))
+        }
 
-		reset.setOnClickListener {
-			AnalyticsHelper.userTapsResetData()
+        reset.setOnClickListener {
+            AnalyticsHelper.userTapsResetData()
 
-			AlertDialog.Builder(this)
-				.setTitle(R.string.reset_dialog_title)
-				.setMessage(R.string.reset_dialog_description)
-				.setPositiveButton(R.string.reset_dialog_button_confirm, resetData)
-				.setNegativeButton(R.string.reset_dialog_button_cancel, null)
-				.show()
-		}
+            AlertDialog.Builder(this)
+                    .setTitle(R.string.reset_dialog_title)
+                    .setMessage(R.string.reset_dialog_description)
+                    .setPositiveButton(R.string.reset_dialog_button_confirm, resetData)
+                    .setNegativeButton(R.string.reset_dialog_button_cancel, null)
+                    .show()
+        }
 
-		updateButton.setOnClickListener {
-			AlertDialog.Builder(this@SettingsActivity)
-				.setTitle(R.string.setting_update_warning_title)
-				.setMessage(R.string.setting_update_warning_message)
-				.setPositiveButton(R.string.setting_update_warning_positive, { dialog, which ->
-					updateTask.invoke()
-				})
-				.setNegativeButton(R.string.setting_update_warning_negative, null)
-				.show()
-		}
+        updateButton.setOnClickListener {
+            AlertDialog.Builder(this@SettingsActivity)
+                    .setTitle(R.string.setting_update_warning_title)
+                    .setMessage(R.string.setting_update_warning_message)
+                    .setPositiveButton(R.string.setting_update_warning_positive) { _, _ ->
+                        updateTask.invoke()
+                    }
+                    .setNegativeButton(R.string.setting_update_warning_negative, null)
+                    .show()
+        }
 
-		locale.setOnClickListener {
-			val availableLocales = PreferenceManager.getDefaultSharedPreferences(it.context).getStringSet("languages", setOf("en"))
-			val selected = PreferenceManager.getDefaultSharedPreferences(it.context).getString("content_language", "en")
-			val index = availableLocales.indexOf(selected)
+//        fun showUpdateConfirmationDialog(){
+//
+//        }
 
-			val locales = arrayListOf<String>()
-			availableLocales.forEach { locales.add(Locale(it).displayLanguage) }
+        locale.setOnClickListener {
+            val availableLocales = PreferenceManager.getDefaultSharedPreferences(it.context).getStringSet("languages", setOf("en"))
+            val selected = PreferenceManager.getDefaultSharedPreferences(it.context).getString("content_language", "en")
+            val index = availableLocales.indexOf(selected)
 
-			AlertDialog.Builder(this@SettingsActivity)
-				.setTitle(R.string.setting_locale_dialog_title)
-				.setSingleChoiceItems(locales.toTypedArray(), index, {dialog, which ->
-					dialog.dismiss()
+            val locales = arrayListOf<String>()
+            availableLocales.forEach { locales.add(Locale(it).displayLanguage) }
 
-					if (which != index)
-					{
-						PreferenceManager.getDefaultSharedPreferences(it.context).edit()
-							.putString("content_language", availableLocales.toTypedArray()[which])
-							.apply()
+            AlertDialog.Builder(this@SettingsActivity)
+                    .setTitle(R.string.setting_locale_dialog_title)
+                    .setSingleChoiceItems(locales.toTypedArray(), index) { dialog, which ->
+                        dialog.dismiss()
 
-						setDownloadUi()
-						updateButton.performClick()
-					}
-				})
-				.show()
-		}
+                        if (which != index) {
+                            PreferenceManager.getDefaultSharedPreferences(it.context).edit()
+                                    .putString("content_language", availableLocales.toTypedArray()[which])
+                                    .apply()
 
-		// Check for update
-		if (File(filesDir, "content-check.json").exists())
-		{
-			setDownloadUi()
-		}
-		else
-		{
-			setCheckUi()
-		}
-	}
+                            setDownloadUi()
+                            updateButton.performClick()
+                        }
+                    }
+                    .show()
+        }
 
-	/**
-	 * Sets the check for updates ui
-	 */
-	fun setCheckUi()
-	{
-		contentUpdate.update_download.setText(R.string.setting_update_check_button)
-		contentUpdate.update_title.setText(R.string.setting_update_check_title)
-		contentUpdate.update_description.setText(R.string.setting_update_check_description)
+        // Check for update
+        if (File(filesDir, "content-check.json").exists()) {
+            setDownloadUi()
+        } else {
+            setCheckUi()
+        }
+    }
 
-		downloadTask = DownloadHelper.newInstance(this, "content_check")
+    /**
+     * Sets the check for updates ui
+     */
+    fun setCheckUi() {
+        contentUpdate.update_download.setText(R.string.setting_update_check_button)
+        contentUpdate.update_title.setText(R.string.setting_update_check_title)
+        contentUpdate.update_description.setText(R.string.setting_update_check_description)
 
-		if (downloadTask.isDownloading.get())
-		{
-			updateButton.isEnabled = false
-		}
+        downloadTask = DownloadHelper.newInstance(this, "content_check")
 
-		downloadTask.progressLambda = { progress ->
-			updateButton.isEnabled = false
-		}
+        if (downloadTask.isDownloading.get()) {
+            updateButton.isEnabled = false
+        }
 
-		downloadTask.callbackLambda = { success, filePath ->
-			downloadProgress.dismiss()
+        downloadTask.progressLambda = { progress ->
+            updateButton.isEnabled = false
+        }
 
-			updateButton.isEnabled = true
-			downloadTask.detach()
+        downloadTask.callbackLambda = { success, filePath ->
+            downloadProgress.dismiss()
 
-			val latestVersion = ({
-				Toast.makeText(this@SettingsActivity, "You are already on the latest content version", Toast.LENGTH_SHORT).show()
-				File(filesDir, "content-check.json").delete()
-				setCheckUi()
-			})
+            updateButton.isEnabled = true
+            downloadTask.detach()
 
-			if (success)
-			{
-				val response = Gson().fromJson<Map<Any?, Any?>>(FileReader(filePath), object : TypeToken<Map<Any?, Any?>>(){}.type) ?: mapOf()
+            val latestVersion = ({
+                Toast.makeText(this@SettingsActivity, "You are already on the latest content version", Toast.LENGTH_SHORT).show()
+                File(filesDir, "content-check.json").delete()
+                setCheckUi()
+            })
 
-				response.getOrElse("data", {
-					latestVersion.invoke()
-				})?.let {
-					val data = it as Map<Any?, Any?>
-					val languages = data["languages"] as List<String> ?: listOf()
+            if (success) {
+                val response = Gson().fromJson<Map<Any?, Any?>>(FileReader(filePath), object : TypeToken<Map<Any?, Any?>>() {}.type)
+                        ?: mapOf()
 
-					PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).edit()
-						.putStringSet("languages", languages.toSet())
-						.apply()
+                response.getOrElse("data") {
+                    latestVersion.invoke()
+                }?.let {
+                    val data = it as Map<Any?, Any?>
+                    val languages = data["languages"] as List<String> ?: listOf()
 
-					var publishDate = data["publish_date"] as String
-					val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-					val date = sdf.parse(publishDate).time
-					val contentDate = PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getLong("content_date", 0)
+                    PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).edit()
+                            .putStringSet("languages", languages.toSet())
+                            .apply()
 
-					if (date > contentDate)
-					{
-						Toast.makeText(this@SettingsActivity, "There are content updates available to download", Toast.LENGTH_SHORT).show()
-						setDownloadUi()
-					}
-					else
-					{
-						latestVersion.invoke()
-					}
-				}
-			}
-			else
-			{
-				latestVersion.invoke()
-			}
-		}
+                    var publishDate = data["publish_date"] as String
+                    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                    val date = sdf.parse(publishDate).time
+                    val contentDate = PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getLong("content_date", 0)
 
-		updateTask = {
-			downloadTask = downloadTask.attach(this)
-			downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest")
-			downloadTask.execute(outFile = File(filesDir, "content-check.json"))
+                    if (date > contentDate) {
+                        Toast.makeText(this@SettingsActivity, "There are content updates available to download", Toast.LENGTH_SHORT).show()
+                        setDownloadUi()
+                    } else {
+                        latestVersion.invoke()
+                    }
+                }
+            } else {
+                latestVersion.invoke()
+            }
+        }
 
-			downloadProgress.show()
-		}
-	}
+        updateTask = {
+            downloadTask = downloadTask.attach(this)
+            downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest")
+            downloadTask.execute(outFile = File(filesDir, "content-check.json"))
 
-	/**
-	 * Changes the "check content" ui to "download content"
-	 */
-	fun setDownloadUi()
-	{
-		contentUpdate.update_download.setText(R.string.setting_update_download_button)
-		contentUpdate.update_title.setText(R.string.setting_update_download_title)
-		contentUpdate.update_description.setText(R.string.setting_update_download_description)
+            downloadProgress.show()
+        }
+    }
 
-		downloadTask = DownloadHelper.newInstance(this, "content_update")
+    /**
+     * Changes the "check content" ui to "download content"
+     */
+    fun setDownloadUi() {
+        contentUpdate.update_download.setText(R.string.setting_update_download_button)
+        contentUpdate.update_title.setText(R.string.setting_update_download_title)
+        contentUpdate.update_description.setText(R.string.setting_update_download_description)
 
-		if (downloadTask.isDownloading.get())
-		{
-			downloadProgress.show()
-			updateButton.isEnabled = false
-		}
+        downloadTask = DownloadHelper.newInstance(this, "content_update")
 
-		downloadTask.progressLambda = { progress ->
-			updateButton.isEnabled = false
-		}
+        if (downloadTask.isDownloading.get()) {
+            downloadProgress.show()
+            updateButton.isEnabled = false
+        }
 
-		downloadTask.callbackLambda = { success, filePath ->
-			downloadProgress.dismiss()
-			downloadTask.detach()
+        downloadTask.progressLambda = { progress ->
+            updateButton.isEnabled = false
+        }
 
-			if (success)
-			{
-				File(filesDir, "content-check.json").delete()
+        downloadTask.errorLambda = { errorCode, errorMessage ->
+            runOnUiThread {
+                downloadProgress.dismiss()
+                updateButton.isEnabled = true
+                Toast.makeText(this,
+                        if (errorMessage.isNullOrEmpty()) "There was a problem downloading the content update"
+                        else errorMessage, Toast.LENGTH_SHORT).show()
+            }
+            downloadTask.detach()
+        }
 
-				// extract tar
-				Thread({
-					filePath.extractTo(filePath.parentFile)
-					filePath.delete()
+        downloadTask.callbackLambda = { success, filePath ->
+            downloadProgress.dismiss()
+            downloadTask.detach()
 
-					runOnUiThread {
-						downloadProgress.dismiss()
-						updateButton.isEnabled = true
+            if (success) {
+                File(filesDir, "content-check.json").delete()
 
-						(application as MainApplication).initManagers()
+                // extract tar
+                Thread {
+                    filePath.extractTo(filePath.parentFile)
+                    filePath.delete()
+                    runOnUiThread {
+                        downloadProgress.dismiss()
+                        updateButton.isEnabled = true
 
-						Toast.makeText(this, "Content successfully updated", Toast.LENGTH_SHORT).show()
+                        (application as MainApplication).initManagers()
 
-						setCheckUi()
-					}
-				}).start()
-			}
-			else
-			{
-				Toast.makeText(this, "There was a problem downloading the content update", Toast.LENGTH_LONG).show()
-				setDownloadUi()
-			}
-		}
+                        Toast.makeText(this, "Content successfully updated", Toast.LENGTH_SHORT).show()
 
-		updateTask = {
-			downloadProgress.show()
-			updateButton.isEnabled = false
+                        setCheckUi()
+                    }
+                }.start()
+            } else {
+                Toast.makeText(this, "There was a problem downloading the content update", Toast.LENGTH_LONG).show()
+                setDownloadUi()
+            }
+        }
 
-			var selectedLocale = PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getString("content_language", "en")
+        updateTask = {
+            downloadProgress.show()
+            updateButton.isEnabled = false
 
-			downloadTask = downloadTask.attach(this)
-			downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest?redirect=true&language=$selectedLocale")
-			downloadTask.execute(outFile = File(filesDir, "content.tar.gz"))
-		}
-	}
+            var selectedLocale = PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getString("content_language", "en")
 
-	/**
-	 * Dialog interface callback for reset data confirmation popup
-	 */
-	val resetData = ({ dialog: DialogInterface, index: Int ->
-		val criticalPrefs = getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
-		val notePrefs = getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
-		val checkPrefs = getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
+            downloadTask = downloadTask.attach(this)
+            downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest?redirect=true&language=$selectedLocale")
+            downloadTask.execute(outFile = File(filesDir, "content.tar.gz"))
+        }
+    }
 
-		criticalPrefs.edit().clear().apply()
-		notePrefs.edit().clear().apply()
-		checkPrefs.edit().clear().apply()
+    /**
+     * Dialog interface callback for reset data confirmation popup
+     */
+    val resetData = ({ _: DialogInterface, _: Int ->
+        val criticalPrefs = getSharedPreferences("cie.critical", Context.MODE_PRIVATE)
+        val notePrefs = getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
+        val checkPrefs = getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
 
-		Toast.makeText(this, R.string.reset_complete_toast, Toast.LENGTH_SHORT).show()
-	})
+        criticalPrefs.edit().clear().apply()
+        notePrefs.edit().clear().apply()
+        checkPrefs.edit().clear().apply()
+
+        Toast.makeText(this, R.string.reset_complete_toast, Toast.LENGTH_SHORT).show()
+    })
 }
