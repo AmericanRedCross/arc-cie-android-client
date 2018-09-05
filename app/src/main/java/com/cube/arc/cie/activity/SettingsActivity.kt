@@ -51,6 +51,8 @@ class SettingsActivity : AppCompatActivity() {
 
     private var updateTask: () -> Unit = {}
 
+    var selectedLocale: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -87,10 +89,6 @@ class SettingsActivity : AppCompatActivity() {
                     .show()
         }
 
-//        fun showUpdateConfirmationDialog(){
-//
-//        }
-
         locale.setOnClickListener {
             val availableLocales = PreferenceManager.getDefaultSharedPreferences(it.context).getStringSet("languages", setOf("en"))
             val selected = PreferenceManager.getDefaultSharedPreferences(it.context).getString("content_language", "en")
@@ -103,12 +101,8 @@ class SettingsActivity : AppCompatActivity() {
                     .setTitle(R.string.setting_locale_dialog_title)
                     .setSingleChoiceItems(locales.toTypedArray(), index) { dialog, which ->
                         dialog.dismiss()
-
                         if (which != index) {
-                            PreferenceManager.getDefaultSharedPreferences(it.context).edit()
-                                    .putString("content_language", availableLocales.toTypedArray()[which])
-                                    .apply()
-
+                            selectedLocale = availableLocales.toTypedArray()[which];
                             setDownloadUi()
                             updateButton.performClick()
                         }
@@ -229,6 +223,9 @@ class SettingsActivity : AppCompatActivity() {
             downloadTask.detach()
 
             if (success) {
+                PreferenceManager.getDefaultSharedPreferences(this).edit()
+                        .putString("content_language", selectedLocale)
+                        .apply()
                 File(filesDir, "content-check.json").delete()
 
                 // extract tar
@@ -256,7 +253,8 @@ class SettingsActivity : AppCompatActivity() {
             downloadProgress.show()
             updateButton.isEnabled = false
 
-            var selectedLocale = PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getString("content_language", "en")
+            this.selectedLocale = this.selectedLocale ?:
+                    PreferenceManager.getDefaultSharedPreferences(this@SettingsActivity).getString("content_language", "en")
 
             downloadTask = downloadTask.attach(this)
             downloadTask.file = FileDescriptor(url = "${BuildConfig.API_URL}/api/projects/${BuildConfig.PROJECT_ID}/publishes/latest?redirect=true&language=$selectedLocale")
