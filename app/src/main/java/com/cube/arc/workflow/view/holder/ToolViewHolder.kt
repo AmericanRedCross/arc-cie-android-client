@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.*
 import com.cube.arc.R
 import com.cube.arc.cie.MainApplication
+import com.cube.arc.common.model.NotificationHelper
 import com.cube.arc.dmsdk.manager.DirectoryManager
 import com.cube.arc.dmsdk.model.Directory
 import com.cube.arc.workflow.activity.NoteActivity
@@ -34,7 +35,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val note by bind<TextView>(R.id.note_added)
     private val exported by bind<TextView>(R.id.exported)
     private val options by bind<ImageButton>(R.id.options_menu)
-
+    private val notificationHelper = NotificationHelper(itemView.context)
     fun populate(root: Directory?, tool: Directory) {
         val notePrefs = itemView.context.getSharedPreferences("cie.notes", Context.MODE_PRIVATE)
         val checkPrefs = itemView.context.getSharedPreferences("cie.checked", Context.MODE_PRIVATE)
@@ -157,10 +158,8 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                                 AnalyticsHelper.userTapsToolDownload(tool)
 
                                 val appContext = view.context.applicationContext
-                                val exportNotification: NotificationCompat.Builder
                                 val notificationManager = appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-                                exportNotification = NotificationCompat.Builder(appContext)
+                                val exportNotification = notificationHelper.getNotificationBuilder(NotificationHelper.CHANNEL_ID)
                                         .setContentText("Downloading file " + file.title)
                                         .setContentTitle("Downloading")
                                         .setContentIntent(PendingIntent.getActivity(appContext, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
@@ -181,7 +180,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                                         },
                                         callback = { success, outFile ->
                                             if (success) {
-                                                val finishNotification = NotificationCompat.Builder(appContext)
+                                                val finishNotification = notificationHelper.getNotificationBuilder(NotificationHelper.CHANNEL_ID)
                                                         .setContentText("File " + file.title + " downloaded")
                                                         .setTicker("Download of " + file.title + " complete")
                                                         .setContentTitle("Download Complete")
@@ -199,7 +198,7 @@ class ToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
                                                 exported.visibility = View.VISIBLE
                                             } else {
-                                                val finishNotification = NotificationCompat.Builder(appContext)
+                                                val finishNotification = notificationHelper.getNotificationBuilder(NotificationHelper.CHANNEL_ID)
                                                         .setContentText("Failed to download " + file.title)
                                                         .setContentTitle("Download Failed")
                                                         .setContentIntent(PendingIntent.getActivity(appContext, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
