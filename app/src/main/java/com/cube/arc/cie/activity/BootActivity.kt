@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import com.cube.arc.R
 import com.cube.arc.onboarding.activity.OnboardingActivity
 import com.cube.lib.helper.PermissionHelper
+import kotlinx.android.synthetic.main.splash_view.*
 
 /**
  * Entry point of the app. This class will decide to show the onboarding feature or to progress to the
@@ -49,7 +50,7 @@ class BootActivity : AppCompatActivity()
 		{
 			setContentView(R.layout.splash_view)
 
-			with (findViewById(R.id.content))
+			with (content)
 			{
 				animation = AnimationSet(true).apply {
 					addAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))

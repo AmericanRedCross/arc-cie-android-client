@@ -12,6 +12,7 @@ import com.cube.arc.R
 import com.cube.arc.progress.fragment.ProgressFragment
 import com.cube.arc.workflow.fragment.WorkFlowFragment
 import com.cube.lib.util.bind
+import kotlinx.android.synthetic.main.main_activity_view.*
 
 /**
  * Main activity host for the workflow and progress tabs
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity()
 		super.onCreate(savedInstanceState)
 
 		setContentView(R.layout.main_activity_view)
-		with (findViewById(R.id.toolbar) as Toolbar)
+		with (toolbar)
 		{
 			setSupportActionBar(this)
 			title = getString(R.string.app_name)

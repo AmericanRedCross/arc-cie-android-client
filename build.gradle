@@ -22,6 +22,10 @@ allprojects {
 		jcenter()
 		mavenCentral()
 	}
+
+	project.ext{
+		support_lib_version = "26.1.0"
+	}
 }
 
 task clean(type: Delete) {

@@ -18,6 +18,7 @@ import com.cube.arc.workflow.manager.ExportManager
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.util.bind
 import com.cube.lib.util.inflate
+import kotlinx.android.synthetic.main.exportable_view_stub.view.*
 import java.io.File
 
 /**
@@ -92,7 +93,7 @@ class ExportActivity : AppCompatActivity()
 				}, "Share to"))
 			}
 		).apply {
-			(findViewById(R.id.mime_icon) as ImageView).setImageResource(R.drawable.ic_mime_csv)
+			mime_icon.setImageResource(R.drawable.ic_mime_csv)
 		}
 
 		// entire progress
@@ -117,7 +118,7 @@ class ExportActivity : AppCompatActivity()
 				}, "Share to"))
 			}
 		).apply {
-			(findViewById(R.id.mime_icon) as ImageView).setImageResource(R.drawable.ic_mime_csv)
+			mime_icon.setImageResource(R.drawable.ic_mime_csv)
 		}
 
 		close.setOnClickListener {
@@ -131,8 +132,8 @@ class ExportActivity : AppCompatActivity()
 	private fun inflateExportable(@StringRes exportTitle: Int, exportClick: (View) -> Unit): View
 	{
 		val view = exportablesContainer.inflate<View>(R.layout.exportable_view_stub).apply {
-			val title = findViewById(R.id.document_title) as TextView
-			val export = findViewById(R.id.export) as Button
+			val title = document_title
+			val export = export
 
 			title.setText(exportTitle)
 			export.setOnClickListener(exportClick)

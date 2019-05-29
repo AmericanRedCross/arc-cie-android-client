@@ -7,6 +7,7 @@ import com.cube.arc.R
 import com.cube.arc.workflow.fragment.ToolSearchResultsFragment
 import com.cube.lib.helper.AnalyticsHelper
 import com.cube.lib.helper.IntentDataHelper
+import kotlinx.android.synthetic.main.fragment_activity_view.*
 
 /**
  * Host activity for search results fragment
@@ -20,7 +21,7 @@ class ToolSearchResultsActivity : AppCompatActivity()
 		AnalyticsHelper.userViewsSearchResults()
 
 		setContentView(R.layout.fragment_activity_view)
-		setSupportActionBar(findViewById(R.id.toolbar) as Toolbar)
+		setSupportActionBar(toolbar)
 
 		if (savedInstanceState == null)
 		{
